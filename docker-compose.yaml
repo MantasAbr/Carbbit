@@ -1,0 +1,26 @@
+version: '3'
+services:
+  express:
+    build: ./backend/
+    env_file:
+      - ./.env
+    ports:
+      - "${WEB_PORT}:${WEB_PORT}"
+    depends_on:
+      - "${MYSQL_HOST}"
+    command: npm start
+  db:
+    build: ./backend/docker-db
+    ports:
+      - "3306:3306"
+    env_file:
+      - ./.env
+  #TODO:
+  #phpmyadmin:
+  #  image: php:7.4-fpm-alpine
+  #  container_name: phpmyadmin
+  #  restart: always
+  #  ports:
+  #   - 8080:80
+
+  #TODO: build frontend Expo with Docker
