@@ -3,7 +3,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarIcon from '../components/TabBarIcon';
 
 import HomeScreen from '../screens/HomeScreen';
+import PublicListScreen from '../screens/PublicListScreen';
 import DatabaseScreen from '../screens/DatabaseScreen'
+import PublicList from '../screens/PublicListScreen';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -19,8 +21,16 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Home"
         component={ HomeScreen }
         options={{
-          title: 'Home screen',
+          title: 'Home',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Rents"
+        component={ PublicListScreen }
+        options={{
+          title: 'Public list',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="logo-model-s" />,
         }}
       />
       <BottomTab.Screen
@@ -41,6 +51,8 @@ function getHeaderTitle(route) {
     switch (routeName) {
       case 'Home':
         return 'Home to register/login?';
+      case 'Rents':
+        return 'Public list'
       case 'Database':
         return 'CRUD FUG JE';
     }

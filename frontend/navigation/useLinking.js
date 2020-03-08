@@ -9,6 +9,7 @@ export default function(containerRef) {
           path: 'root',
           screens: {
             Home: 'home',
+            PublicList: 'public',
             Database: 'database',
           },
         },
