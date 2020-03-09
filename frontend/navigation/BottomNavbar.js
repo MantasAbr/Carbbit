@@ -4,6 +4,8 @@ import TabBarIcon from '../components/TabBarIcon';
 
 import HomeScreen from '../screens/HomeScreen';
 import DatabaseScreen from '../screens/DatabaseScreen'
+import LoginScreen from '../screens/LoginScreen'
+import RegisterScreen from '../screens/RegisterScreen'
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -31,6 +33,22 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-cloud" />,
         }}
       />
+      <BottomTab.Screen
+        name="Login"
+        component={ LoginScreen }
+        options={{
+          title: 'Login',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-home" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Register"
+        component={ RegisterScreen }
+        options={{
+          title: 'Register',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-home" />,
+        }}
+      />
     </BottomTab.Navigator>
   )
 }
@@ -43,5 +61,9 @@ function getHeaderTitle(route) {
         return 'Home to register/login?';
       case 'Database':
         return 'CRUD FUG JE';
+      case 'Login':
+        return 'Login';
+      case 'Register':
+        return 'Register';
     }
   }
