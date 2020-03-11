@@ -57,3 +57,6 @@ buck-out/
 
 # expo cache
 .expo/web/cache/
+
+# expo
+.expo/packager-info.json

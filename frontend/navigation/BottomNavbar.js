@@ -5,12 +5,10 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import PublicListScreen from '../screens/PublicListScreen';
 import DatabaseScreen from '../screens/DatabaseScreen'
-<<<<<<< HEAD
+
 import LoginScreen from '../screens/LoginScreen'
 import RegisterScreen from '../screens/RegisterScreen'
-=======
-import PublicList from '../screens/PublicListScreen';
->>>>>>> 1a597cbfb2a3c023db1a619f962537717c91beef
+
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';

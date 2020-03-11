@@ -12,6 +12,7 @@ export default function(containerRef) {
             PublicList: 'public',
             Database: 'database',
             Login: 'login',
+            Register: 'register',
           },
         },
       },

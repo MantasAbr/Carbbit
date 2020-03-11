@@ -1,17 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-<<<<<<< HEAD
-  "packagerPid": 14660,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
   "expoServerNgrokUrl": null,
   "packagerNgrokUrl": null,
   "ngrokPid": null,
-=======
-  "packagerPid": 11513,
-  "expoServerNgrokUrl": "https://sj-zup.anonymous.frontend.exp.direct",
-  "packagerNgrokUrl": "https://packager.sj-zup.anonymous.frontend.exp.direct",
-  "ngrokPid": 11619,
->>>>>>> 1a597cbfb2a3c023db1a619f962537717c91beef
-  "webpackServerPort": 19006
+  "webpackServerPort": null
 }
