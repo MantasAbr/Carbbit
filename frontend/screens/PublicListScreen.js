@@ -17,7 +17,7 @@ export default class PublicList extends React.Component{
         try {
         
             // change IP to your PC's internal IP that's running Docker
-            const response = await fetch('192.168.0.101:3000'); // TODO: change to ENV variables or something?
+            const response = await fetch('192.168.1.66:3000/'); // TODO: change to ENV variables or something?
             //console.log(response);
             const responseJson = await response.json();
             console.log(responseJson);

@@ -3,11 +3,19 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors');
+var xhr = new XMLHttpRequest();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+app.use(cors({credentials: true}));
+
+xhr.open('GET', 'http://192.168.1.66:19006', true);
+xhr.withCredentials = true;
+xhr.send(null);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
+
 export default class Database extends React.Component{
 
     constructor(props){
@@ -27,8 +28,8 @@ export default class Database extends React.Component{
                 https://enable-cors.org/server_apache.html
            */
 
-           //TODO: avoid CORS, Express background api to fetch, foward here or smth...
-           const response = await fetch('https://stud.if.ktu.lt/~lukant3/test.json'); // fake json file, php gets CORSed on mobile too
+           //TODO: avoid CORS, Express background api to fethch, foward here or smth...
+           const response = await fetch('http://192.168.1.66:3000'); // fake json file, php gets CORSed on mobile too
             //console.log(response);
             const responseJson = await response.json();
             console.log(responseJson);
