@@ -14,7 +14,7 @@ const instructions = Platform.select({
     web: "--durniau ne ant webo--",
   });
 
-export default function HomeScreen(){
+export default function HomeScreen({navigation}){
     return (
         <View style={styles.container}>
             <Text style={styles.welcome}>Testas veikia su komanda:</Text>
@@ -31,6 +31,12 @@ export default function HomeScreen(){
                 <TouchableOpacity onPress={handleButton_getData} style={styles.helpLink}>
                     <Text style={styles.helpLinkText}></Text>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleButton_Login(navigation)} style={styles.helpLink}>
+                    <Text style={styles.helpLinkText}>Prisijungti</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleButton_Register(navigation)} style={styles.helpLink}>
+                    <Text style={styles.helpLinkText}>Registruotis</Text>
+                </TouchableOpacity>
             </ScrollView>
         </View>
     )
@@ -38,6 +44,14 @@ export default function HomeScreen(){
 
 function handleButton_getData(){
     
+}
+
+function handleButton_Login(navigation){
+  navigation.navigate('Login')
+}
+
+function handleButton_Register(navigation){
+  navigation.navigate('Register')
 }
 
 const styles = StyleSheet.create({

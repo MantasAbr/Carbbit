@@ -2,7 +2,7 @@ import * as React from 'react'
 import { TouchableOpacity, Platform, StyleSheet, View, Text, ImageBackground, Image} from 'react-native';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 
-export default function RegisterScreen(){
+export default function RegisterScreen({navigation}){
 
     const [inputName, setInputName] = React.useState('');
     const [inputEmail, setInputEmail] = React.useState('');
@@ -56,9 +56,9 @@ export default function RegisterScreen(){
                                       onPress={() => {{inputName === '' || inputEmail === '' ||
                                                        inputPassword === '' || inputConfirmationPassword === ''
                                                        ? alert("Neužpildyti visi registracijos laukai")
-                                                       : handleRegisterButton()}; 
+                                                       : handleRegisterButton(navigation)}; 
                                                       {inputPassword === inputConfirmationPassword 
-                                                       ? handleRegisterButton()
+                                                       ? handleRegisterButton(navigation)
                                                        : alert("Patvirtinimo slaptažodis neatitinka slaptažodžio")}}}>
                         <Text>Prisijungti</Text>
                     
@@ -74,8 +74,8 @@ function Separator() {
     return <View style={styles.separator} />;
 }
 
-function handleRegisterButton(){
-
+function handleRegisterButton(navigation){
+    navigation.navigate('Root')
 }
 
 const styles = StyleSheet.create({

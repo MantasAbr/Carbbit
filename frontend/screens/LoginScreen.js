@@ -4,8 +4,7 @@ import { ScrollView, TextInput} from 'react-native-gesture-handler';
 
 
 
-
-export default function LoginScreen(){
+export default function LoginScreen({navigation}){
 
     const [inputName, setInputName] = React.useState('');
     const [inputPassword, setInputPassword] = React.useState('');
@@ -37,7 +36,7 @@ export default function LoginScreen(){
                 <TouchableOpacity style={styles.button} 
                                   onPress={() => {inputName === '' || inputPassword === '' 
                                                   ? alert("Nenurodytas vardas ir/arba slaptažodis") 
-                                                  : handleLoginButton()}}>
+                                                  : handleLoginButton(navigation)}}>
                     <Text>Prisijungti</Text>
                     
                 </TouchableOpacity>
@@ -52,8 +51,8 @@ function Separator() {
     return <View style={styles.separator} />;
 }
 
-function handleLoginButton(){
-
+function handleLoginButton(navigation){
+    navigation.navigate('Root')
 }
 
 const styles = StyleSheet.create({

@@ -9,6 +9,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 import BottomNavbar from './navigation/BottomNavbar';
 import useLinking from './navigation/useLinking';
 
+import HomeScreen from './screens/HomeScreen';
+import RegisterScreen from './screens/RegisterScreen';
+import LoginScreen from './screens/LoginScreen';
+import PublicListScreen from './screens/PublicListScreen';
+
 const Stack = createStackNavigator();
 
 export default function App(props) {
@@ -30,6 +35,7 @@ export default function App(props) {
         await Font.loadAsync({
           ...Ionicons.font,
           'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+          'titillium-web': require('./assets/fonts/TitilliumWeb-Regular.ttf'),
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
@@ -50,7 +56,11 @@ export default function App(props) {
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-          <Stack.Navigator>
+          <Stack.Navigator>           
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen} />
+            <Stack.Screen name="Rents" component={PublicListScreen} />
             <Stack.Screen name="Root" component={BottomNavbar} />
           </Stack.Navigator>
         </NavigationContainer>

@@ -11,7 +11,7 @@ import RegisterScreen from '../screens/RegisterScreen'
 
 
 const BottomTab = createBottomTabNavigator();
-const INITIAL_ROUTE_NAME = 'Home';
+const INITIAL_ROUTE_NAME = 'Rents';
 
 export default function BottomTabNavigator({ navigation, route }) {
   // Set the header title on the parent stack navigator depending on the
@@ -20,14 +20,14 @@ export default function BottomTabNavigator({ navigation, route }) {
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
-        <BottomTab.Screen
+{/*         <BottomTab.Screen
         name="Home"
         component={ HomeScreen }
         options={{
           title: 'Home',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
         }}
-      />
+      /> */}
       <BottomTab.Screen
         name="Rents"
         component={ PublicListScreen }
@@ -44,7 +44,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-cloud" />,
         }}
       />
-      <BottomTab.Screen
+{/*       <BottomTab.Screen
         name="Login"
         component={ LoginScreen }
         options={{
@@ -59,7 +59,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           title: 'Register',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-home" />,
         }}
-      />
+      /> */}
     </BottomTab.Navigator>
   )
 }
