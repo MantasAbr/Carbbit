@@ -3,6 +3,7 @@ import { TouchableOpacity, Platform, StyleSheet, View, Text} from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 
 import { MonoText } from '../components/StyledText';
+import { TitilliumWeb } from '../components/TitilliumWeb';
 
 const instructions = Platform.select({
     ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -28,6 +29,7 @@ export default function HomeScreen({navigation}){
 
             <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
                 <MonoText>Labas</MonoText>
+                <TitilliumWeb>hello</TitilliumWeb>
                 <TouchableOpacity onPress={handleButton_getData} style={styles.helpLink}>
                     <Text style={styles.helpLinkText}></Text>
                 </TouchableOpacity>

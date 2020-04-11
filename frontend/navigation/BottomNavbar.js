@@ -5,10 +5,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import PublicListScreen from '../screens/PublicListScreen';
 import DatabaseScreen from '../screens/DatabaseScreen'
-
-import LoginScreen from '../screens/LoginScreen'
-import RegisterScreen from '../screens/RegisterScreen'
-
+import SettingsScreen from '../screens/SettingsScreen'
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Rents';
@@ -44,22 +41,14 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-cloud" />,
         }}
       />
-{/*       <BottomTab.Screen
-        name="Login"
-        component={ LoginScreen }
+      <BottomTab.Screen
+        name="Settings"
+        component={ SettingsScreen }
         options={{
-          title: 'Login',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-home" />,
+          title: 'Settings',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-cog" />,
         }}
       />
-      <BottomTab.Screen
-        name="Register"
-        component={ RegisterScreen }
-        options={{
-          title: 'Register',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-home" />,
-        }}
-      /> */}
     </BottomTab.Navigator>
   )
 }
@@ -74,9 +63,7 @@ function getHeaderTitle(route) {
         return 'Public list'
       case 'Database':
         return 'CRUD FUG JE';
-      case 'Login':
-        return 'Login';
-      case 'Register':
-        return 'Register';
+      case 'Settings':
+        return 'Settings (tik tlf)';
     }
   }

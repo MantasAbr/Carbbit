@@ -13,6 +13,7 @@ export default function(containerRef) {
             Database: 'database',
             Login: 'login',
             Register: 'register',
+            Settings: 'settings',
           },
         },
       },
