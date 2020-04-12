@@ -1,7 +1,9 @@
 import * as React from 'react'
-import { TouchableOpacity, StyleSheet, View, Text, ImageBackground, Alert, PixelRatio} from 'react-native';
-import { ScrollView, TextInput} from 'react-native-gesture-handler';
+import { TouchableOpacity, StyleSheet, View, Text, ImageBackground, Modal, Alert} from 'react-native';
+import { ScrollView} from 'react-native-gesture-handler';
 import { TitilliumWeb } from '../components/TitilliumWeb';
+import EnterOrBack from '../components/IonicsIcon';
+
 
 export default class SettingsScreen extends React.Component{
 
@@ -20,26 +22,26 @@ export default class SettingsScreen extends React.Component{
                     <View style={{marginVertical: 10}}/>
 
                     <TitilliumWeb style={styles.header}>pasirinkti kalbą</TitilliumWeb>
-                    <TouchableOpacity style={styles.button} onPress={() => null} activeOpacity={0.4}>
+                    <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('LanguageSettings')} activeOpacity={0.5}>
                         <TitilliumWeb style={styles.languageText}>Lietuvių</TitilliumWeb>
                     </TouchableOpacity> 
                     <View style={{marginVertical: 23}}/>
 
                     <TitilliumWeb style={styles.header}>paskyros valdymas</TitilliumWeb>
-                    <TouchableOpacity style={styles.buttonUpper} onPress={() => null} activeOpacity={0.4}>
+                    <TouchableOpacity style={styles.buttonUpper} onPress={() => null} activeOpacity={0.5}>
                         <TitilliumWeb style={styles.basicText}>atsiminti prisijungimo duomenis</TitilliumWeb>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonLower} onPress={() => null} activeOpacity={0.4}>
+                    <TouchableOpacity style={styles.buttonLower} onPress={() => null} activeOpacity={0.5}>
                         <TitilliumWeb style={styles.importantText}>Ištrinti paskyrą</TitilliumWeb>
                     </TouchableOpacity> 
                     <View style={{marginVertical: 23}}/>
 
                     <TitilliumWeb style={styles.header}>programėlės funkcijos</TitilliumWeb>
-                    <TouchableOpacity style={styles.button} onPress={() => null} activeOpacity={0.4}>
+                    <TouchableOpacity style={styles.button} onPress={() => null} activeOpacity={0.5}>
                         <TitilliumWeb style={styles.basicText}>programėlės pranešimai</TitilliumWeb>
                     </TouchableOpacity>
                 </View>
-            </ScrollView>
+            </ScrollView>            
             </ImageBackground>
         )
     }
@@ -128,4 +130,34 @@ const styles = StyleSheet.create({
         color: '#D92626',
         paddingLeft: 17,
     },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+      },
+    modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
+    textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: "center"
+    }
 });

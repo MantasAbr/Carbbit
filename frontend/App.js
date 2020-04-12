@@ -12,7 +12,7 @@ import useLinking from './navigation/useLinking';
 import HomeScreen from './screens/HomeScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import LoginScreen from './screens/LoginScreen';
-import PublicListScreen from './screens/PublicListScreen';
+import LanguageScreen from './screens/Settings_children_screens/LanguageScreen';
 
 const Stack = createStackNavigator();
 
@@ -51,17 +51,22 @@ export default function App(props) {
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return null;
+    
   } else {
     return (
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-          <Stack.Navigator>           
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Register" component={RegisterScreen} />
-            <Stack.Screen name="Rents" component={PublicListScreen} />
-            <Stack.Screen name="Root" component={BottomNavbar} />
+          <Stack.Navigator>          
+            <Stack.Screen name="Home" component={HomeScreen}/>
+            <Stack.Screen name="Login" component={LoginScreen}/>
+            <Stack.Screen name="Register" component={RegisterScreen}/>
+            <Stack.Screen name="Root" component={BottomNavbar}/>
+
+            {/* Šitam kitam langui ir visiems kitiems children screen'ams reiktų sukurti atskirą stack navigatorių iš parent elemento*/}
+            {/* Kol kas juos įdedu čia*/}
+            {/* Šitas pastarasis turėtų priklausyti SettingsScreen parent'ui*/}
+            <Stack.Screen /* props={{headerMode: screen}} */ options={{headerShown: false}} name="LanguageSettings" component={LanguageScreen}/>
           </Stack.Navigator>
         </NavigationContainer>
       </View>

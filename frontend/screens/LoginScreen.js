@@ -52,7 +52,7 @@ function Separator() {
 }
 
 function handleLoginButton(navigation){
-    navigation.navigate('Root')
+    navigation.navigate('Root');
 }
 
 const styles = StyleSheet.create({

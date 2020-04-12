@@ -11,7 +11,11 @@ export default class PublicList extends React.Component{
     constructor(props){
         super(props);
         this.state = {isLoading :true}
+
+        //Reikia reset'int navigation'a, kad negrizt atgal i login arba register
+        //props.navigation.reset();
     }
+
 
     async componentDidMount(){
         try {
