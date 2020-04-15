@@ -1,11 +1,19 @@
 import * as React from 'react'
-import { TouchableOpacity, StyleSheet, View, Text, ImageBackground, Modal, Alert} from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Platform, ImageBackground, Modal, Image} from 'react-native';
 import { ScrollView} from 'react-native-gesture-handler';
 import { TitilliumWeb } from '../components/TitilliumWeb';
-import EnterOrBack from '../components/IonicsIcon';
+import {Dimensions } from "react-native";
+import IonicsIcon from '../components/IonicsIcon';
 
 
 export default class SettingsScreen extends React.Component{
+
+    constructor(props){
+        super(props)
+        this.state = {screenWidth: '', rememberInfo: false, radioButtonName: 'ios-radio-button-off', showModal: false}
+    }
+
+    screenWidth = Math.round((Dimensions.get('window').width))
 
     render(){
         return(
@@ -21,25 +29,85 @@ export default class SettingsScreen extends React.Component{
                     <View style={styles.hairline}/>
                     <View style={{marginVertical: 10}}/>
 
-                    <TitilliumWeb style={styles.header}>pasirinkti kalbą</TitilliumWeb>
+                    <TitilliumWeb style={styles.header}>pasirinkti kalbą</TitilliumWeb>           
                     <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('LanguageSettings')} activeOpacity={0.5}>
-                        <TitilliumWeb style={styles.languageText}>Lietuvių</TitilliumWeb>
+                        <View style={styles.buttonContainer}>
+                            <Image source={require('../assets/custom_icons/lt_circle.png')} style={styles.flagCircle}/>
+                            <TitilliumWeb style={styles.languageText}>Lietuvių</TitilliumWeb>                            
+                            <View style={{marginLeft: this.screenWidth - 170}}/>                           
+                            <View style={styles.icon}>
+                                <IonicsIcon name={"ios-arrow-forward"} sizeOf={30} colorOf={'arrowIdle'} />
+                            </View>                                                   
+                        </View>
                     </TouchableOpacity> 
+
                     <View style={{marginVertical: 23}}/>
 
                     <TitilliumWeb style={styles.header}>paskyros valdymas</TitilliumWeb>
+
                     <TouchableOpacity style={styles.buttonUpper} onPress={() => null} activeOpacity={0.5}>
-                        <TitilliumWeb style={styles.basicText}>atsiminti prisijungimo duomenis</TitilliumWeb>
+                        <View style={styles.buttonContainer}>
+                            <TitilliumWeb style={styles.basicText}>profilio nustatymai</TitilliumWeb>
+                            <View style={{marginLeft: this.screenWidth - 173}}/>
+                            <View style={styles.icon}>
+                                <IonicsIcon name={"ios-arrow-forward"} sizeOf={30} colorOf={'arrowIdle'} />
+                            </View>
+                        </View> 
+                            
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonLower} onPress={() => null} activeOpacity={0.5}>
-                        <TitilliumWeb style={styles.importantText}>Ištrinti paskyrą</TitilliumWeb>
-                    </TouchableOpacity> 
+
+                    <TouchableOpacity style={styles.buttonLower} onPress={() => {if(this.state.rememberInfo === false){
+                                                                                    this.setState({rememberInfo: true})
+                                                                                    this.setState({radioButtonName: 'ios-radio-button-on'})
+                                                                                }
+                                                                                if(this.state.rememberInfo === true){
+                                                                                    this.setState({rememberInfo:  false})
+                                                                                    this.setState({radioButtonName: 'ios-radio-button-off'})
+                                                                                }}} 
+                                      activeOpacity={0.5}>
+                        <View style={styles.buttonContainer}>
+                            <TitilliumWeb style={styles.basicText}>atsiminti prisijungimo duomenis</TitilliumWeb>
+                            <View style={{marginLeft: this.screenWidth - 264}}/>
+                            <View style={styles.icon}>
+                                <IonicsIcon name={this.state.radioButtonName} sizeOf={30} colorOf={'arrowIdle'} />
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.buttonLower} onPress={() => this.setState({showModal: true})} activeOpacity={0.5}>
+                        <View style={styles.buttonContainer}>
+                            <TitilliumWeb style={styles.importantText}>ištrinti paskyrą</TitilliumWeb>
+                        </View>
+                    </TouchableOpacity>  
+
                     <View style={{marginVertical: 23}}/>
 
                     <TitilliumWeb style={styles.header}>programėlės funkcijos</TitilliumWeb>
                     <TouchableOpacity style={styles.button} onPress={() => null} activeOpacity={0.5}>
-                        <TitilliumWeb style={styles.basicText}>programėlės pranešimai</TitilliumWeb>
+                        <View style={styles.buttonContainer}>
+                            <TitilliumWeb style={styles.basicText}>programėlės pranešimai</TitilliumWeb>
+                            <View style={{marginLeft: this.screenWidth - 208}}/>
+                            <View style={styles.icon}>
+                                <IonicsIcon name={"ios-arrow-forward"} sizeOf={30} colorOf={'arrowIdle'} />
+                            </View>
+                        </View>
                     </TouchableOpacity>
+
+                    {Platform.OS == "web" ? <TitilliumWeb>Note: per web'a rodo modal (pop-up) screen'a. su telefonu jo taip apacioje nerodys</TitilliumWeb> : undefined}                                                                
+                    <Modal transparent={true} visible={this.state.showModal} animationType={'fade'}>
+                        <View style={{backgroundColor: '#000000aa', flex: 1}}>
+                            <View style={styles.modal}>
+                                <TouchableOpacity style={styles.modalDeleteButton}>
+                                    <TitilliumWeb style={styles.modalDeleteText}>ištrinti paskyrą</TitilliumWeb>
+                                </TouchableOpacity>
+                                <View style={{marginVertical: 13}}/>
+                                <TouchableOpacity style={styles.modalCancelButton} onPress={() => this.setState({showModal: false})}>
+                                    <TitilliumWeb style={styles.modalCancelText}>atšaukti</TitilliumWeb>
+                                </TouchableOpacity>                                                         
+                            </View>
+                        </View>                                                               
+                    </Modal>
+
                 </View>
             </ScrollView>            
             </ImageBackground>
@@ -81,7 +149,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F5F3CB',
         borderWidth: 1,
         borderColor: '#6D6D6D',
-        height: 41,
+        height: 42,
         alignSelf: 'stretch',
         justifyContent: 'center',
         borderLeftColor: '#F5F3CB',
@@ -89,7 +157,7 @@ const styles = StyleSheet.create({
     },
     // ---
     // Used so that buttons' lower and upper borders don't 
-    // double if they're on top on one another
+    // double if they're on top of one another
     buttonUpper: {
         backgroundColor: '#F5F3CB',
         borderWidth: 1,
@@ -111,53 +179,78 @@ const styles = StyleSheet.create({
         borderRightColor: '#F5F3CB',
         borderTopColor: '#F5F3CB',
     },
-    buttonMiddle: {
-
-    },
     // ---
     languageText: {
         fontSize: 17,
         color: '#CB9D3C',
-        paddingLeft: 17,
+        paddingLeft: 19,
+        marginTop: 4,
     },
     basicText: {
-        fontSize: 14,
+        fontSize: 15,
         color: '#CB9D3C',
-        paddingLeft: 17,
+        paddingLeft: 15,
+        marginTop: 5
     },
     importantText: {
-        fontSize: 14,
+        fontSize: 15,
         color: '#D92626',
-        paddingLeft: 17,
+        paddingLeft: 15,
     },
-    centeredView: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 22
-      },
-    modalView: {
-        margin: 20,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5
+    flagCircle: {
+        resizeMode: 'contain',
+        width: 30,
+        height: 30,
+        marginLeft: 25,
+        marginTop: 2.5,
     },
-    textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
+    buttonContainer: {
+        flexDirection: 'row',        
     },
-    modalText: {
-        marginBottom: 15,
-        textAlign: "center"
-    }
+    icon: {
+        marginTop: 2,
+    },
+    modal: {
+        backgroundColor: '#F5F3CB', 
+        flex: 1, 
+        borderColor: 'black',
+        borderWidth: 1.5, 
+        marginVertical: 250,
+        paddingVertical: 20,
+        paddingHorizontal: 20,
+        marginHorizontal: 60, 
+        borderRadius: 10, 
+    },
+    modalDeleteButton: {
+        backgroundColor: '#F5F3CB',
+        borderWidth: 1,
+        borderColor: '#D92626',
+        height: 50,
+        width: 200,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        borderRadius: 10, 
+    },
+    modalCancelButton:{
+        backgroundColor: '#F5F3CB',
+        borderWidth: 1,
+        borderColor: '#6D6D6D',
+        height: 50,
+        width: 100,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        borderRadius: 10, 
+    },
+    modalDeleteText: {
+        fontSize: 17,
+        color: '#D92626',
+        alignSelf: 'center',
+        justifyContent: 'center',
+    },
+    modalCancelText: {
+        fontSize: 15,
+        color: '#6D6D6D',
+        alignSelf: 'center',
+        justifyContent: 'center',
+    },
 });

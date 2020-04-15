@@ -1,10 +1,14 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import TabBarIcon from '../components/TabBarIcon';
+import TabBarIconAwesome5 from '../components/TabBarIconAwesome5';
+import TabBarIconIonicons from '../components/TabBarIconIonicons';
 
 import PublicListScreen from '../screens/PublicListScreen';
-import DatabaseScreen from '../screens/DatabaseScreen'
+import UserPostsScreen from '../screens/UserPostsScreen';
+import ChatScreen from '../screens/ChatScreen';
 import SettingsScreen from '../screens/SettingsScreen'
+
+import DatabaseScreen from '../screens/DatabaseScreen'
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Rents';
@@ -23,8 +27,24 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Rents"
         component={ PublicListScreen }
         options={{
-          title: 'Public list',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="logo-model-s" />,
+          title: 'skelbimai',
+          tabBarIcon: ({ focused }) => <TabBarIconAwesome5 focused={focused} name="user-friends" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Posts"
+        component={ UserPostsScreen }
+        options={{
+          title: 'jūsų skelbimai',
+          tabBarIcon: ({ focused }) => <TabBarIconAwesome5 focused={focused} name="user-alt" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Chats"
+        component={ ChatScreen }
+        options={{
+          title: 'pokalbiai',
+          tabBarIcon: ({ focused }) => <TabBarIconIonicons focused={focused} name="ios-chatboxes" />,
         }}
       />
       <BottomTab.Screen
@@ -32,15 +52,15 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={ DatabaseScreen }
         options={{
           title: 'CRUDtastic',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-cloud" />,
+          tabBarIcon: ({ focused }) => <TabBarIconAwesome5 focused={focused} name="cloud" />,
         }}
       />
       <BottomTab.Screen
         name="Settings"
         component={ SettingsScreen }
         options={{
-          title: 'Settings',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-cog" />,
+          title: 'nustatymai',
+          tabBarIcon: ({ focused }) => <TabBarIconAwesome5 focused={focused} name="user-cog" />,
         }}
       />
     </BottomTab.Navigator>
@@ -53,6 +73,10 @@ function getHeaderTitle(route) {
     switch (routeName) {
       case 'Rents':
         return 'Public list'
+      case 'Posts':
+        return 'User Posts'
+      case 'Chats':
+        return 'Chats'
       case 'Database':
         return 'CRUD FUG JE';
       case 'Settings':

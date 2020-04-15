@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { TouchableOpacity, StyleSheet, View, Text, ImageBackground, Modal, Alert} from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text, ImageBackground, Modal, Alert, Image} from 'react-native';
 import { TitilliumWeb } from '../../components/TitilliumWeb';
 import {Dimensions } from "react-native";
 import IonicsIcon from '../../components/IonicsIcon';
@@ -16,7 +16,7 @@ export default function LanguageScreen({navigation}){
             <View style={styles.headerContainer}>
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                     <View>
-                        <IonicsIcon name={"ios-arrow-back"} sizeOf={35}/>
+                        <IonicsIcon name={"ios-arrow-back"} sizeOf={35} colorOf={'arrowIdle'}/>
                     </View> 
                 </TouchableOpacity>                   
                 <TitilliumWeb style={styles.title}>pasirinkti kalbą</TitilliumWeb>
@@ -29,6 +29,7 @@ export default function LanguageScreen({navigation}){
                 <TouchableOpacity style={styles.buttonUpper} onPress={() => null} activeOpacity={0.5}>
                     <View style={styles.buttonContainer}>
                         <FontAwesomeIcon name={"circle-thin"} sizeOf={40} colorOf={"black"} style={styles.languageCircle}/>
+                        {/* <Image source={require('../../assets/custom_icons/lt_circle.png')} style={styles.flagCircle}/> */}
                         <TitilliumWeb style={styles.languageText}>Lietuvių</TitilliumWeb>
                     </View>
                 </TouchableOpacity>
@@ -42,7 +43,6 @@ export default function LanguageScreen({navigation}){
                         <TitilliumWeb style={styles.languageText}>Anglų</TitilliumWeb>
                     </View>
                 </TouchableOpacity>
-                
             </View>
         </ImageBackground>
     )
@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
         width: 20,
         height: 30,
         marginLeft: -70,
+        
     },
     buttonUpper: {
         backgroundColor: '#F5F3CB',
@@ -121,12 +122,18 @@ const styles = StyleSheet.create({
     },
     lineBetweenButtons: {
         borderColor: '#6D6D6D',
-        borderWidth: StyleSheet.hairlineWidth,
+        borderTopWidth: StyleSheet.hairlineWidth,
         width: Math.round((Dimensions.get('window').width) - 95), 
     },
     lineBetweenButtonsBackground: {
         backgroundColor: '#F5F3CB',
         borderColor: '#F5F3CB',
         width: 95,
+    },
+    flagCircle: {
+        resizeMode: 'contain',
+        width: 40,
+        height: 40,
+        marginLeft: 25,
     },
 });
