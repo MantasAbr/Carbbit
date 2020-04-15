@@ -40,8 +40,10 @@ $ npm install
 ## Docker
 This will start the backend Express.js server on local port **3000** and a MySQL database server on local port **3306**.
 ``` 
-$ docker-compose up -d
+$ docker-compose up
 ```
+You can add a ```-d``` tag for the command to run as a deamon. This is not recommended for development, since you won't be able to debug the containers.
+
 Make sure everything is running:
 ```
 $ docker ps -a
@@ -92,16 +94,22 @@ Once you have the Expo app, simply scan the QR code provided by the Expo server.
 To shut down the Expo server, simply press ```Ctrl + C``` once on the terminal to stop it.
 
 ## Troubleshooting
-If you can't find the QR code, try:
-* pressing c on the terminal running Expo  server
-* opening the Expo developer debugger by pressing ```d``` in the console running Expo server
-* restarting Expo
-* clearing Expo cache (```shift + r``` while Expo is running)
-* crying for help
+#### If you can't find the QR code, try:
+*  pressing c on the terminal running Expo  server
+*  opening the Expo developer debugger by pressing ```d``` in the console running Expo server
+*  restarting Expo
+*  clearing Expo cache (```shift + r``` while Expo is running)
+*  crying for help
 
+#### If the SQL file is changed, the Docker container needs its volumes removed and to be rebuilt:
+```
+$ docker-compose down -v                # remove volumes (if any)
+$ docker-compose build --no-cache db    # rebuild database container
+```
+Then you can start Docker normally with ```docker-compose up```
 # Running the tests
 
 There are no automated tests currently.
 
 # Known bugs
-* The Expo debugger can sometimes show a blank dark-gray screen. Restarting usually helps. If not, clearing cache should help. If not still, taking a break and trying again usually helps.
+*  The Expo debugger can sometimes show a blank dark-gray screen. Restarting usually helps. If not, clearing cache should help. If not still, taking a break and trying again usually helps.
