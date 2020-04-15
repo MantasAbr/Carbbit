@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity, TextInput, ImageBackground } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
 /*
@@ -11,7 +11,11 @@ export default class PublicList extends React.Component{
     constructor(props){
         super(props);
         this.state = {isLoading :true}
+
+        //Reikia reset'int navigation'a, kad negrizt atgal i login arba register
+        //props.navigation.reset(); ??
     }
+
 
     async componentDidMount(){
         try {
@@ -36,9 +40,12 @@ export default class PublicList extends React.Component{
     render(){
         if(this.state.isLoading){
             return(
-                <View style={{flex:1,padding:20}}>
-                    <ActivityIndicator/>
-                </View>
+                <ImageBackground source={require('../assets/backgrounds/kaunas_bg.png')} 
+                                 style={styles.background} blurRadius={5}>
+                    <View style={{flex:1,padding:20}}>
+                        <ActivityIndicator/>
+                    </View>
+                </ImageBackground>
             )
         }
 
@@ -60,3 +67,10 @@ export default class PublicList extends React.Component{
         )
     }
 }
+
+const styles = StyleSheet.create({
+    background: {
+        width: '100%',
+        height: '100%',
+    },
+})

@@ -1,39 +1,50 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import TabBarIcon from '../components/TabBarIcon';
+import TabBarIconAwesome5 from '../components/TabBarIconAwesome5';
+import TabBarIconIonicons from '../components/TabBarIconIonicons';
 
-import HomeScreen from '../screens/HomeScreen';
 import PublicListScreen from '../screens/PublicListScreen';
+import UserPostsScreen from '../screens/UserPostsScreen';
+import ChatScreen from '../screens/ChatScreen';
+import SettingsScreen from '../screens/SettingsScreen'
+
 import DatabaseScreen from '../screens/DatabaseScreen'
 
-import LoginScreen from '../screens/LoginScreen'
-import RegisterScreen from '../screens/RegisterScreen'
-
-
 const BottomTab = createBottomTabNavigator();
-const INITIAL_ROUTE_NAME = 'Home';
+const INITIAL_ROUTE_NAME = 'Rents';
 
 export default function BottomTabNavigator({ navigation, route }) {
+
+  
+
   // Set the header title on the parent stack navigator depending on the
   // currently active tab. Learn more in the documentation:
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
-        <BottomTab.Screen
-        name="Home"
-        component={ HomeScreen }
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
-        }}
-      />
       <BottomTab.Screen
         name="Rents"
         component={ PublicListScreen }
         options={{
-          title: 'Public list',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="logo-model-s" />,
+          title: 'skelbimai',
+          tabBarIcon: ({ focused }) => <TabBarIconAwesome5 focused={focused} name="user-friends" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Posts"
+        component={ UserPostsScreen }
+        options={{
+          title: 'jūsų skelbimai',
+          tabBarIcon: ({ focused }) => <TabBarIconAwesome5 focused={focused} name="user-alt" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Chats"
+        component={ ChatScreen }
+        options={{
+          title: 'pokalbiai',
+          tabBarIcon: ({ focused }) => <TabBarIconIonicons focused={focused} name="ios-chatboxes" />,
         }}
       />
       <BottomTab.Screen
@@ -41,23 +52,15 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={ DatabaseScreen }
         options={{
           title: 'CRUDtastic',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-cloud" />,
+          tabBarIcon: ({ focused }) => <TabBarIconAwesome5 focused={focused} name="cloud" />,
         }}
       />
       <BottomTab.Screen
-        name="Login"
-        component={ LoginScreen }
+        name="Settings"
+        component={ SettingsScreen }
         options={{
-          title: 'Login',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-home" />,
-        }}
-      />
-      <BottomTab.Screen
-        name="Register"
-        component={ RegisterScreen }
-        options={{
-          title: 'Register',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-home" />,
+          title: 'nustatymai',
+          tabBarIcon: ({ focused }) => <TabBarIconAwesome5 focused={focused} name="user-cog" />,
         }}
       />
     </BottomTab.Navigator>
@@ -68,15 +71,15 @@ function getHeaderTitle(route) {
     const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
   
     switch (routeName) {
-      case 'Home':
-        return 'Home to register/login?';
       case 'Rents':
         return 'Public list'
+      case 'Posts':
+        return 'User Posts'
+      case 'Chats':
+        return 'Chats'
       case 'Database':
         return 'CRUD FUG JE';
-      case 'Login':
-        return 'Login';
-      case 'Register':
-        return 'Register';
+      case 'Settings':
+        return 'Settings (tik tlf)';
     }
   }
