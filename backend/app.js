@@ -4,18 +4,14 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
-var xhr = new XMLHttpRequest();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var postsRouter = require('./routes/posts');
 
 var app = express();
 
 app.use(cors({credentials: true}));
-
-xhr.open('GET', 'http://192.168.1.66:19006', true);
-xhr.withCredentials = true;
-xhr.send(null);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -29,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/posts', postsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -44,6 +41,10 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.listen(3000, () => {
+  console.log("Server is running on port 3000.");
 });
 
 module.exports = app;

@@ -1,11 +1,11 @@
-CREATE TABLE Users (
+CREATE TABLE IF NOT EXISTS Users (
     user_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     first_name varchar(255) NOT NULL,
     email varchar(255) NOT NULL,
     password varchar(255) NOT NULL
 );
 
-CREATE TABLE Posts (
+CREATE TABLE IF NOT EXISTS Posts (
     post_id int AUTO_INCREMENT,
     picture_uri varchar(255) NOT NULL,
     body varchar(255) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE Posts (
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
-CREATE TABLE Ratings (
+CREATE TABLE IF NOT EXISTS Ratings (
     rating_id int AUTO_INCREMENT,
     rating int NOT NULL,
     post_id int NOT NULL,
