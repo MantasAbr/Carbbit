@@ -79,8 +79,7 @@ const styles = StyleSheet.create({
     backButton: {
         width: 20,
         height: 30,
-        marginLeft: -70,
-        
+        marginLeft: -70,        
     },
     buttonUpper: {
         backgroundColor: '#F5F3CB',

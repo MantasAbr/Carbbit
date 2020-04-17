@@ -2,7 +2,7 @@ import * as React from 'react'
 import { TouchableOpacity, StyleSheet, View, Platform, ImageBackground, Modal, Image} from 'react-native';
 import { ScrollView} from 'react-native-gesture-handler';
 import { TitilliumWeb } from '../components/TitilliumWeb';
-import {Dimensions } from "react-native";
+import { Dimensions } from "react-native";
 import IonicsIcon from '../components/IonicsIcon';
 
 
@@ -36,7 +36,7 @@ export default class SettingsScreen extends React.Component{
                             <TitilliumWeb style={styles.languageText}>Lietuvių</TitilliumWeb>                            
                             <View style={{marginLeft: this.screenWidth - 170}}/>                           
                             <View style={styles.icon}>
-                                <IonicsIcon name={"ios-arrow-forward"} sizeOf={30} colorOf={'arrowIdle'} />
+                                <IonicsIcon name={"ios-arrow-forward"} sizeOf={30} colorOf={"arrowIdle"} />
                             </View>                                                   
                         </View>
                     </TouchableOpacity> 
@@ -50,7 +50,7 @@ export default class SettingsScreen extends React.Component{
                             <TitilliumWeb style={styles.basicText}>profilio nustatymai</TitilliumWeb>
                             <View style={{marginLeft: this.screenWidth - 173}}/>
                             <View style={styles.icon}>
-                                <IonicsIcon name={"ios-arrow-forward"} sizeOf={30} colorOf={'arrowIdle'} />
+                                <IonicsIcon name={"ios-arrow-forward"} sizeOf={30} colorOf={"arrowIdle"} />
                             </View>
                         </View> 
                             
@@ -69,7 +69,7 @@ export default class SettingsScreen extends React.Component{
                             <TitilliumWeb style={styles.basicText}>atsiminti prisijungimo duomenis</TitilliumWeb>
                             <View style={{marginLeft: this.screenWidth - 264}}/>
                             <View style={styles.icon}>
-                                <IonicsIcon name={this.state.radioButtonName} sizeOf={30} colorOf={'arrowIdle'} />
+                                <IonicsIcon name={this.state.radioButtonName} sizeOf={30} colorOf={"arrowIdle"} />
                             </View>
                         </View>
                     </TouchableOpacity>
@@ -88,7 +88,7 @@ export default class SettingsScreen extends React.Component{
                             <TitilliumWeb style={styles.basicText}>programėlės pranešimai</TitilliumWeb>
                             <View style={{marginLeft: this.screenWidth - 208}}/>
                             <View style={styles.icon}>
-                                <IonicsIcon name={"ios-arrow-forward"} sizeOf={30} colorOf={'arrowIdle'} />
+                                <IonicsIcon name={"ios-arrow-forward"} sizeOf={30} colorOf={"arrowIdle"} />
                             </View>
                         </View>
                     </TouchableOpacity>

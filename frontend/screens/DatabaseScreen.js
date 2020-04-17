@@ -9,6 +9,8 @@ export default class Database extends React.Component{
     constructor(props){
         super(props);
         this.state = {isLoading :true}
+
+        
     }
 
     async componentDidMount(){
