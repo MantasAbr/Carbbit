@@ -11,7 +11,7 @@ exports.create = (req, res) => {
 
     // Create a User
     const user = new User({
-        firstName: req.body.firstName,
+        firstName: req.body.first_name,
         email: req.body.email,
         password: req.body.password
     });
@@ -68,7 +68,7 @@ exports.update = (req, res) => {
     User.updateById(
         req.params.userId,
         new User({
-            firstName: req.body.firstName,
+            firstName: req.body.first_name,
             email: req.body.email,
             password: req.body.password
         }),

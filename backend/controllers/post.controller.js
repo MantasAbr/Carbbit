@@ -11,10 +11,10 @@ exports.create = (req, res) => {
 
     // Create a Post
     const post = new Post({
-        pictureUri: req.body.pictureUri,
+        pictureUri: req.body.picture_uri,
         body: req.body.body,
-        availableDate: req.body.availableDate,
-        userId: req.body.userId,
+        availableDate: req.body.available_date,
+        userId: req.body.user_id,
     });
 
     // Save Post in the database
@@ -86,10 +86,10 @@ exports.update = (req, res) => {
     Post.updateById(
         req.params.postId,
         new Post({
-            pictureUri: req.body.pictureUri,
+            pictureUri: req.body.picture_uri,
             body: req.body.body,
-            availableDate: req.body.availableDate,
-            userId: req.body.userId,
+            availableDate: req.body.available_date,
+            userId: req.body.user_id,
         }),
         (err, data) => {
             if (err) {
