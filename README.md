@@ -39,7 +39,31 @@ $ npm install
 ```
 
 # Running the backend server
-## Docker
+## Backend development
+***This is meant for active backend dedevlopment, so that you don't have to rebuild the Docker container each time you want to run changed code.***
+
+Run these three commands below *only* if you need to run new code on Docker. This will refresh the containers to the latest changes
+```
+$ docker-compose down -v                    # remove volumes and network (if any)
+$ docker-compose build --no-cache db        # rebuild database container
+$ docker-compose build --no-cache express   # rebuild express container
+```
+In order for Express to connect to the database, you need to run the database container:
+```
+$ docker-compose up db
+```
+Bare in mind, that the database server (container) might take a few minutes to fully start working.
+
+Once the database is running fully, use ```Node``` to run the server on your machine (not on a Docker container):
+```
+$ cd backend
+$ node app.js
+```
+## Running backend
+### Docker
+
+To update Docker's image to a changed one, refer to the [troubleshooting](##Troubleshooting) section.
+
 This will start the backend Express.js server on local port **3000** and a MySQL database server on local port **3306**.
 ``` 
 $ docker-compose up
@@ -73,18 +97,6 @@ To shut down the Docker service, run:
 ```
 $ docker-compose down
 ```
-## Manually
-**NOT RECOMMENDED** you will need to configure MySQL to Express connection yourself.
-
-Run the Express server on your machine.
-```
-$ node ./backend/bin/www
-```
-Run your own MySQL server and connect it to the backend.
-
-Now you should reach the server with on localhost port 3000. 
-
-http://localhost:3000
 
 # Running the frontend
 To open the front-end on a web browser, you simply start the Expo server:
@@ -107,10 +119,10 @@ To shut down the Expo server, simply press ```Ctrl + C``` once on the terminal t
 *  clearing Expo cache (```shift + r``` while Expo is running)
 *  crying for help
 
-#### If the SQL file is changed, the Docker container needs its volumes removed and to be rebuilt:
+#### If backend or database code is changed, the Docker container needs its volumes removed and to be rebuilt:
 ```
-$ docker-compose down -v                # remove volumes (if any)
-$ docker-compose build --no-cache db    # rebuild database container
+$ docker-compose down -v                        # remove volumes (if any)
+$ docker-compose build --no-cache db express    # rebuild database container
 ```
 Then you can start Docker normally with ```docker-compose up```
 # Running the tests
