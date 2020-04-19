@@ -16,6 +16,8 @@ You need [Node.js](https://nodejs.org) installed on your computer from your syst
 
 You also need [Docker](https://www.docker.com/products/docker-desktop) and [docker-compose](https://docs.docker.com/compose/install/).
 
+For backend, you'll need [Postman](https://www.postman.com/) to test requests.
+
 For the backlog and sprints go to [Jira](https://lukasa.atlassian.net/secure/RapidBoard.jspa?projectKey=AR&rapidView=1&view=planning.nodetail&atlOrigin=eyJpIjoiZmYxMjVmOTcwY2QyNDRjZjgzNDkxNmFjNDhlYWE1ZDQiLCJwIjoiaiJ9).
 
 Using [Discord](https://discord.gg/7b9Jzqm) for technical and structured communication and Facebook Mesenger for a quicker information transmission.
@@ -61,6 +63,10 @@ These links should be reachable from your machine:
 http://localhost:3000 / http://127.0.0.1:3000
 
 http://localhost:3306 / http://127.0.0.1:3306
+
+#### Postman
+
+The exported config file to use in Postman is located in ```backend/postman```. You'll need to import that file into your postman application and start testing all requests that are available.
 
 ### Shutting down
 To shut down the Docker service, run:
