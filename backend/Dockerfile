@@ -19,4 +19,4 @@ CMD /wait-for-it.sh db:3306
 #ENTRYPOINT [ "node" ]
 #CMD [ "./bin/www" ]
 
-#EXPOSE 3000
+EXPOSE 3000

@@ -2,20 +2,22 @@ version: '3'
 services:
   express:
     build: ./backend/
-    env_file:
-      - ./.env
     ports:
-      - "${WEB_PORT}:${WEB_PORT}"
+      - "3000:3000"
+    environment:
+      DB_HOST: db
     depends_on:
-      - "${MYSQL_HOST}"
-    command: npm start
+      - db
+    command: node app.js
   db:
     build: ./backend/docker-db
     restart: always
     ports:
       - "3306:3306"
-    env_file:
-      - ./.env
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: autorent
   #TODO:
   #phpmyadmin:
   #  image: php:7.4-fpm-alpine
