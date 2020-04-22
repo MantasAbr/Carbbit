@@ -117,9 +117,9 @@ export default class PublicList extends React.Component{
 
                                     {/* Info komponentas */}
                                     <View style={styles.carNameAndDistance}>
-                                        <TitilliumWeb>{item.make} {item.model}</TitilliumWeb>
-                                        <View style={{marginVertical: 10}}/>
-                                        <TitilliumWeb>Atstumas: {item.distance} km</TitilliumWeb>
+                                        <TitilliumWeb style={{fontSize: 16}}>{item.make} {item.model}</TitilliumWeb>
+                                        <View style={{marginVertical: 6}}/>
+                                        <TitilliumWeb style={{fontSize: 16}}>Atstumas: {item.distance} km</TitilliumWeb>
                                     </View>
 
                                     {/* Ikona */}
@@ -205,6 +205,7 @@ const styles = StyleSheet.create({
         borderRightColor: 'transparent',
         width: screenWidth,
         flexDirection: 'row',
+        backgroundColor: '#EEECD4aa',
     },
     circle: {
         marginHorizontal: 16,

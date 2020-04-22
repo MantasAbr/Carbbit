@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { TouchableOpacity, StyleSheet, View, Platform, ImageBackground, Modal, Image} from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Platform, ImageBackground, Image, Alert} from 'react-native';
 import { ScrollView} from 'react-native-gesture-handler';
 import { TitilliumWeb } from '../components/TitilliumWeb';
 import { Dimensions } from "react-native";
@@ -10,7 +10,7 @@ export default class SettingsScreen extends React.Component{
 
     constructor(props){
         super(props)
-        this.state = {screenWidth: '', rememberInfo: false, radioButtonName: 'ios-radio-button-off', showModal: false}
+        this.state = {screenWidth: '', rememberInfo: false, radioButtonName: 'ios-radio-button-off'}
     }
 
     screenWidth = Math.round((Dimensions.get('window').width))
@@ -23,10 +23,13 @@ export default class SettingsScreen extends React.Component{
             <ScrollView keyboardDismissMode={'on-drag'} showsVerticalScrollIndicator={false}>
                 <View style={styles.container}>
 
+                    {/* --------- */}
                     <View style={{marginVertical: 15}}/>                   
                     <TitilliumWeb style={styles.title}>nustatymai</TitilliumWeb>
 
                     <View style={styles.hairline}/>
+                    {/* Šitą sekciją būtų logiškiau išmesti prieš ScrollView */}
+
                     <View style={{marginVertical: 10}}/>
 
                     <TitilliumWeb style={styles.header}>pasirinkti kalbą</TitilliumWeb>           
@@ -74,7 +77,7 @@ export default class SettingsScreen extends React.Component{
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.buttonLower} onPress={() => this.setState({showModal: true})} activeOpacity={0.5}>
+                    <TouchableOpacity style={styles.buttonLower} onPress={() => {this.deleteAccountAlert();}} activeOpacity={0.5}>
                         <View style={styles.buttonContainer}>
                             <TitilliumWeb style={styles.importantText}>ištrinti paskyrą</TitilliumWeb>
                         </View>
@@ -83,7 +86,7 @@ export default class SettingsScreen extends React.Component{
                     <View style={{marginVertical: 23}}/>
 
                     <TitilliumWeb style={styles.header}>programėlės funkcijos</TitilliumWeb>
-                    <TouchableOpacity style={styles.button} onPress={() => null} activeOpacity={0.5}>
+                    <TouchableOpacity style={styles.buttonUpper} onPress={() => null} activeOpacity={0.5}>
                         <View style={styles.buttonContainer}>
                             <TitilliumWeb style={styles.basicText}>programėlės pranešimai</TitilliumWeb>
                             <View style={{marginLeft: this.screenWidth - 208}}/>
@@ -92,8 +95,18 @@ export default class SettingsScreen extends React.Component{
                             </View>
                         </View>
                     </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonLower} onPress={() => this.props.navigation.navigate('AboutScreen')} activeOpacity={0.5}>
+                        <View style={styles.buttonContainer}>
+                            <TitilliumWeb style={styles.basicText}>apie programėlę</TitilliumWeb>
+                            <View style={{marginLeft: this.screenWidth - 158}}/>
+                            <View style={styles.icon}>
+                                <IonicsIcon name={"ios-arrow-forward"} sizeOf={30} colorOf={"arrowIdle"} />
+                            </View>
+                        </View>
+                    </TouchableOpacity>
 
-                    {Platform.OS == "web" ? <TitilliumWeb>Note: per web'a rodo modal (pop-up) screen'a. su telefonu jo taip apacioje nerodys</TitilliumWeb> : undefined}                                                                
+
+{/*                     {Platform.OS == "web" ? <TitilliumWeb>Note: per web'a rodo modal (pop-up) screen'a. su telefonu jo taip apacioje nerodys</TitilliumWeb> : undefined}                                                                
                     <Modal transparent={true} visible={this.state.showModal} animationType={'fade'}>
                         <View style={{backgroundColor: '#000000aa', flex: 1}}>
                             <View style={styles.modal}>
@@ -106,12 +119,26 @@ export default class SettingsScreen extends React.Component{
                                 </TouchableOpacity>                                                         
                             </View>
                         </View>                                                               
-                    </Modal>
+                    </Modal> */}
+
+
 
                 </View>
             </ScrollView>            
             </ImageBackground>
         )
+    }
+
+    deleteAccountAlert = () => {
+        if(Platform.OS == 'web'){
+            alert("Paskyrą ištrinta!")
+        }
+        else
+        {
+            Alert.alert('Ištrinti paskyrą?', null, [
+                        {text: 'Ištrinti', onPress: () => console.log('ištrinta paskyra'), style: 'default'},
+                        {text: 'Atšaukti', onPress: () => null, style: 'cancel'}]);
+        }
     }
 }
 
@@ -210,7 +237,7 @@ const styles = StyleSheet.create({
     icon: {
         marginTop: 2,
     },
-    modal: {
+/*     modal: {
         backgroundColor: '#F5F3CB', 
         flex: 1, 
         borderColor: 'black',
@@ -252,5 +279,5 @@ const styles = StyleSheet.create({
         color: '#6D6D6D',
         alignSelf: 'center',
         justifyContent: 'center',
-    },
+    }, */
 });
