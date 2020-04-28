@@ -9,8 +9,9 @@ const Post = function(post) {
 };
 
 Post.create = (newPost, result) => {
+    console.log('iejom i create')
     let postArray = [newPost.pictureUri, newPost.body, newPost.availableDate, newPost.userId];
-    sql.query("INSERT INTO Posts(picture_uri, body, available_date, user_id ) VALUES (?, ?, ?, ?)", postArray, (err, res) => {
+    sql.query('INSERT INTO Posts(picture_uri, body, available_date, user_id ) VALUES (?, ?, ?, ?)', postArray, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
