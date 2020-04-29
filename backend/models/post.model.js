@@ -28,7 +28,7 @@ Post.create = (newPost, result) => {
 };
 
 Post.findById = (postId, result) => {
-    sql.query(`SELECT * FROM Posts WHERE post_id = ${postId}`, (err, res) => {
+    sql.query(`SELECT * FROM Posts WHERE post_id = ${postId} AND is_private = 'false'`, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -66,7 +66,7 @@ Post.findByUserId = (userId, result) => {
 };
 
 Post.getAll = result => {
-    sql.query("SELECT * FROM Posts", (err, res) => {
+    sql.query("SELECT * FROM Posts WHERE is_private = 'false'", (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(null, err);
@@ -79,8 +79,8 @@ Post.getAll = result => {
 
 Post.updateById = (id, post, result) => {
     sql.query(
-        "UPDATE Posts SET picture_uri = ?, body = ?, available_date = ?, user_id = ? WHERE post_id = ?",
-        [post.pictureUri, post.body, post.availableDate, post.userId, id],
+        "UPDATE Posts SET picture_uri = ?, body = ?, available_from_date = ?, available_to_date = ?, brand = ?, model = ?, is_private = ? WHERE post_id = ?",
+        [post.pictureUri, post.body, post.availableFromDate, post.availableToDate, post.brand, post.model, post.isPrivate, id],
         (err, res) => {
             if (err) {
                 console.log("error: ", err);

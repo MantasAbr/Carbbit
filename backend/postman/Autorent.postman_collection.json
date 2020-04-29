@@ -87,7 +87,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/users/8",
+					"raw": "http://localhost:3000/users/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -95,7 +95,7 @@
 					"port": "3000",
 					"path": [
 						"users",
-						"8"
+						"2"
 					]
 				}
 			},
@@ -107,7 +107,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/users/8",
+					"raw": "http://localhost:3000/users/6",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -115,7 +115,7 @@
 					"port": "3000",
 					"path": [
 						"users",
-						"8"
+						"6"
 					]
 				}
 			},
@@ -147,7 +147,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"picture_uri\": \"PauliusABC\",\n\t\"body\": \"abbbbb\",\n\t\"available_date\": \"2015-01-01 12:00:00.000\",\n\t\"user_id\": 5\n}",
+					"raw": "{\r\n    \"post_id\": 1,\r\n    \"picture_uri\": \"image/jpeg;base1\",\r\n    \"body\": \"aprasymas\",\r\n    \"available_from_date\": \"2020-04-29 10:20:21.000\",\r\n    \"available_to_date\": \"2020-04-29 10:20:21.000\",\r\n    \"brand\": \"BMW\",\r\n    \"model\": \"E46\",\r\n    \"is_private\": \"true\",\r\n    \"user_id\": 5\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -174,7 +174,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/posts/6",
+					"raw": "http://localhost:3000/posts/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -182,7 +182,7 @@
 					"port": "3000",
 					"path": [
 						"posts",
-						"6"
+						"2"
 					]
 				}
 			},
@@ -195,7 +195,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"postId\": 6,\n    \"picture_uri\": \"PauliusABCUpdate\",\n    \"body\": \"abbbbbUdate\",\n    \"available_date\": \"2015-01-01 10:00:00.000\",\n    \"user_id\": 2\n}",
+					"raw": "{\r\n    \"picture_uri\": \"image/jpeg;base1\",\r\n    \"body\": \"aprasymas\",\r\n    \"available_from_date\": \"2020-04-29 10:20:21.000\",\r\n    \"available_to_date\": \"2020-04-29 10:20:21.000\",\r\n    \"brand\": \"BMW\",\r\n    \"model\": \"E46\",\r\n    \"is_private\": \"true\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -203,7 +203,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/posts/6",
+					"raw": "http://localhost:3000/posts/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -211,7 +211,7 @@
 					"port": "3000",
 					"path": [
 						"posts",
-						"6"
+						"2"
 					]
 				}
 			},
@@ -223,7 +223,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/posts/6",
+					"raw": "http://localhost:3000/posts/7",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -231,7 +231,7 @@
 					"port": "3000",
 					"path": [
 						"posts",
-						"6"
+						"7"
 					]
 				}
 			},
@@ -243,7 +243,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/posts/user/3",
+					"raw": "http://localhost:3000/posts/user/5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -252,7 +252,7 @@
 					"path": [
 						"posts",
 						"user",
-						"3"
+						"5"
 					]
 				}
 			},
@@ -311,7 +311,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/ratings/7",
+					"raw": "http://localhost:3000/ratings/6",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -319,7 +319,7 @@
 					"port": "3000",
 					"path": [
 						"ratings",
-						"7"
+						"6"
 					]
 				}
 			},
@@ -332,7 +332,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"rating\": 10,\n\t\"post_id\": 5\n}",
+					"raw": "{\n\t\"rating\": 10\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -340,7 +340,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/ratings/6",
+					"raw": "http://localhost:3000/ratings/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -348,7 +348,7 @@
 					"port": "3000",
 					"path": [
 						"ratings",
-						"6"
+						"1"
 					]
 				}
 			},
