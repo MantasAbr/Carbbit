@@ -13,4 +13,5 @@ export default {
   noticeText: '#fff',
   arrowIdle: '#000000',
   arrowPressed: '#ABABAB',
+  iconColor: '#000000',
 };

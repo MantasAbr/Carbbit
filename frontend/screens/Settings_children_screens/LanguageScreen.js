@@ -77,10 +77,9 @@ const styles = StyleSheet.create({
         width: 315,
     },
     backButton: {
-        width: 20,
-        height: 30,
-        marginLeft: -70,
-        
+        marginLeft: -80,
+        paddingHorizontal: 10,
+        paddingTop: 5,     
     },
     buttonUpper: {
         backgroundColor: '#F5F3CB',

@@ -12,7 +12,10 @@ import useLinking from './navigation/useLinking';
 import HomeScreen from './screens/HomeScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import LoginScreen from './screens/LoginScreen';
+
 import LanguageScreen from './screens/Settings_children_screens/LanguageScreen';
+import AboutScreen from './screens/Settings_children_screens/AboutScreen';
+import UserAccountScreen from './screens/Settings_children_screens/UserAccountScreen';
 
 const Stack = createStackNavigator();
 
@@ -65,8 +68,10 @@ export default function App(props) {
 
             {/* Šitam kitam langui ir visiems kitiems children screen'ams reiktų sukurti atskirą stack navigatorių iš parent elemento*/}
             {/* Kol kas juos įdedu čia*/}
-            {/* Šitas pastarasis turėtų priklausyti SettingsScreen parent'ui*/}
-            <Stack.Screen /* props={{headerMode: screen}} */ options={{headerShown: false}} name="LanguageSettings" component={LanguageScreen}/>
+            {/* Šitie pastarieji turėtų priklausyti SettingsScreen parent'ui*/}
+            <Stack.Screen options={{headerShown: false}} name="LanguageSettings" component={LanguageScreen}/>
+            <Stack.Screen options={{headerShown: false}} name="AboutScreen" component={AboutScreen}/>
+            <Stack.Screen options={{headerShown: false}} name="UserAccountScreen" component={UserAccountScreen}/>
           </Stack.Navigator>
         </NavigationContainer>
       </View>
