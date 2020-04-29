@@ -73,8 +73,8 @@ Rating.getAll = result => {
 
 Rating.updateById = (id, rating, result) => {
     sql.query(
-        "UPDATE Ratings SET rating = ?, post_id = ? WHERE rating_id = ?",
-        [rating.rating, rating.postId, id],
+        "UPDATE Ratings SET rating = ? WHERE rating_id = ?",
+        [rating.rating, id],
         (err, res) => {
             if (err) {
                 console.log("error: ", err);

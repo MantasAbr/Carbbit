@@ -75,8 +75,8 @@ Post.getAll = result => {
 
 Post.updateById = (id, post, result) => {
     sql.query(
-        "UPDATE Posts SET picture_uri = ?, body = ?, available_date = ?, user_id = ? WHERE post_id = ?",
-        [post.pictureUri, post.body, post.availableDate, post.userId, id],
+        "UPDATE Posts SET picture_uri = ?, body = ?, available_date = ? WHERE post_id = ?",
+        [post.pictureUri, post.body, post.availableDate, id],
         (err, res) => {
             if (err) {
                 console.log("error: ", err);
