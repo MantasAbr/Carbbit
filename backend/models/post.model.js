@@ -29,7 +29,7 @@ Post.create = (newPost, result) => {
 };
 
 Post.findById = (postId, result) => {
-    sql.query(`SELECT * FROM Posts WHERE post_id = ${postId} AND is_private = 'false'`, (err, res) => {
+    sql.query(`SELECT * FROM Posts WHERE post_id = ${postId} AND is_private = 0`, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -67,7 +67,7 @@ Post.findByUserId = (userId, result) => {
 };
 
 Post.getAll = result => {
-    sql.query("SELECT * FROM Posts WHERE is_private = 'false'", (err, res) => {
+    sql.query("SELECT * FROM Posts WHERE is_private = 0", (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(null, err);

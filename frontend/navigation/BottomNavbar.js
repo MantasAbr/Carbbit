@@ -43,7 +43,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Post"
         component={ PostScreen }
         options={{
-          title: 'Ikelti',
+          title: 'įkelti',
           tabBarIcon: ({ focused }) => <TabBarIconAwesome5 focused={focused} name="user-alt" />,
         }}
       />

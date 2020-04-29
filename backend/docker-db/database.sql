@@ -13,7 +13,7 @@
         available_to_date DATETIME NOT NULL,
         brand varchar(255) NOT NULL,
         model varchar(255) NOT NULL,
-        is_private varchar(255) NOT NULL,
+        is_private BIT NOT NULL,
         user_id int NOT NULL, PRIMARY KEY (post_id),
         FOREIGN KEY (user_id) REFERENCES Users(user_id)
     );
@@ -37,11 +37,11 @@
 
     INSERT INTO Posts (picture_uri , body, available_from_date, available_to_date, brand, model, is_private, user_id)
     VALUES
-    ('image/jpeg;base1', 'aprasymas', CURRENT_TIMESTAMP() , CURRENT_TIMESTAMP() , 'BMW' , 'E46', 'true', 1),
-    ('image/jpeg;base2', 'aprasymas', CURRENT_TIMESTAMP() , CURRENT_TIMESTAMP() , 'Audi' , 'A6' , 'false', 2),
-    ('image/jpeg;base3', 'aprasymas', CURRENT_TIMESTAMP() , CURRENT_TIMESTAMP() , 'Audi' , 'A7' , 'false', 3),
-    ('image/jpeg;base4', 'aprasymas', CURRENT_TIMESTAMP() , CURRENT_TIMESTAMP() , 'Audi' , 'A3' , 'false', 4),
-    ('image/jpeg;base5', 'aprasymas', CURRENT_TIMESTAMP() , CURRENT_TIMESTAMP() , 'Audi' , 'A6' , 'false', 5);
+    ('image/jpeg;base1', 'aprasymas', CURRENT_TIMESTAMP() , CURRENT_TIMESTAMP() , 'BMW' , 'E46', 1, 1),
+    ('image/jpeg;base2', 'aprasymas', CURRENT_TIMESTAMP() , CURRENT_TIMESTAMP() , 'Audi' , 'A6' , 0, 2),
+    ('image/jpeg;base3', 'aprasymas', CURRENT_TIMESTAMP() , CURRENT_TIMESTAMP() , 'Audi' , 'A7' , 0, 3),
+    ('image/jpeg;base4', 'aprasymas', CURRENT_TIMESTAMP() , CURRENT_TIMESTAMP() , 'Audi' , 'A3' , 0, 4),
+    ('image/jpeg;base5', 'aprasymas', CURRENT_TIMESTAMP() , CURRENT_TIMESTAMP() , 'Audi' , 'A6' , 0, 5);
 
     INSERT INTO Ratings (rating, post_id)
     VALUES

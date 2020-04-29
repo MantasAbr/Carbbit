@@ -65,18 +65,21 @@ export default class PublicList extends React.Component{
                   data={this.state.results}
                   renderItem={({item}) =>
                       <View style={{borderColor:'black', borderWidth: 1, marginTop: 30}}>
-                      <Text>ID: {item.post_id} : {item.body}, {moment(item.available_from_date).format('YYYY-MM-DD, HH:mm')},
-                      {moment(item.available_to_date).format('YYYY-MM-DD, HH:mm')}, {item.brand}, {item.model}</Text>
-                      <Image
-                        style={{ width: 150, height: 150 }}
-                        source={{ uri: item.picture_uri }} // isideti normaliu nuotrauku, kad veiktu
-                      />
+                        <Text style={{fontWeight:"bold"}}>{item.brand} {item.model}</Text>
+                        <Text>nuo {moment(item.available_to_date).format('YYYY-MM-DD, HH:mm')} </Text>
+                        <Text>iki {moment(item.available_from_date).format('YYYY-MM-DD, HH:mm')}</Text>
+                        <Text>{item.body}</Text>
+                        <Image
+                            style={{ width: 150, height: 150 }}
+                            source={{ uri: item.picture_uri }} // isideti normaliu nuotrauku, kad veiktu
+                        />
                       </View>}
                       keyExtractor={item => item.id}
               />
           </View>
           </ImageBackground>
-      )
+          
+        )
     }
     
 }
