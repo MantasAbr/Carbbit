@@ -2,6 +2,7 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity, TextInput, ImageBackground, Image } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+import moment from "moment";
 /*
     This is the screen for the main list of all public posts.
 */
@@ -14,7 +15,10 @@ export default class PublicList extends React.Component{
                 post_id: '',
                 picture_uri: '',
                 body: '',
-                available_date: '',
+                available_from_date: '',
+                available_to_date: '',
+                brand: '',
+                model: '',
                 user_id: ''
             }
         ]
@@ -39,7 +43,6 @@ export default class PublicList extends React.Component{
       .catch((error) =>{
           console.error(error);
       });
-
     }
 
     render() {
@@ -61,8 +64,9 @@ export default class PublicList extends React.Component{
               <FlatList
                   data={this.state.results}
                   renderItem={({item}) =>
-                      <View>
-                      <Text>ID: {item.post_id} : {item.body}, {item.available_date}, {item.user_id}</Text>
+                      <View style={{borderColor:'black', borderWidth: 1, marginTop: 30}}>
+                      <Text>ID: {item.post_id} : {item.body}, {moment(item.available_from_date).format('YYYY-MM-DD, HH:mm')},
+                      {moment(item.available_to_date).format('YYYY-MM-DD, HH:mm')}, {item.brand}, {item.model}</Text>
                       <Image
                         style={{ width: 150, height: 150 }}
                         source={{ uri: item.picture_uri }} // isideti normaliu nuotrauku, kad veiktu

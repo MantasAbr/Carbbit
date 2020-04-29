@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
 export default class PostScreen extends React.Component {
   
   state = {
-    reiksme: null,
     time: new Date(),
     image: '',
     descriptionInput: null,
@@ -50,9 +49,14 @@ export default class PostScreen extends React.Component {
 
   handleSubmit = () => {
     var data = {
+
       picture_uri: this.state.image,
       body: this.state.descriptionInput,
-      available_date: this.state.availableFromDate,
+      available_from_date: moment(this.state.availableFromDate).format('YYYY-MM-DD, HH:mm'),
+      available_to_date: moment(this.state.availableToDate).format('YYYY-MM-DD, HH:mm'),
+      brand: this.state.firstDropDownValue,
+      model: this.state.secondDropDownValue,
+      is_private: this.state.isPrivate,
       user_id: 1
       // kitam sprinte, kai auth padarysiu bus normalus user_id
     }
@@ -86,7 +90,9 @@ export default class PostScreen extends React.Component {
   }
 
   postSuccessful = () => {
-    if (this.state.availableFromDate != "select date") {
+    if (this.state.availableFromDate != "select date" && this.state.availableToDate != "select date" &&
+    this.state.image != '' && this.state.descriptionInput != null && this.state.firstDropDownValue != null &&
+    this.state.secondDropDownValue != null) {
         Alert.alert('Post is ready!', 'Post it?', [
           {text: 'NO', onPress: () => console.log('post cancelled'), style: 'default'},
           {text: 'OK', onPress: this.handleSubmit},

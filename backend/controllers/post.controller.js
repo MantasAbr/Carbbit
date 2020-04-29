@@ -13,7 +13,11 @@ exports.create = (req, res) => {
     const post = new Post({
         pictureUri: req.body.picture_uri,
         body: req.body.body,
-        availableDate: req.body.available_date,
+        availableToDate: req.body.available_from_date,
+        availableFromDate: req.body.available_to_date,
+        brand: req.body.brand,
+        model: req.body.model,
+        isPrivate: req.body.is_private,
         userId: req.body.user_id,
         private: req.body.private,
     });
@@ -89,8 +93,12 @@ exports.update = (req, res) => {
         new Post({
             pictureUri: req.body.picture_uri,
             body: req.body.body,
-            availableDate: req.body.available_date,
-            private: req.body.private,
+            availableFromDate: req.body.available_from_date,
+            availableToDate: req.body.available_to_date,
+            brand: req.body.brand,
+            model: req.body.model,
+            isPrivate: req.body.is_private,
+            userId: req.body.user_id,
         }),
         (err, data) => {
             if (err) {

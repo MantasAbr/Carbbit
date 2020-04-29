@@ -15,6 +15,54 @@ export default class SettingsScreen extends React.Component{
 
     screenWidth = Math.round((Dimensions.get('window').width))
 
+    handleDeletion = () => {
+
+    fetch("http://192.168.56.1:3000/ratings/" + 5, { // po auth user_id
+    method: 'DELETE', 
+    })
+    .then(res => res.text())
+    .then(res => console.log(res))
+    
+    fetch("http://192.168.56.1:3000/posts/" + 5, { // po auth user_id
+    method: 'DELETE', 
+    })
+    .then(res => res.text())
+    .then(res => console.log(res))
+
+    fetch("http://192.168.56.1:3000/users/" + 5, { // po auth user_id
+        method: 'DELETE', 
+      })
+      .then(res => res.text())
+      .then(res => console.log(res))
+    }
+
+    handleUpdate = () => {
+        var data = {
+        first_name: "vardas2", 
+        email: "email2",
+        password: "slaptazodis",
+
+        }
+        console.log('labas')
+        fetch("http://192.168.56.1:3000/users/1", {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        }).then(function(response) {
+            if (response.status >= 400) {
+            console.log('Couldn\'t update..')
+            }
+            return response.json();
+        }).then(function(data) {
+            console.log(data)    
+            if(data == "success"){
+            console.log('updated!')
+            }
+        }).catch(function(err) {
+            console.log(err)
+        });
+    }
+
     render(){
         return(
             <ImageBackground source={require('../assets/backgrounds/kaunas_bg.png')} 
@@ -110,7 +158,7 @@ export default class SettingsScreen extends React.Component{
                     <Modal transparent={true} visible={this.state.showModal} animationType={'fade'}>
                         <View style={{backgroundColor: '#000000aa', flex: 1}}>
                             <View style={styles.modal}>
-                                <TouchableOpacity style={styles.modalDeleteButton}>
+                                <TouchableOpacity style={styles.modalDeleteButton} onPress={this.handleDeletion}>
                                     <TitilliumWeb style={styles.modalDeleteText}>ištrinti paskyrą</TitilliumWeb>
                                 </TouchableOpacity>
                                 <View style={{marginVertical: 13}}/>

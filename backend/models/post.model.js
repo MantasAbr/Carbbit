@@ -4,15 +4,19 @@ const sql = require("./db.js");
 const Post = function(post) {
     this.pictureUri = post.pictureUri;
     this.body = post.body;
-    this.availableDate = post.availableDate;
+    this.availableToDate = post.availableToDate;
+    this.availableFromDate = post.availableFromDate;
+    this.brand = post.brand;
+    this.model = post.model;
+    this.isPrivate = post.isPrivate;
     this.userId = post.userId;
     this.private = post.private;
 };
 
 Post.create = (newPost, result) => {
-    console.log('iejom i create')
-    let postArray = [newPost.pictureUri, newPost.body, newPost.availableDate, newPost.userId, newPost.private];
-    sql.query('INSERT INTO Posts(picture_uri, body, available_date, user_id, private) VALUES (?, ?, ?, ?, ?)', postArray, (err, res) => {
+    console.log(newPost.isPrivate)
+    let postArray = [newPost.pictureUri, newPost.body, newPost.availableToDate, newPost.availableFromDate, newPost.brand, newPost.model, newPost.isPrivate, newPost.userId];
+    sql.query('INSERT INTO Posts (picture_uri , body, available_from_date, available_to_date, brand, model, is_private, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', postArray, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -25,7 +29,7 @@ Post.create = (newPost, result) => {
 };
 
 Post.findById = (postId, result) => {
-    sql.query(`SELECT * FROM Posts WHERE post_id = ${postId} AND private = 1`, (err, res) => {
+    sql.query(`SELECT * FROM Posts WHERE post_id = ${postId} AND is_private = 'false'`, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -63,7 +67,7 @@ Post.findByUserId = (userId, result) => {
 };
 
 Post.getAll = result => {
-    sql.query("SELECT * FROM Posts WHERE private = 1", (err, res) => {
+    sql.query("SELECT * FROM Posts WHERE is_private = 'false'", (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(null, err);
@@ -76,8 +80,8 @@ Post.getAll = result => {
 
 Post.updateById = (id, post, result) => {
     sql.query(
-        "UPDATE Posts SET picture_uri = ?, body = ?, available_date = ?, private = ? WHERE post_id = ?",
-        [post.pictureUri, post.body, post.availableDate, post.private, id],
+        "UPDATE Posts SET picture_uri = ?, body = ?, available_from_date = ?, available_to_date = ?, brand = ?, model = ?, is_private = ? WHERE post_id = ?",
+        [post.pictureUri, post.body, post.availableFromDate, post.availableToDate, post.brand, post.model, post.isPrivate, id],
         (err, res) => {
             if (err) {
                 console.log("error: ", err);
