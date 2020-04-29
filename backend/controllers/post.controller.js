@@ -15,6 +15,7 @@ exports.create = (req, res) => {
         body: req.body.body,
         availableDate: req.body.available_date,
         userId: req.body.user_id,
+        private: req.body.private,
     });
 
     // Save Post in the database
@@ -89,7 +90,7 @@ exports.update = (req, res) => {
             pictureUri: req.body.picture_uri,
             body: req.body.body,
             availableDate: req.body.available_date,
-            userId: req.body.user_id,
+            private: req.body.private,
         }),
         (err, data) => {
             if (err) {

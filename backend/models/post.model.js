@@ -6,12 +6,13 @@ const Post = function(post) {
     this.body = post.body;
     this.availableDate = post.availableDate;
     this.userId = post.userId;
+    this.private = post.private;
 };
 
 Post.create = (newPost, result) => {
     console.log('iejom i create')
-    let postArray = [newPost.pictureUri, newPost.body, newPost.availableDate, newPost.userId];
-    sql.query('INSERT INTO Posts(picture_uri, body, available_date, user_id ) VALUES (?, ?, ?, ?)', postArray, (err, res) => {
+    let postArray = [newPost.pictureUri, newPost.body, newPost.availableDate, newPost.userId, newPost.private];
+    sql.query('INSERT INTO Posts(picture_uri, body, available_date, user_id, private) VALUES (?, ?, ?, ?, ?)', postArray, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -24,7 +25,7 @@ Post.create = (newPost, result) => {
 };
 
 Post.findById = (postId, result) => {
-    sql.query(`SELECT * FROM Posts WHERE post_id = ${postId}`, (err, res) => {
+    sql.query(`SELECT * FROM Posts WHERE post_id = ${postId} AND private = 1`, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -62,7 +63,7 @@ Post.findByUserId = (userId, result) => {
 };
 
 Post.getAll = result => {
-    sql.query("SELECT * FROM Posts", (err, res) => {
+    sql.query("SELECT * FROM Posts WHERE private = 1", (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(null, err);
@@ -75,8 +76,8 @@ Post.getAll = result => {
 
 Post.updateById = (id, post, result) => {
     sql.query(
-        "UPDATE Posts SET picture_uri = ?, body = ?, available_date = ?, user_id = ? WHERE post_id = ?",
-        [post.pictureUri, post.body, post.availableDate, post.userId, id],
+        "UPDATE Posts SET picture_uri = ?, body = ?, available_date = ?, private = ? WHERE post_id = ?",
+        [post.pictureUri, post.body, post.availableDate, post.private, id],
         (err, res) => {
             if (err) {
                 console.log("error: ", err);
