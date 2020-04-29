@@ -1,38 +1,23 @@
 import * as React from 'react';
-import { TouchableOpacity, Platform, StyleSheet, View, Text} from 'react-native';
+import { TouchableOpacity, Platform, StyleSheet, View, Text, ImageBackground, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import { MonoText } from '../components/StyledText';
 import { TitilliumWeb } from '../components/TitilliumWeb';
 
-const instructions = Platform.select({
-    ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-    android: 'Double tap R on your keyboard to reload,\n' + 'Shake or press menu button for dev menu',
-  });
-  const appstore = Platform.select({
-    android: "Google Play Store",
-    ios: "App Store",
-    web: "--durniau ne ant webo--",
-  });
-
 export default function HomeScreen({navigation}){
     return (
         <View style={styles.container}>
-            <Text style={styles.welcome}>Testas veikia su komanda:</Text>
-            <Text style={styles.instructions}>expo start</Text>
-
-            {Platform.OS == 'web' ? <Text style={styles.instructions}>Testas: čia viskas veikia TIK ant webo seni</Text> : undefined}
-            <Text style={styles.instructions}>{Platform.OS == 'ios' ? "Testas: čia veikia tik ant obuolio reikia Expo app iš " + appstore : undefined }</Text>
-            <Text style={styles.instructions}>{Platform.OS == 'android' ? "Testas: čia veikia tik ant android reikia Expo app iš " + appstore : undefined }</Text>
-
-            <Text style={styles.instructions}>{instructions}</Text>
-
+          <View style={styles.containeris}>
+            <Image
+              style={styles.tinyLogo}
+              source={require('../assets/backgrounds/temp_logo.png')}
+            />
+          </View>
+           <View style={{alignSelf: 'center'}}>
+              <Text style={styles.title}>Autorent</Text>
+          </View>
             <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-                <MonoText>Labas</MonoText>
-                <TitilliumWeb>hello</TitilliumWeb>
-                <TouchableOpacity onPress={handleButton_getData} style={styles.helpLink}>
-                    <Text style={styles.helpLinkText}></Text>
-                </TouchableOpacity>
                 <TouchableOpacity onPress={() => handleButton_Login(navigation)} style={styles.helpLink}>
                     <Text style={styles.helpLinkText}>Prisijungti</Text>
                 </TouchableOpacity>
@@ -57,9 +42,26 @@ function handleButton_Register(navigation){
 }
 
 const styles = StyleSheet.create({
+    title: {
+      color: '#20B2AA',
+      fontWeight: 'bold',
+      fontSize: 30,
+      paddingBottom: 20
+    },
     container: {
       flex: 1,
       backgroundColor: '#fff',
+    },
+    containeris: {
+      paddingTop: 50,
+      alignSelf: 'center'
+    },
+    containeris2: {
+      alignSelf: 'center'
+    },
+    tinyLogo: {
+      width: 150,
+      height: 150,
     },
     developmentModeText: {
       marginBottom: 20,
@@ -137,11 +139,17 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     helpLink: {
+      paddingTop: 20,
       paddingVertical: 15,
+      alignSelf: 'center'
     },
     helpLinkText: {
-      fontSize: 14,
+      fontSize: 25,
       color: '#2e78b7',
     },
+    background: {
+      width: '100%',
+      height: '100%',
+  },
   });
   
