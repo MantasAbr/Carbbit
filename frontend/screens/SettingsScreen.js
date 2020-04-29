@@ -48,7 +48,7 @@ export default class SettingsScreen extends React.Component{
 
                     <TitilliumWeb style={styles.header}>paskyros valdymas</TitilliumWeb>
 
-                    <TouchableOpacity style={styles.buttonUpper} onPress={() => null} activeOpacity={0.5}>
+                    <TouchableOpacity style={styles.buttonUpper} onPress={() => this.props.navigation.navigate('UserAccountScreen')} activeOpacity={0.5}>
                         <View style={styles.buttonContainer}>
                             <TitilliumWeb style={styles.basicText}>profilio nustatymai</TitilliumWeb>
                             <View style={{marginLeft: this.screenWidth - 173}}/>
