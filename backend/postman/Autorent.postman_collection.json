@@ -147,7 +147,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"picture_uri\": \"PauliusABC\",\n\t\"body\": \"abbbbb\",\n\t\"available_date\": \"2015-01-01 12:00:00.000\",\n\t\"user_id\": 5\n}",
+					"raw": "{\n\t\"picture_uri\": \"PauliusABC\",\n\t\"body\": \"abbbbb\",\n\t\"available_date\": \"2015-01-01 12:00:00.000\",\n\t\"user_id\": 5,\n\t\"private\": 0\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -174,7 +174,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/posts/6",
+					"raw": "http://localhost:3000/posts/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -182,7 +182,7 @@
 					"port": "3000",
 					"path": [
 						"posts",
-						"6"
+						"2"
 					]
 				}
 			},
@@ -195,7 +195,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"picture_uri\": \"PauliusABCUpdate2\",\n    \"body\": \"abbbbbUdate\",\n    \"available_date\": \"2015-01-01 10:00:00.000\"\n}",
+					"raw": "{\n    \"picture_uri\": \"PauliusABCUpdate2\",\n    \"body\": \"abbbbbUdate\",\n    \"available_date\": \"2015-01-01 10:00:00.000\",\n    \"private\": 1\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -243,7 +243,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/posts/user/3",
+					"raw": "http://localhost:3000/posts/user/5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -252,7 +252,7 @@
 					"path": [
 						"posts",
 						"user",
-						"3"
+						"5"
 					]
 				}
 			},
@@ -332,7 +332,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"rating\": 0\n}",
+					"raw": "{\n\t\"rating\": 10\n}",
 					"options": {
 						"raw": {
 							"language": "json"
