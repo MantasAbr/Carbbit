@@ -60,7 +60,7 @@ export default class PostScreen extends React.Component {
       user_id: 1
       // kitam sprinte, kai auth padarysiu bus normalus user_id
     }
-    fetch("http://192.168.56.1:3000/posts/", {
+    fetch("http://192.168.0.103:3000/posts/", {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
@@ -129,18 +129,18 @@ export default class PostScreen extends React.Component {
           <Header/>
           <View style={{alignItems: 'center', paddingTop: 20}}>
             <View style={{height: 150, width: 150}}>
-            <Dropdown
-              label='Brand'
-              data={this.state.brands}
-              onChangeText={(value) => { this.setState({firstDropDownValue : value}); this.filterModelsByBrand(); } }
-            />
+              <Dropdown
+                label='Brand'
+                data={this.state.brands}
+                onChangeText={(value) => { this.setState({firstDropDownValue : value}); this.filterModelsByBrand(); } }
+              />
             </View>
             <View style={{height: 150, width: 150}}>
-            <Dropdown
-              label='Model'
-              onChangeText={(value) => {this.setState({secondDropDownValue: value})}}
-              data={this.state.models}
-            />
+              <Dropdown
+                label='Model'
+                onChangeText={(value) => {this.setState({secondDropDownValue: value})}}
+                data={this.state.models}
+              />
             </View>
             <Text style={{paddingTop: 30}} >Available date from: </Text>
             <DatePicker
@@ -193,7 +193,7 @@ export default class PostScreen extends React.Component {
             </View>
             <View>
               <Text>Upload a picture</Text>
-                <Button title="Upload an image" onPress={() => { this.pickImage(); } }/>
+              <Button title="Upload an image" onPress={() => { this.pickImage(); } }/>
             </View>
             <Text style={{paddingTop: 30}}>Comments</Text>
             <View style={styles.textAreaContainer}>
@@ -214,11 +214,9 @@ export default class PostScreen extends React.Component {
               value={this.state.isPrivate}
               onValueChange={this.setSelection}
             />
-              <View style={{paddingTop: 30 }}>
+            <View style={{paddingTop: 30 }}>
               <Button title="Post!" onPress={this.postSuccessful}/>
             </View>
-            </View>
-            <View>
           </View>
         </ScrollView>
     );

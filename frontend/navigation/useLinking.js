@@ -9,7 +9,6 @@ export default function(containerRef) {
           path: 'root',
           screens: {
             PublicList: 'public',
-            Database: 'database',
             Settings: 'settings',
             Posts: 'posts',
             Chats: 'chats'

@@ -8,8 +8,6 @@ import UserPostsScreen from '../screens/UserPostsScreen';
 import ChatScreen from '../screens/ChatScreen';
 import SettingsScreen from '../screens/SettingsScreen'
 
-import DatabaseScreen from '../screens/DatabaseScreen'
-
 import PostScreen from '../screens/PostScreen'
 
 const BottomTab = createBottomTabNavigator();
@@ -58,14 +56,6 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
-        name="Database"
-        component={ DatabaseScreen }
-        options={{
-          title: 'CRUDtastic',
-          tabBarIcon: ({ focused }) => <TabBarIconAwesome5 focused={focused} name="cloud" />,
-        }}
-      />
-      <BottomTab.Screen
         name="Settings"
         component={ SettingsScreen }
         options={{
@@ -87,9 +77,7 @@ function getHeaderTitle(route) {
         return 'User Posts'
       case 'Chats':
         return 'Chats'
-      case 'Database':
-        return 'CRUD FUG JE';
       case 'Settings':
-        return 'Settings (tik tlf)';
+        return 'Settings';
     }
   }
