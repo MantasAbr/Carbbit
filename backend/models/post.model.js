@@ -4,14 +4,18 @@ const sql = require("./db.js");
 const Post = function(post) {
     this.pictureUri = post.pictureUri;
     this.body = post.body;
-    this.availableDate = post.availableDate;
+    this.availableToDate = post.availableToDate;
+    this.availableFromDate = post.availableFromDate;
+    this.brand = post.brand;
+    this.model = post.model;
+    this.isPrivate = post.isPrivate;
     this.userId = post.userId;
 };
 
 Post.create = (newPost, result) => {
-    console.log('iejom i create')
-    let postArray = [newPost.pictureUri, newPost.body, newPost.availableDate, newPost.userId];
-    sql.query('INSERT INTO Posts(picture_uri, body, available_date, user_id ) VALUES (?, ?, ?, ?)', postArray, (err, res) => {
+    console.log(newPost.isPrivate)
+    let postArray = [newPost.pictureUri, newPost.body, newPost.availableToDate, newPost.availableFromDate, newPost.brand, newPost.model, newPost.isPrivate, newPost.userId];
+    sql.query('INSERT INTO Posts (picture_uri , body, available_from_date, available_to_date, brand, model, is_private, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', postArray, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);

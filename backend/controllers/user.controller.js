@@ -90,6 +90,7 @@ exports.update = (req, res) => {
 
 // Delete a Customer with the specified customerId in the request
 exports.delete = (req, res) => {
+
     User.remove(req.params.userId, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
