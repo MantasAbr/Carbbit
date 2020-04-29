@@ -10,6 +10,8 @@ import SettingsScreen from '../screens/SettingsScreen'
 
 import DatabaseScreen from '../screens/DatabaseScreen'
 
+import PostScreen from '../screens/PostScreen'
+
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Rents';
 
@@ -36,6 +38,14 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={ UserPostsScreen }
         options={{
           title: 'jūsų skelbimai',
+          tabBarIcon: ({ focused }) => <TabBarIconAwesome5 focused={focused} name="user-alt" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Post"
+        component={ PostScreen }
+        options={{
+          title: 'Ikelti',
           tabBarIcon: ({ focused }) => <TabBarIconAwesome5 focused={focused} name="user-alt" />,
         }}
       />
