@@ -10,6 +10,8 @@ const jsonData = require('../assets/json_data/CarData');
 import CheckBox from '@react-native-community/checkbox';
 import moment from "moment";
 
+import env from "../env/server"
+
 const styles = StyleSheet.create({
   textAreaContainer: {
     borderColor: 'grey',
@@ -60,7 +62,7 @@ export default class PostScreen extends React.Component {
       user_id: 1
       // kitam sprinte, kai auth padarysiu bus normalus user_id
     }
-    fetch("http://192.168.0.103:3000/posts/", {
+    fetch('http://' + env.server.ip + ':' + env.server.port + '/posts/', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)

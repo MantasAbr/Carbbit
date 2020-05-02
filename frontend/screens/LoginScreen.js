@@ -17,7 +17,7 @@ export default function LoginScreen({navigation}){
                 <Text style={styles.login}>Prisijungimas</Text>
                 <Separator/>
                 
-                <Text>Paštas</Text>
+                <Text>Vardas</Text>
                 <TextInput
                     onChangeText={text => setInputName(text)}
                     value={inputName}
@@ -33,10 +33,19 @@ export default function LoginScreen({navigation}){
                     secureTextEntry={true}
                     />
                 <Separator/>
-                <TouchableOpacity style={styles.button} 
-                                  onPress={() => {inputName === '' || inputPassword === '' 
-                                                  ? alert("Nenurodytas vardas ir/arba slaptažodis") 
-                                                  : handleLoginButton(navigation)}}>
+                <TouchableOpacity style={styles.button} onPress={() => {
+                    // set navigation head to Root (BottomNavbar component in App.js)
+                    // navigation.reset CANNOT BE CALLED OUTSIDE OF return()
+                    // or it won't work, but doesn't throw an error
+                    checkInputs(inputName, inputPassword)
+                    ? navigation.reset({
+                        index: 0,
+                        routes: [
+                            {name: 'Root'}
+                        ]
+                    })
+                    : undefined}
+                    }>
                     <Text>Prisijungti</Text>
                     
                 </TouchableOpacity>
@@ -45,6 +54,14 @@ export default function LoginScreen({navigation}){
             </View>
         </ImageBackground>
     )
+}
+
+function checkInputs(name, pass){
+    if (name === '' || pass === ''){
+        alert("Nenurodytas vardas ir/arba slaptažodis");
+        return false;
+    }
+    return true;
 }
 
 function Separator() {

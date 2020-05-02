@@ -29,10 +29,6 @@ export default function HomeScreen({navigation}){
     )
 }
 
-function handleButton_getData(){
-    
-}
-
 function handleButton_Login(navigation){
   navigation.navigate('Login')
 }
