@@ -3,6 +3,8 @@ import { render } from 'react-dom';
 import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity, TextInput, ImageBackground, Image } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import moment from "moment";
+
+import env from '../env/server';
 /*
     This is the screen for the main list of all public posts.
 */
@@ -29,7 +31,7 @@ export default class PublicList extends React.Component{
     }
 
     fetchJson(){
-        fetch('http://192.168.0.103:3000/posts/',{ // pasikeisti i savo IP
+        fetch('http://' + env.server.ip + ':' + env.server.port + '/posts/',{
             method: 'GET',
             headers: {
               Accept: 'application/json',
