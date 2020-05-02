@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { TouchableOpacity, Platform, StyleSheet, View, Text, ImageBackground, Image} from 'react-native';
+import { TouchableOpacity, Platform, StyleSheet, View, Text, ImageBackground, Image, Alert} from 'react-native';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 
 export default function RegisterScreen({navigation}){
@@ -53,13 +53,16 @@ export default function RegisterScreen({navigation}){
                     <Separator/>
 
                     <TouchableOpacity style={styles.button} 
-                                      onPress={() => {{inputName === '' || inputEmail === '' ||
-                                                       inputPassword === '' || inputConfirmationPassword === ''
-                                                       ? alert("Neužpildyti visi registracijos laukai")
-                                                       : handleRegisterButton(navigation)}; 
-                                                      {inputPassword === inputConfirmationPassword 
-                                                       ? handleRegisterButton(navigation)
-                                                       : alert("Patvirtinimo slaptažodis neatitinka slaptažodžio")}}}>
+                                      onPress={() => {
+                                        if (checkInputs(inputName, inputEmail, inputPassword, inputConfirmationPassword)){
+                                            navigation.reset({
+                                                index: 0,
+                                                routes: [
+                                                    {name: 'Root'}
+                                                ]
+                                            })
+                                        }
+                                    }}>
                         <Text>Prisijungti</Text>
                     
                     </TouchableOpacity>
@@ -72,6 +75,28 @@ export default function RegisterScreen({navigation}){
 
 function Separator() {
     return <View style={styles.separator} />;
+}
+
+function checkInputs(name, mail, pass, pass2){
+    if (name === ''){
+        alert("Vardas tuščias");
+        return false;
+    }
+    if (mail === ''){ // TODO: email regex check
+        alert("Email tuščias");
+        return false;
+    }
+    if (pass === '' || pass2 === ''){
+        alert("slaptažodis tuščias");
+        return false;
+    }
+    if (pass === pass2){
+        return true;
+    }
+    else{
+        alert("Patvirtinimo slaptažodis neatitinka slaptažodžio");
+        return false;
+    }
 }
 
 function handleRegisterButton(navigation){
