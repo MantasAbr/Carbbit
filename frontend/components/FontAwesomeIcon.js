@@ -7,7 +7,7 @@ export default function FontAwesomeIcon(props, sizeOf, colorOf){
         <FontAwesome
             name={props.name}
             size={props.sizeOf}
-            color={props.colorOf}
+            color={Colors.colorOf}
             style={props.style}
         />
     )

@@ -103,8 +103,7 @@ export default class SettingsScreen extends React.Component{
                             <View style={styles.icon}>
                                 <IonicsIcon name={"ios-arrow-forward"} sizeOf={30} colorOf={"arrowIdle"} />
                             </View>
-                        </View> 
-                            
+                        </View>                            
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.buttonLower} onPress={() => {if(this.state.rememberInfo === false){

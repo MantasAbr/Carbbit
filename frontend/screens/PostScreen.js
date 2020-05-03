@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, View, Text, TextInput, StyleSheet, ScrollView, Alert } from 'react-native';
+import { Image, Dimensions, Text, Button, TouchableOpacity, View, TextInput, StyleSheet, ScrollView, Alert, ImageBackground, Modal } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
@@ -10,39 +10,47 @@ const jsonData = require('../assets/json_data/CarData');
 import CheckBox from '@react-native-community/checkbox';
 import moment from "moment";
 
-import env from "../env/server"
+import IonicsIcon from '../components/IonicsIcon'
+import { TitilliumWeb } from '../components/TitilliumWeb'
+import FontAwesomeIcon from '../components/FontAwesomeIcon';
 
-const styles = StyleSheet.create({
-  textAreaContainer: {
-    borderColor: 'grey',
-    borderWidth: 1,
-    padding: 5
-  },
-  textArea: {
-    height: 150,
-    width: 150,
-    justifyContent: "flex-start",
-    textAlignVertical: 'top'
-  }
-});
+import env from '../env/server'
 
 export default class PostScreen extends React.Component {
+
+  screenWidth = Math.round((Dimensions.get('window').width))
   
   state = {
     time: new Date(),
     image: '',
     descriptionInput: null,
-    availableFromDate: "select date",
-    availableToDate: "select date",
+    availableFromDate: "pasirinkite datą",
+    availableToDate: "pasirinkite datą",
     brands: [],
     models: [],
     firstDropDownValue: null,
     secondDropDownValue: null,
-    isPrivate: false
+    isPrivate: false,
+    priceInput: null,
+    locationInput: null,
+    addressInput: null,
+    radioButtonName: 'ios-close-circle',  
   };
 
   handleChangeInput = (text) => {
     this.setState({ descriptionInput: text })
+  }
+
+  handlePriceInput = (text) => {
+    this.setState({ priceInput: text})
+  }
+
+  handleLocationInput = (text) => {
+    this.setState({ locationInput: text})
+  }
+
+  handleAddressInput = (text) => {
+    this.setState({ addressInput: text})
   }
 
   setSelection = (value) => {
@@ -92,7 +100,7 @@ export default class PostScreen extends React.Component {
   }
 
   postSuccessful = () => {
-    if (this.state.availableFromDate != "select date" && this.state.availableToDate != "select date" &&
+    if (this.state.availableFromDate != "pasirinkite datą" && this.state.availableToDate != "pasirinkite datą" &&
     this.state.image != '' && this.state.descriptionInput != null && this.state.firstDropDownValue != null &&
     this.state.secondDropDownValue != null) {
         Alert.alert('Post is ready!', 'Post it?', [
@@ -125,104 +133,237 @@ export default class PostScreen extends React.Component {
     this.setState({models: aray})
   }
   
-  render() {
+  render() { 
     return (
-        <ScrollView>
-          <Header/>
-          <View style={{alignItems: 'center', paddingTop: 20}}>
-            <View style={{height: 150, width: 150}}>
-              <Dropdown
-                label='Brand'
-                data={this.state.brands}
-                onChangeText={(value) => { this.setState({firstDropDownValue : value}); this.filterModelsByBrand(); } }
-              />
-            </View>
-            <View style={{height: 150, width: 150}}>
-              <Dropdown
-                label='Model'
-                onChangeText={(value) => {this.setState({secondDropDownValue: value})}}
-                data={this.state.models}
-              />
-            </View>
-            <Text style={{paddingTop: 30}} >Available date from: </Text>
-            <DatePicker
-              style={{width: 200}}
-              mode="datetime"
-              placeholder={this.state.availableFromDate}
-              minDate={this.state.time}
-              maxDate="2020-12-12"
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              is24Hour={true}
-              customStyles={{
-                dateIcon: {
-                  position: 'absolute',
-                  left: 0,
-                  top: 4,
-                  marginLeft: 0
-                },
-                dateInput: {
-                  marginLeft: 36
-                }
-              }}
-              onDateChange={(date) => {this.setState({availableFromDate: date})}}
-            />
-
-            <View style={{paddingBottom: 50, paddingTop: 50, alignContent: 'center'}}>
-              <Text> Available date until: </Text>
-              <DatePicker
-                style={{width: 200}}
-                mode="datetime"
-                placeholder={this.state.availableToDate}
-                minDate={this.state.time}
-                maxDate="2020-12-12"
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                is24Hour={true}
-                customStyles={{
-                  dateIcon: {
-                    position: 'absolute',
-                    left: 0,
-                    top: 4,
-                    marginLeft: 0
-                  },
-                  dateInput: {
-                    marginLeft: 36
-                  }
-                }}
-                onDateChange={(date) => {this.setState({availableToDate: date})}}
-              />  
-            </View>
-            <View>
-              <Text>Upload a picture</Text>
-              <Button title="Upload an image" onPress={() => { this.pickImage(); } }/>
-            </View>
-            <Text style={{paddingTop: 30}}>Comments</Text>
-            <View style={styles.textAreaContainer}>
-              <TextInput onChangeText={this.handleChangeInput}
-                style={styles.textArea}
-                underlineColorAndroid="transparent"
-                placeholder="e.g AC doesn't work"
-                placeholderTextColor="grey"
-                numberOfLines={10}
-                multiline={true}
-                value={this.state.descriptionInput}
-              />
-            </View>
-            <View>
-              <Text>Set post to private?</Text>
-            </View>
-            <CheckBox
-              value={this.state.isPrivate}
-              onValueChange={this.setSelection}
-            />
-            <View style={{paddingTop: 30 }}>
-              <Button title="Post!" onPress={this.postSuccessful}/>
-            </View>
+      <ImageBackground source={require('../assets/backgrounds/klaipeda_bg.png')} 
+                       style={styles.background} blurRadius={5}>
+        
+          <View style={styles.headerContainer}>
+              
+              <TouchableOpacity style={styles.backButton} onPress={() => null}>
+                  <View>
+                      <IonicsIcon name={"ios-arrow-back"} sizeOf={35} colorOf={'arrowIdle'}/>
+                  </View> 
+              </TouchableOpacity>                   
+              <TitilliumWeb style={styles.title}>naujas skelbimas</TitilliumWeb>
           </View>
-        </ScrollView>
+
+          <View style={{alignSelf: 'center'}}>
+            <View style={styles.hairline}/>           
+          </View>
+
+        
+        <ScrollView keyboardDismissMode={'on-drag'} showsVerticalScrollIndicator={false}>
+          <View style={{marginVertical: 20}}/>
+          <View style={styles.container}>
+
+            <TouchableOpacity style={styles.circle} onPress={() => { this.pickImage(); } } >
+              
+              <View style={styles.circleContainer}>
+                <View style={styles.circleTextContainer}>
+                  <TitilliumWeb style={styles.circleText}>Įkelti automobilio</TitilliumWeb>
+                  <TitilliumWeb style={styles.circleText}>nuotrauka</TitilliumWeb>
+                </View>
+
+                <View style={styles.iconContainer}>
+                  <IonicsIcon name={"ios-car"} sizeOf={50} colorOf={"iconColor"}/>
+                  <FontAwesomeIcon style={{marginTop: 13, marginLeft: 7}}name={"plus"} sizeOf={25} colorOf={"iconColor"}/>
+                </View>
+              </View>             
+            </TouchableOpacity>
+
+            <View style={{marginVertical: 10}}/>
+            <TitilliumWeb style={styles.header}>automobilio informacija</TitilliumWeb>
+
+            <View style={styles.brandAndMakeContainer}>
+
+            <View style={{marginHorizontal: 10}}/>
+
+              <View style={styles.brandAndMakeSelection}>
+                <Dropdown
+                  baseColor='black'
+                  label='markė'
+                  pickerStyle={styles.dropdownPickerStyle}
+                  data={this.state.brands}
+                  onChangeText={(value) => { this.setState({firstDropDownValue : value}); this.filterModelsByBrand(); } }
+                />
+              </View>
+
+              <View style={{marginHorizontal: 10}}/>
+
+              <View style={styles.brandAndMakeSelection}>
+                <Dropdown
+                  baseColor='black'
+                  label='modelis'
+                  pickerStyle={styles.dropdownPickerStyle}
+                  onChangeText={(value) => {this.setState({secondDropDownValue: value})}}
+                  data={this.state.models}
+                />
+              </View>
+
+              <View style={{marginHorizontal: 10}}/>
+
+            </View>
+
+            <View style={{marginVertical: 65}}/>
+            <TitilliumWeb style={styles.header}>nuomos laiko intervalas</TitilliumWeb>
+            <View style={styles.calendarContainer}>
+              <View style={styles.calendarComponent}>
+                <View style={styles.calendarHeader}>
+                  <TitilliumWeb style={{fontSize: 15}}>nuo</TitilliumWeb>
+                </View>
+
+                <DatePicker
+                  style={styles.calendarInputStyle}
+                  mode="datetime"
+                  placeholder={this.state.availableFromDate}
+                  minDate={this.state.time}
+                  maxDate="2020-12-12"
+                  confirmBtnText="Patvirtinti"
+                  cancelBtnText="Atšaukti"
+                  is24Hour={true}
+                  showIcon={false}
+                  onDateChange={(date) => {this.setState({availableFromDate: date})}}
+                  customStyles={{
+                    placeholderText :{
+                      color: '#6E6E6E',
+                      fontSize: 15,                     
+                    },
+                    dateInput: {
+                      borderWidth: 0,
+                      borderColor: 'black',
+                      borderBottomWidth: StyleSheet.hairlineWidth,
+                      marginTop: -15,
+                    }
+                  }}               
+                />
+              </View>
+
+              <View style={styles.calendarComponent}>
+                <View style={styles.calendarHeader}>
+                  <TitilliumWeb style={{fontSize: 15}}>iki</TitilliumWeb>
+                </View>
+              
+                <DatePicker
+                  style={styles.calendarInputStyle}
+                  mode="datetime"
+                  placeholder={this.state.availableToDate}
+                  minDate={this.state.time}
+                  maxDate="2020-12-12"
+                  confirmBtnText="Patvirtinti"
+                  cancelBtnText="Atšaukti"
+                  is24Hour={true}
+                  showIcon={false}
+                  onDateChange={(date) => {this.setState({availableToDate: date})}}
+                  customStyles={{
+                    placeholderText :{
+                      color: '#6E6E6E',
+                      fontSize: 15,                     
+                    },
+                    dateInput: {
+                      borderWidth: 0,
+                      borderColor: 'black',
+                      borderBottomWidth: StyleSheet.hairlineWidth,
+                      marginTop: -15,
+                    }
+                  }}
+                />
+              </View> 
+            </View>
+
+            <View style={{marginVertical: 10}}/>
+            <TitilliumWeb style={styles.header}>nuomos kaina</TitilliumWeb>
+
+
+            <View style={styles.priceContainer}>
+              <View style={styles.priceInputContainer}>
+                <FontAwesomeIcon name={"money"} sizeOf={30} colorOf={"iconColorGray"} style={styles.moneyIcon}/>
+
+                <TextInput onChangeText={this.handlePriceInput}
+                style={styles.priceInputField}
+                underlineColorAndroid="transparent"
+                placeholder="suma už pasirinktą laiko tarpą"
+                placeholderTextColor="#6E6E6E"               
+                multiline={false}
+                value={this.state.priceInput}
+                keyboardType="numeric"
+                />
+              </View>
+            </View>
+
+            <View style={{marginVertical: 10}}/>
+            <TitilliumWeb style={styles.header}>automobilio vieta</TitilliumWeb>
+
+            <View style={styles.locationContainer}>
+              <View style={styles.locationInputContainer}>
+                <FontAwesomeIcon name={"location-arrow"} sizeOf={30} colorOf={"iconColorGray"} style={styles.navIcon}/>
+
+                <TextInput onChangeText={this.handleAddressInput}
+                style={styles.locationInputField}
+                underlineColorAndroid="transparent"
+                placeholder="adresas"
+                placeholderTextColor="#6E6E6E"               
+                multiline={false}
+                value={this.state.addressInput}
+                />
+              </View>
+            </View>
+
+
+
+            <View style={{marginVertical: 10}}/>
+            <TitilliumWeb style={styles.header}>komentarai</TitilliumWeb>
+            <View style={styles.commentContainer}>
+              <TextInput onChangeText={this.handleChangeInput}
+                style={styles.commentField}
+                underlineColorAndroid="transparent"
+                placeholder="pvz. neveikia kondicionierius"
+                placeholderTextColor="#6E6E6E"               
+                multiline={true}
+                numberOfLines={7}
+                value={this.state.descriptionInput}
+                maxLength={200}
+              />
+            </View>
+
+
+            <View style={{marginVertical: 20}}/>
+            <View style={styles.privateContainer}>
+              <TitilliumWeb style={{fontSize: 16, color: '#D92626'}}>privatus skelbimas?</TitilliumWeb>
+
+              <TouchableOpacity style={styles.checkBox} value={this.state.isPrivate} 
+                                onPress={() => {if(this.state.isPrivate === false){
+                                                this.setState({isPrivate: true})
+                                                this.setState({radioButtonName: 'ios-checkmark-circle'})
+                                            }
+                                              if(this.state.isPrivate === true){
+                                                this.setState({isPrivate:  false})
+                                                this.setState({radioButtonName: 'ios-close-circle'})
+                                            }}} 
+                                      activeOpacity={0.5}>
+                <IonicsIcon name={this.state.radioButtonName} sizeOf={30} colorOf={"arrowIdle"} />
+              </TouchableOpacity>
+            </View>
+
+            <View style={{marginVertical: 30}}/>
+            <TouchableOpacity style={styles.createButtonContainer} onPress={this.postSuccessful}>
+              <FontAwesomeIcon style={{marginTop: 2}}name={"plus"} sizeOf={25} colorOf={"iconColor"}/>
+              <View style={{marginHorizontal: 5}}/>
+              <TitilliumWeb style={{fontSize: 22, marginTop: -3}}>sukurti</TitilliumWeb>                         
+            </TouchableOpacity>
+
+            <View style={{marginVertical: 30}}/>
+
+            
+            </View>
+          </ScrollView>
+      </ImageBackground>
+
+        
+                   
     );
-  }
+    }
+
 
   componentDidMount() {
     this.getPermissionAsync();
@@ -257,3 +398,277 @@ export default class PostScreen extends React.Component {
     }
   };
 }
+
+const styles = StyleSheet.create({
+    background: {
+      width: '100%',
+      height: '100%',
+  },
+  container: {
+      flex: 1,
+      width: '100%',
+      alignItems: 'center',
+  },
+  headerContainer: {
+      flexDirection: 'row',
+      marginTop: 50.5,
+      alignItems: 'center',
+      justifyContent: 'center',
+  },
+  title: {
+      fontSize: 22,
+      fontWeight: '600',
+      letterSpacing: 1,
+      marginLeft: 51,
+  },
+  hairline: {
+      borderBottomWidth: 1,
+      paddingTop: 8.5,
+      borderColor: 'black',
+      width: 347,
+  },
+  backButton: {
+      marginLeft: -80,
+      paddingHorizontal: 10,
+      paddingTop: 5,        
+  },
+  circle: {
+    marginHorizontal: 10,
+    marginVertical: 10,
+    width: 150,
+    height: 150,
+    borderRadius: 150/2,
+    borderWidth: 1,
+    borderColor: 'black',
+  },
+  circleContainer: {
+    flexDirection: 'column',
+  },
+  circleTextContainer: {
+    marginTop: 35,
+    color: '#B4B3B3',
+  },
+  circleText: {
+    alignSelf: 'center',
+    color: '#6E6E6E',
+    fontSize: 15,
+  },
+  iconContainer: {
+    flexDirection: 'row',
+    alignContent: 'center',
+    alignSelf: 'center',
+  },
+  header: {
+    fontSize: 17,
+    fontWeight: '600',
+    letterSpacing: 1,
+    paddingBottom: 10,
+    alignSelf: 'flex-start',
+    paddingLeft: 15,
+  },
+  button: {
+    backgroundColor: '#F5F3CB',
+    borderWidth: 1,
+    borderColor: '#6D6D6D',
+    height: 42,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    borderLeftColor: '#F5F3CB',
+    borderRightColor: '#F5F3CB',
+  },
+  // ---
+  // Used so that buttons' lower and upper borders don't 
+  // double if they're on top of one another
+  buttonUpper: {
+      backgroundColor: '#F5F3CB',
+      borderWidth: 1,
+      borderColor: '#6D6D6D',
+      height: 41,
+      alignSelf: 'stretch',
+      justifyContent: 'center',
+      borderLeftColor: '#F5F3CB',
+      borderRightColor: '#F5F3CB',
+  },
+  buttonLower: {
+      backgroundColor: '#F5F3CB',
+      borderWidth: 1,        
+      borderColor: '#6D6D6D',
+      height: 40,
+      alignSelf: 'stretch',
+      justifyContent: 'center',
+      borderLeftColor: '#F5F3CB',
+      borderRightColor: '#F5F3CB',
+      borderTopColor: '#F5F3CB',
+  },
+  // ---
+  basicText: {
+    fontSize: 15,
+    color: '#CB9D3C',
+    paddingLeft: 15,
+    marginTop: 5
+  },
+  importantText: {
+      fontSize: 15,
+      color: '#D92626',
+      paddingLeft: 15,
+  },
+  buttonContainer: {
+      flexDirection: 'row',        
+  },
+  icon: {
+      marginTop: 2,
+  },
+  brandAndMakeContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    borderRadius: 10,
+    borderColor: 'black',
+    borderWidth: 1,
+    backgroundColor: '#EEECD4',
+    width: 347,
+    height: 70,
+  },
+  brandAndMakeSelection: {
+    width: 140, 
+    justifyContent: 'center',
+    marginTop: -5,
+  },
+  dropdownPickerStyle: {
+    backgroundColor: '#EEECD4', 
+    marginTop: 86, 
+    width: 142, 
+    height: 135, 
+    marginLeft: 15,
+    borderColor: 'black',
+    borderRadius: 5,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+  },
+  priceContainer: {
+    alignItems: 'center',
+    flexDirection: 'column',
+    borderRadius: 10,
+    borderColor: 'black',
+    borderWidth: 1,
+    backgroundColor: '#EEECD4',
+    width: 347,
+    height: 50,
+  },
+  priceInputContainer: {
+    flexDirection: 'row',
+    alignSelf: 'flex-start'
+  },
+  moneyIcon: {
+    marginTop: 8,
+    marginLeft: 40,
+    height: 27,
+  },
+  priceInputField: {
+    width: 210,
+    color: 'black',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'black',
+    fontSize: 15,
+    marginLeft: 12,
+    marginTop: 10,
+  },
+  locationContainer: {
+    alignItems: 'center',
+    flexDirection: 'column',
+    borderRadius: 10,
+    borderColor: 'black',
+    borderWidth: 1,
+    backgroundColor: '#EEECD4',
+    width: 347,
+    height: 50,
+  },
+  locationInputContainer: {
+    flexDirection: 'row',
+    alignSelf: 'flex-start'
+  },
+  navIcon: {
+    marginTop: 8,
+    marginLeft: 40,
+    height: 27,
+  },
+  locationInputField: {
+    width: 210,
+    color: 'black',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'black',
+    fontSize: 15,
+    marginLeft: 18,
+    marginTop: 10,
+  },
+  calendarContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    borderRadius: 10,
+    borderColor: 'black',
+    borderWidth: 1,
+    backgroundColor: '#EEECD4',
+    width: 347,
+    height: 100,
+  },
+  calendarInputStyle: {
+    width: 140,
+  },
+  calendarComponent: {
+    flexDirection: 'column',
+    marginTop: -7,
+    marginLeft: 21,
+  },
+  calendarHeader: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'black',
+    width: 140,
+    marginBottom: 8,
+  },
+  commentContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    borderColor: 'black',
+    borderWidth: 1,
+    backgroundColor: '#EEECD4',
+    width: 347,
+    height: 150,
+  },
+  commentField: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderColor: 'black',
+    width: 300,
+    height: 120,
+  },
+  privateContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    borderRadius: 10,
+    borderColor: 'black',
+    borderWidth: 1,
+    backgroundColor: '#EEECD4',
+    width: 200,
+    height: 50,
+  },
+  checkBox: {
+    width: 35,
+    height: 35,
+    paddingLeft: 5,
+    paddingRight: 2,
+    paddingVertical: 2,
+  },
+  createButtonContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    borderColor: 'black',
+    borderWidth: 1,
+    backgroundColor: '#EEECD4',
+    width: 170,
+    height: 60,
+    borderRadius: 10,
+  }
+})

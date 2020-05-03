@@ -14,4 +14,5 @@ export default {
   arrowIdle: '#000000',
   arrowPressed: '#ABABAB',
   iconColor: '#000000',
+  iconColorGray: '#6E6E6E',
 };
