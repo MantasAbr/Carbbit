@@ -29,7 +29,7 @@ export default class PublicList extends React.Component{
     }
 
     fetchJson(){
-        fetch('http://192.168.0.103:3000/posts/',{ // pasikeisti i savo IP
+        fetch('http://192.168.1.135:3000/posts/',{ // pasikeisti i savo IP
             method: 'GET',
             headers: {
               Accept: 'application/json',
