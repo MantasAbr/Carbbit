@@ -15,4 +15,17 @@ export default {
   arrowPressed: '#ABABAB',
   iconColor: '#000000',
   iconColorGray: '#6E6E6E',
+
+  containerColor: '#EEECD4',
+  buttonColor: '#F5F3CB',
+  blackText: 'black',
+  defaultText: '#CB9D3C',
+  languageText: '#CB9D3C',
+  importantText: '#D92626',
+  hintText: '#6E6E6E', //Used for placeholders, e.g. in search box where the text says 'find...', this would be used
+  unavailableText: '',
+  buttonBorderColorGray: '#6D6D6D',
+  buttonBorderColorBlack: 'black',
+  hairline: 'black',
+  photoCircle: 'black',
 };

@@ -1,24 +1,24 @@
 import * as React from 'react';
-import { Image, Dimensions, Text, Button, TouchableOpacity, View, TextInput, StyleSheet, ScrollView, Alert, ImageBackground, Modal } from 'react-native';
+import { Image, TouchableOpacity, View, TextInput, StyleSheet, ScrollView, Alert, ImageBackground} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import DatePicker from 'react-native-datepicker'
-import Header from '../components/Header';
 import { Dropdown } from 'react-native-material-dropdown';
 const jsonData = require('../assets/json_data/CarData');
-import CheckBox from '@react-native-community/checkbox';
 import moment from "moment";
 
 import IonicsIcon from '../components/IonicsIcon'
 import { TitilliumWeb } from '../components/TitilliumWeb'
 import FontAwesomeIcon from '../components/FontAwesomeIcon';
+import Colors from '../constants/Colors';
+import Dimensions from '../constants/Layout';
 
 import env from '../env/server'
 
 export default class PostScreen extends React.Component {
 
-  screenWidth = Math.round((Dimensions.get('window').width))
+  screenWidth = Math.round(Dimensions.window.width);
   
   state = {
     time: new Date(),
@@ -226,12 +226,12 @@ export default class PostScreen extends React.Component {
                   onDateChange={(date) => {this.setState({availableFromDate: date})}}
                   customStyles={{
                     placeholderText :{
-                      color: '#6E6E6E',
+                      color: Colors.hintText,
                       fontSize: 15,                     
                     },
                     dateInput: {
                       borderWidth: 0,
-                      borderColor: 'black',
+                      borderColor: Colors.buttonBorderColorBlack,
                       borderBottomWidth: StyleSheet.hairlineWidth,
                       marginTop: -15,
                     }
@@ -257,12 +257,12 @@ export default class PostScreen extends React.Component {
                   onDateChange={(date) => {this.setState({availableToDate: date})}}
                   customStyles={{
                     placeholderText :{
-                      color: '#6E6E6E',
+                      color: Colors.hintText,
                       fontSize: 15,                     
                     },
                     dateInput: {
                       borderWidth: 0,
-                      borderColor: 'black',
+                      borderColor: Colors.buttonBorderColorBlack,
                       borderBottomWidth: StyleSheet.hairlineWidth,
                       marginTop: -15,
                     }
@@ -283,7 +283,7 @@ export default class PostScreen extends React.Component {
                 style={styles.priceInputField}
                 underlineColorAndroid="transparent"
                 placeholder="suma už pasirinktą laiko tarpą"
-                placeholderTextColor="#6E6E6E"               
+                placeholderTextColor={Colors.hintText}               
                 multiline={false}
                 value={this.state.priceInput}
                 keyboardType="numeric"
@@ -302,7 +302,7 @@ export default class PostScreen extends React.Component {
                 style={styles.locationInputField}
                 underlineColorAndroid="transparent"
                 placeholder="adresas"
-                placeholderTextColor="#6E6E6E"               
+                placeholderTextColor={Colors.hintText}               
                 multiline={false}
                 value={this.state.addressInput}
                 />
@@ -318,7 +318,7 @@ export default class PostScreen extends React.Component {
                 style={styles.commentField}
                 underlineColorAndroid="transparent"
                 placeholder="pvz. neveikia kondicionierius"
-                placeholderTextColor="#6E6E6E"               
+                placeholderTextColor={Colors.hintText}               
                 multiline={true}
                 numberOfLines={7}
                 value={this.state.descriptionInput}
@@ -328,9 +328,7 @@ export default class PostScreen extends React.Component {
 
 
             <View style={{marginVertical: 20}}/>
-            <View style={styles.privateContainer}>
-              <TitilliumWeb style={{fontSize: 16, color: '#D92626'}}>privatus skelbimas?</TitilliumWeb>
-
+            <View style={styles.privateContainer}>              
               <TouchableOpacity style={styles.checkBox} value={this.state.isPrivate} 
                                 onPress={() => {if(this.state.isPrivate === false){
                                                 this.setState({isPrivate: true})
@@ -343,6 +341,8 @@ export default class PostScreen extends React.Component {
                                       activeOpacity={0.5}>
                 <IonicsIcon name={this.state.radioButtonName} sizeOf={30} colorOf={"arrowIdle"} />
               </TouchableOpacity>
+
+              <TitilliumWeb style={{fontSize: 16, color: Colors.importantText}}>privatus skelbimas?</TitilliumWeb>
             </View>
 
             <View style={{marginVertical: 30}}/>
@@ -424,7 +424,7 @@ const styles = StyleSheet.create({
   hairline: {
       borderBottomWidth: 1,
       paddingTop: 8.5,
-      borderColor: 'black',
+      borderColor: Colors.hairline,
       width: 347,
   },
   backButton: {
@@ -439,18 +439,17 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 150/2,
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: Colors.photoCircle,
   },
   circleContainer: {
     flexDirection: 'column',
   },
   circleTextContainer: {
     marginTop: 35,
-    color: '#B4B3B3',
   },
   circleText: {
     alignSelf: 'center',
-    color: '#6E6E6E',
+    color: Colors.hintText,
     fontSize: 15,
   },
   iconContainer: {
@@ -466,50 +465,15 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     paddingLeft: 15,
   },
-  button: {
-    backgroundColor: '#F5F3CB',
-    borderWidth: 1,
-    borderColor: '#6D6D6D',
-    height: 42,
-    alignSelf: 'stretch',
-    justifyContent: 'center',
-    borderLeftColor: '#F5F3CB',
-    borderRightColor: '#F5F3CB',
-  },
-  // ---
-  // Used so that buttons' lower and upper borders don't 
-  // double if they're on top of one another
-  buttonUpper: {
-      backgroundColor: '#F5F3CB',
-      borderWidth: 1,
-      borderColor: '#6D6D6D',
-      height: 41,
-      alignSelf: 'stretch',
-      justifyContent: 'center',
-      borderLeftColor: '#F5F3CB',
-      borderRightColor: '#F5F3CB',
-  },
-  buttonLower: {
-      backgroundColor: '#F5F3CB',
-      borderWidth: 1,        
-      borderColor: '#6D6D6D',
-      height: 40,
-      alignSelf: 'stretch',
-      justifyContent: 'center',
-      borderLeftColor: '#F5F3CB',
-      borderRightColor: '#F5F3CB',
-      borderTopColor: '#F5F3CB',
-  },
-  // ---
   basicText: {
     fontSize: 15,
-    color: '#CB9D3C',
+    color: Colors.defaultText,
     paddingLeft: 15,
     marginTop: 5
   },
   importantText: {
       fontSize: 15,
-      color: '#D92626',
+      color: Colors.importantText,
       paddingLeft: 15,
   },
   buttonContainer: {
@@ -522,9 +486,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     borderRadius: 10,
-    borderColor: 'black',
+    borderColor: Colors.buttonBorderColorBlack,
     borderWidth: 1,
-    backgroundColor: '#EEECD4',
+    backgroundColor: Colors.containerColor,
     width: 347,
     height: 70,
   },
@@ -534,12 +498,12 @@ const styles = StyleSheet.create({
     marginTop: -5,
   },
   dropdownPickerStyle: {
-    backgroundColor: '#EEECD4', 
+    backgroundColor: Colors.containerColor, 
     marginTop: 86, 
     width: 142, 
     height: 135, 
     marginLeft: 15,
-    borderColor: 'black',
+    borderColor: Colors.buttonBorderColorBlack,
     borderRadius: 5,
     borderWidth: StyleSheet.hairlineWidth,
     borderTopLeftRadius: 0,
@@ -549,9 +513,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     borderRadius: 10,
-    borderColor: 'black',
+    borderColor: Colors.buttonBorderColorBlack,
     borderWidth: 1,
-    backgroundColor: '#EEECD4',
+    backgroundColor: Colors.containerColor,
     width: 347,
     height: 50,
   },
@@ -566,9 +530,9 @@ const styles = StyleSheet.create({
   },
   priceInputField: {
     width: 210,
-    color: 'black',
+    color: Colors.blackText,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: 'black',
+    borderBottomColor: Colors.hairline,
     fontSize: 15,
     marginLeft: 12,
     marginTop: 10,
@@ -577,9 +541,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     borderRadius: 10,
-    borderColor: 'black',
+    borderColor: Colors.buttonBorderColorBlack,
     borderWidth: 1,
-    backgroundColor: '#EEECD4',
+    backgroundColor: Colors.containerColor,
     width: 347,
     height: 50,
   },
@@ -594,9 +558,9 @@ const styles = StyleSheet.create({
   },
   locationInputField: {
     width: 210,
-    color: 'black',
+    color: Colors.blackText,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: 'black',
+    borderBottomColor: Colors.hairline,
     fontSize: 15,
     marginLeft: 18,
     marginTop: 10,
@@ -605,9 +569,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     borderRadius: 10,
-    borderColor: 'black',
+    borderColor: Colors.buttonBorderColorBlack,
     borderWidth: 1,
-    backgroundColor: '#EEECD4',
+    backgroundColor: Colors.containerColor,
     width: 347,
     height: 100,
   },
@@ -621,7 +585,7 @@ const styles = StyleSheet.create({
   },
   calendarHeader: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: 'black',
+    borderBottomColor: Colors.buttonBorderColorBlack,
     width: 140,
     marginBottom: 8,
   },
@@ -629,16 +593,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
-    borderColor: 'black',
+    borderColor: Colors.buttonBorderColorBlack,
     borderWidth: 1,
-    backgroundColor: '#EEECD4',
+    backgroundColor: Colors.containerColor,
     width: 347,
     height: 150,
   },
   commentField: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderColor: 'black',
+    borderColor: Colors.buttonBorderColorBlack,
     width: 300,
     height: 120,
   },
@@ -647,26 +611,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     borderRadius: 10,
-    borderColor: 'black',
+    borderColor: Colors.buttonBorderColorBlack,
     borderWidth: 1,
-    backgroundColor: '#EEECD4',
+    backgroundColor: Colors.containerColor,
     width: 200,
     height: 50,
   },
   checkBox: {
     width: 35,
     height: 35,
-    paddingLeft: 5,
-    paddingRight: 2,
+    paddingLeft: 2,
+    paddingRight: 5,
     paddingVertical: 2,
   },
   createButtonContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    borderColor: 'black',
+    borderColor: Colors.buttonBorderColorBlack,
     borderWidth: 1,
-    backgroundColor: '#EEECD4',
+    backgroundColor: Colors.containerColor,
     width: 170,
     height: 60,
     borderRadius: 10,

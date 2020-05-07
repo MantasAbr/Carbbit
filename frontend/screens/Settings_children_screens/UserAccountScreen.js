@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { TouchableOpacity, StyleSheet, View, Text, ImageBackground, Modal, Alert, Image, ScrollView} from 'react-native';
 import { TitilliumWeb } from '../../components/TitilliumWeb';
-import {Dimensions } from "react-native";
+import Dimensions from '../../constants/Layout';
 import IonicsIcon from '../../components/IonicsIcon';
 import FontAwesomeIcon from '../../components/FontAwesomeIcon';
+import Colors from '../../constants/Colors';
 
 export default function UserAccountScreen({navigation}){
 
@@ -12,21 +13,23 @@ export default function UserAccountScreen({navigation}){
     return(        
         <ImageBackground source={require('../../assets/backgrounds/vilnius_bg.png')} 
         style={styles.background} blurRadius={5}>
+
+            <View style={styles.headerContainer}>
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                    <View>
+                        <IonicsIcon name={"ios-arrow-back"} sizeOf={35} colorOf={'arrowIdle'}/>
+                    </View> 
+                </TouchableOpacity>                   
+                <TitilliumWeb style={styles.title}>vartotojo nustatymai</TitilliumWeb>
+            </View>
+
+            <View style={{alignSelf: 'center'}}>
+                <View style={styles.hairline}/>           
+            </View>   
+
             <ScrollView keyboardDismissMode={'on-drag'} showsVerticalScrollIndicator={false}>
-
-                <View style={styles.headerContainer}>
-                    <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-                        <View>
-                            <IonicsIcon name={"ios-arrow-back"} sizeOf={35} colorOf={'arrowIdle'}/>
-                        </View> 
-                    </TouchableOpacity>                   
-                    <TitilliumWeb style={styles.title}>vartotojo nustatymai</TitilliumWeb>
-                </View>
-
+                <View style={{marginVertical: 10}}/>        
                 <View style={styles.container}>
-                    <View style={styles.hairline}/>
-                    <View style={{marginVertical: 10}}/>
-
                     <View style={styles.photoAndNameComponent}>
                         <View style={styles.photoCircle}>
                             <View style={styles.userBehind}>
@@ -46,7 +49,7 @@ export default function UserAccountScreen({navigation}){
                     <TouchableOpacity style={styles.buttonUpper} onPress={() => null} activeOpacity={0.5}>
                             <View style={styles.buttonContainer}>
                                 <TitilliumWeb style={styles.basicText}>vardo pakeitimas</TitilliumWeb>
-                                <View style={{marginLeft: Math.round((Dimensions.get('window').width)) - 160}}/>
+                                <View style={{marginLeft: Math.round((Dimensions.window.width) - 160)}}/>
                                 <View style={styles.icon}>
                                     <IonicsIcon name={"ios-arrow-forward"} sizeOf={30} colorOf={"arrowIdle"} />
                                 </View>
@@ -56,7 +59,7 @@ export default function UserAccountScreen({navigation}){
                     <TouchableOpacity style={styles.buttonLower} onPress={() => null} activeOpacity={0.5}>
                             <View style={styles.buttonContainer}>
                                 <TitilliumWeb style={styles.basicText}>el. pašto pakeitimas</TitilliumWeb>
-                                <View style={{marginLeft: Math.round((Dimensions.get('window').width)) - 177}}/>
+                                <View style={{marginLeft: Math.round((Dimensions.window.width) - 177)}}/>
                                 <View style={styles.icon}>
                                     <IonicsIcon name={"ios-arrow-forward"} sizeOf={30} colorOf={"arrowIdle"} />
                                 </View>
@@ -66,7 +69,7 @@ export default function UserAccountScreen({navigation}){
                     <TouchableOpacity style={styles.buttonLower} onPress={() => null} activeOpacity={0.5}>
                             <View style={styles.buttonContainer}>
                                 <TitilliumWeb style={styles.basicText}>slaptažodžio pakeitimas</TitilliumWeb>
-                                <View style={{marginLeft: Math.round((Dimensions.get('window').width)) - 203}}/>
+                                <View style={{marginLeft: Math.round((Dimensions.window.width) - 203)}}/>
                                 <View style={styles.icon}>
                                     <IonicsIcon name={"ios-arrow-forward"} sizeOf={30} colorOf={"arrowIdle"} />
                                 </View>
@@ -103,7 +106,7 @@ const styles = StyleSheet.create({
     hairline: {
         borderBottomWidth: 1,
         paddingTop: 8.5,
-        borderColor: 'black',
+        borderColor: Colors.hairline,
         width: 315,
     },
     backButton: {
@@ -140,7 +143,7 @@ const styles = StyleSheet.create({
         height: 100,
         borderRadius: 100/2,
         borderWidth: 1,
-        borderColor: /* '#6D6D6D' */ 'black',
+        borderColor: Colors.photoCircle,
     },
     userBehind: {
         alignItems: 'center',
@@ -158,28 +161,27 @@ const styles = StyleSheet.create({
     userMail: {
         alignSelf: 'center',
         fontSize: 19,
-
     },
     buttonUpper: {
-        backgroundColor: '#F5F3CB',
+        backgroundColor: Colors.buttonColor,
         borderWidth: 1,
-        borderColor: '#6D6D6D',
+        borderColor: Colors.buttonBorderColorBlack,
         height: 41,
         alignSelf: 'stretch',
         justifyContent: 'center',
-        borderLeftColor: '#F5F3CB',
-        borderRightColor: '#F5F3CB',
+        borderLeftColor: Colors.buttonColor,
+        borderRightColor: Colors.buttonColor,
     },
     buttonLower: {
-        backgroundColor: '#F5F3CB',
+        backgroundColor: Colors.buttonColor,
         borderWidth: 1,        
-        borderColor: '#6D6D6D',
+        borderColor: Colors.buttonBorderColorBlack,
         height: 40,
         alignSelf: 'stretch',
         justifyContent: 'center',
-        borderLeftColor: '#F5F3CB',
-        borderRightColor: '#F5F3CB',
-        borderTopColor: '#F5F3CB',
+        borderLeftColor: Colors.buttonColor,
+        borderRightColor: Colors.buttonColor,
+        borderTopColor: Colors.buttonColor,
     },
     buttonContainer: {
         flexDirection: 'row',        
@@ -189,7 +191,7 @@ const styles = StyleSheet.create({
     },
     basicText: {
         fontSize: 15,
-        color: '#CB9D3C',
+        color: Colors.defaultText,
         paddingLeft: 15,
         marginTop: 5
     },

@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { TouchableOpacity, StyleSheet, View, Text, ImageBackground, Modal, Alert, Image} from 'react-native';
 import { TitilliumWeb } from '../../components/TitilliumWeb';
-import {Dimensions } from "react-native";
 import IonicsIcon from '../../components/IonicsIcon';
 import FontAwesomeIcon from '../../components/FontAwesomeIcon';
+import Colors from '../../constants/Colors';
+import Dimensions from '../../constants/Layout';
 
 
 export default function LanguageScreen({navigation}){
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     hairline: {
         borderBottomWidth: 1,
         paddingTop: 8.5,
-        borderColor: 'black',
+        borderColor: Colors.hairline,
         width: 315,
     },
     backButton: {
@@ -82,30 +83,30 @@ const styles = StyleSheet.create({
         paddingTop: 5,     
     },
     buttonUpper: {
-        backgroundColor: '#F5F3CB',
+        backgroundColor: Colors.buttonColor,
         borderWidth: 1,
-        borderColor: '#6D6D6D',
+        borderColor: Colors.buttonBorderColorBlack,
         height: 60,
         alignSelf: 'stretch',
         justifyContent: 'center',
-        borderLeftColor: '#F5F3CB',
-        borderRightColor: '#F5F3CB',
-        borderBottomColor: '#F5F3CB',
+        borderLeftColor: Colors.buttonColor,
+        borderRightColor: Colors.buttonColor,
+        borderBottomColor: Colors.buttonColor,
     },
     buttonLower: {
-        backgroundColor: '#F5F3CB',
+        backgroundColor: Colors.buttonColor,
         borderWidth: 1,        
-        borderColor: '#6D6D6D',
+        borderColor: Colors.buttonBorderColorBlack,
         height: 60,
         alignSelf: 'stretch',
         justifyContent: 'center',
-        borderLeftColor: '#F5F3CB',
-        borderRightColor: '#F5F3CB',
-        borderTopColor: '#F5F3CB',
+        borderLeftColor: Colors.buttonColor,
+        borderRightColor: Colors.buttonColor,
+        borderTopColor: Colors.buttonColor,
     },
     languageText: {
         fontSize: 17,
-        color: '#CB9D3C',
+        color: Colors.defaultText,
         alignSelf: 'center',
         marginLeft: 35,
     },
@@ -120,13 +121,13 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
     },
     lineBetweenButtons: {
-        borderColor: '#6D6D6D',
+        borderColor: Colors.buttonBorderColorBlack,
         borderTopWidth: StyleSheet.hairlineWidth,
-        width: Math.round((Dimensions.get('window').width) - 95), 
+        width: Math.round((Dimensions.window.width) - 95), 
     },
     lineBetweenButtonsBackground: {
-        backgroundColor: '#F5F3CB',
-        borderColor: '#F5F3CB',
+        backgroundColor: Colors.buttonColor,
+        borderColor: Colors.buttonColor,
         width: 95,
     },
     flagCircle: {

@@ -1,6 +1,6 @@
 export default {
     server: {
-        ip: '192.168.0.103',
+        ip: '192.168.1.135',
         port: '3000'
     }
 }
