@@ -2,8 +2,9 @@ import * as React from 'react'
 import { TouchableOpacity, StyleSheet, View, Platform, ImageBackground, Image, Alert} from 'react-native';
 import { ScrollView} from 'react-native-gesture-handler';
 import { TitilliumWeb } from '../components/TitilliumWeb';
-import { Dimensions } from "react-native";
+import Dimensions from '../constants/Layout';
 import IonicsIcon from '../components/IonicsIcon';
+import Colors from '../constants/Colors'
 
 
 export default class SettingsScreen extends React.Component{
@@ -13,7 +14,7 @@ export default class SettingsScreen extends React.Component{
         this.state = {screenWidth: '', rememberInfo: false, radioButtonName: 'ios-radio-button-off'}
     }
 
-    screenWidth = Math.round((Dimensions.get('window').width))
+    screenWidth = Math.round(Dimensions.window.width);
 
     handleDeletion = () => {
 
@@ -67,16 +68,18 @@ export default class SettingsScreen extends React.Component{
         return(
             <ImageBackground source={require('../assets/backgrounds/kaunas_bg.png')} 
                              style={styles.background} blurRadius={5}>
+
+<           View style={styles.headerContainer}>
+                <View style={{marginVertical: 15}}/>      
+                <TitilliumWeb style={styles.title}>nustatymai</TitilliumWeb>
+            </View>
+
+            <View style={{alignSelf: 'center'}}>
+                <View style={styles.hairline}/>           
+            </View>   
             
             <ScrollView keyboardDismissMode={'on-drag'} showsVerticalScrollIndicator={false}>
                 <View style={styles.container}>
-
-                    {/* --------- */}
-                    <View style={{marginVertical: 15}}/>                   
-                    <TitilliumWeb style={styles.title}>nustatymai</TitilliumWeb>
-
-                    <View style={styles.hairline}/>
-                    {/* Šitą sekciją būtų logiškiau išmesti prieš ScrollView */}
 
                     <View style={{marginVertical: 10}}/>
 
@@ -199,6 +202,12 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
     },
+    headerContainer: {
+        flexDirection: 'row',
+        marginTop: 50.5,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     title: {
         fontSize: 22,
         fontWeight: '600',
@@ -208,7 +217,7 @@ const styles = StyleSheet.create({
     hairline: {
         borderBottomWidth: 1,
         paddingTop: 4.5,
-        borderColor: 'black',
+        borderColor: Colors.hairline,
         width: 315,
     },
     header: {
@@ -220,55 +229,55 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
     },
     button: {
-        backgroundColor: '#F5F3CB',
+        backgroundColor: Colors.buttonColor,
         borderWidth: 1,
-        borderColor: '#6D6D6D',
+        borderColor: Colors.buttonBorderColorBlack,
         height: 42,
         alignSelf: 'stretch',
         justifyContent: 'center',
-        borderLeftColor: '#F5F3CB',
-        borderRightColor: '#F5F3CB',
+        borderLeftColor: Colors.buttonColor,
+        borderRightColor: Colors.buttonColor,
     },
     // ---
     // Used so that buttons' lower and upper borders don't 
     // double if they're on top of one another
     buttonUpper: {
-        backgroundColor: '#F5F3CB',
+        backgroundColor: Colors.buttonColor,
         borderWidth: 1,
-        borderColor: '#6D6D6D',
+        borderColor: Colors.buttonBorderColorBlack,
         height: 41,
         alignSelf: 'stretch',
         justifyContent: 'center',
-        borderLeftColor: '#F5F3CB',
-        borderRightColor: '#F5F3CB',
+        borderLeftColor: Colors.buttonColor,
+        borderRightColor: Colors.buttonColor,
     },
     buttonLower: {
-        backgroundColor: '#F5F3CB',
+        backgroundColor: Colors.buttonColor,
         borderWidth: 1,        
-        borderColor: '#6D6D6D',
+        borderColor: Colors.buttonBorderColorBlack,
         height: 40,
         alignSelf: 'stretch',
         justifyContent: 'center',
-        borderLeftColor: '#F5F3CB',
-        borderRightColor: '#F5F3CB',
-        borderTopColor: '#F5F3CB',
+        borderLeftColor: Colors.buttonColor,
+        borderRightColor: Colors.buttonColor,
+        borderTopColor: Colors.buttonColor,
     },
     // ---
     languageText: {
         fontSize: 17,
-        color: '#CB9D3C',
+        color: Colors.languageText,
         paddingLeft: 19,
         marginTop: 4,
     },
     basicText: {
         fontSize: 15,
-        color: '#CB9D3C',
+        color: Colors.defaultText,
         paddingLeft: 15,
         marginTop: 5
     },
     importantText: {
         fontSize: 15,
-        color: '#D92626',
+        color: Colors.importantText,
         paddingLeft: 15,
     },
     flagCircle: {

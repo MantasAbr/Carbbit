@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { TouchableOpacity, StyleSheet, View, Text, ImageBackground, Modal, Alert, Image} from 'react-native';
 import { TitilliumWeb } from '../../components/TitilliumWeb';
-import {Dimensions } from "react-native";
 import IonicsIcon from '../../components/IonicsIcon';
 import FontAwesomeIcon from '../../components/FontAwesomeIcon';
+import Colors from '../../constants/Colors';
 
 export default function AboutScreen({navigation}){
     return(
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     hairline: {
         borderBottomWidth: 1,
         paddingTop: 8.5,
-        borderColor: 'black',
+        borderColor: Colors.hairline,
         width: 315,
     },
     backButton: {
