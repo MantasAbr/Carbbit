@@ -2,6 +2,8 @@ import * as React from 'react'
 import { TouchableOpacity, Platform, StyleSheet, View, Text, ImageBackground, Image, Alert} from 'react-native';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 
+import Layout from '../constants/Layout'
+
 export default function RegisterScreen({navigation}){
 
     const [inputName, setInputName] = React.useState('');
@@ -14,8 +16,13 @@ export default function RegisterScreen({navigation}){
                          style={styles.background} blurRadius={5}>
             <View>
                 <ScrollView keyboardDismissMode={'on-drag'} showsVerticalScrollIndicator={false}>
-
+                    <Image
+                        style={Layout.logoPresentation}
+                        source={require('../assets/images/carbbit.png')}
+                    />
+                    
                     <Text style={styles.register}>Registracija</Text>
+                    
                     <Separator/>
 
                     <Text>Vardas</Text>
@@ -24,6 +31,7 @@ export default function RegisterScreen({navigation}){
                         value={inputName}
                         style={styles.inputBox}
                     />
+                    
                     <Separator/>
 
                     <Text>El. paštas</Text>
@@ -32,6 +40,7 @@ export default function RegisterScreen({navigation}){
                         value={inputEmail}
                         style={styles.inputBox}
                     />
+                    
                     <Separator/>
 
                     <Text>Slaptažodis</Text>
@@ -41,6 +50,7 @@ export default function RegisterScreen({navigation}){
                         style={styles.inputBox}
                         secureTextEntry={true}
                     />
+                    
                     <Separator/>
 
                     <Text>Patvirtinkite slaptažodį</Text>
@@ -50,6 +60,7 @@ export default function RegisterScreen({navigation}){
                         style={styles.inputBox}
                         secureTextEntry={true}
                     />
+                    
                     <Separator/>
 
                     <TouchableOpacity style={styles.button} 
@@ -63,10 +74,10 @@ export default function RegisterScreen({navigation}){
                                             })
                                         }
                                     }}>
-                        <Text>Prisijungti</Text>
-                    
+                        <Text>Registruotis</Text>
                     </TouchableOpacity>
 
+                    <Separator />
                 </ScrollView>
             </View>
         </ImageBackground>       

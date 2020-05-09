@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { TouchableOpacity, StyleSheet, View, Text, ImageBackground, Alert} from 'react-native';
+import { Image, TouchableOpacity, StyleSheet, View, Text, ImageBackground, Alert} from 'react-native';
 import { ScrollView, TextInput} from 'react-native-gesture-handler';
 
-
+import Layout from '../constants/Layout'
 
 export default function LoginScreen({navigation}){
 
@@ -13,43 +13,48 @@ export default function LoginScreen({navigation}){
         <ImageBackground source={require('../assets/backgrounds/kaunas_bg.png')} 
                          style={styles.background} blurRadius={5}>
             <View>
-                <ScrollView keyboardDismissMode={'on-drag'} showsVerticalScrollIndicator={false}>
-                <Text style={styles.login}>Prisijungimas</Text>
-                <Separator/>
-                
-                <Text>Vardas</Text>
-                <TextInput
-                    onChangeText={text => setInputName(text)}
-                    value={inputName}
-                    style={styles.inputBox}
+                <ScrollView  keyboardDismissMode={'on-drag'} showsVerticalScrollIndicator={false}>
+                    <Image
+                        style={Layout.logoPresentation}
+                        source={require('../assets/images/carbbit.png')}
                     />
-                <Separator/>
-
-                <Text>Slaptažodis</Text>
-                <TextInput
-                    onChangeText={text => setInputPassword(text)}
-                    value={inputPassword}
-                    style={styles.inputBox}
-                    secureTextEntry={true}
-                    />
-                <Separator/>
-                <TouchableOpacity style={styles.button} onPress={() => {
-                    // set navigation head to Root (BottomNavbar component in App.js)
-                    // navigation.reset CANNOT BE CALLED OUTSIDE OF return()
-                    // or it won't work, but doesn't throw an error
-                    checkInputs(inputName, inputPassword)
-                    ? navigation.reset({
-                        index: 0,
-                        routes: [
-                            {name: 'Root'}
-                        ]
-                    })
-                    : undefined}
-                    }>
-                    <Text>Prisijungti</Text>
+                    <Text style={styles.login}>Prisijungimas</Text>
+                    <Separator/>
                     
-                </TouchableOpacity>
+                    <Text>Vardas</Text>
+                    <TextInput
+                        onChangeText={text => setInputName(text)}
+                        value={inputName}
+                        style={styles.inputBox}
+                        />
+                    <Separator/>
+
+                    <Text>Slaptažodis</Text>
+                    <TextInput
+                        onChangeText={text => setInputPassword(text)}
+                        value={inputPassword}
+                        style={styles.inputBox}
+                        secureTextEntry={true}
+                        />
+                    <Separator/>
+                    <TouchableOpacity style={styles.button} onPress={() => {
+                        // set navigation head to Root (BottomNavbar component in App.js)
+                        // navigation.reset CANNOT BE CALLED OUTSIDE OF return()
+                        // or it won't work, but doesn't throw an error
+                        checkInputs(inputName, inputPassword)
+                        ? navigation.reset({
+                            index: 0,
+                            routes: [
+                                {name: 'Root'}
+                            ]
+                        })
+                        : undefined}
+                        }>
+                        <Text>Prisijungti</Text>
+                    </TouchableOpacity>
                 
+                    <Separator />
+
                 </ScrollView>    
             </View>
         </ImageBackground>

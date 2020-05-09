@@ -9,4 +9,10 @@ export default {
     height,
   },
   isSmallDevice: width < 375,
+  logoPresentation: {
+    width: width < 375 ? '100%' : 300, 
+    height: 175,
+    marginTop: 10,
+    alignSelf: 'center'
+  }
 };

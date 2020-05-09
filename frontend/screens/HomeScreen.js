@@ -5,18 +5,15 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { MonoText } from '../components/StyledText';
 import { TitilliumWeb } from '../components/TitilliumWeb';
 
+import Layout from '../constants/Layout'
+
 export default function HomeScreen({navigation}){
     return (
         <View style={styles.container}>
-          <View style={styles.containeris}>
             <Image
-              style={styles.tinyLogo}
-              source={require('../assets/backgrounds/temp_logo.png')}
+              style={Layout.logoPresentation}
+              source={require('../assets/images/carbbit.png')}
             />
-          </View>
-           <View style={{alignSelf: 'center'}}>
-              <Text style={styles.title}>Autorent</Text>
-          </View>
             <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
                 <TouchableOpacity onPress={() => handleButton_Login(navigation)} style={styles.helpLink}>
                     <Text style={styles.helpLinkText}>Prisijungti</Text>
@@ -46,7 +43,6 @@ const styles = StyleSheet.create({
     },
     container: {
       flex: 1,
-      backgroundColor: '#fff',
     },
     containeris: {
       paddingTop: 50,
@@ -54,10 +50,6 @@ const styles = StyleSheet.create({
     },
     containeris2: {
       alignSelf: 'center'
-    },
-    tinyLogo: {
-      width: 150,
-      height: 150,
     },
     developmentModeText: {
       marginBottom: 20,
