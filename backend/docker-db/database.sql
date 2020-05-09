@@ -26,6 +26,15 @@
         FOREIGN KEY (post_id) REFERENCES Posts(post_id)
     );
 
+    CREATE TABLE IF NOT EXISTS Remembered (
+        remembered_id int AUTO_INCREMENT,
+        post_id int NOT NULL,
+        user_id int NOT NULL,
+        PRIMARY KEY (remembered_id),
+        FOREIGN KEY (post_id) REFERENCES Posts(post_id),
+        FOREIGN KEY (user_id) REFERENCES Users(user_id)
+    );
+
     INSERT INTO Users (first_name, email, password )
     VALUES
     ('iksd', 'iksd@gmail.com', 'slaptazodis5'),
@@ -50,3 +59,11 @@
     (5, 3),
     (5, 2),
     (5, 3);
+
+    INSERT INTO Remembered(post_id, user_id)
+    VALUES
+    (5, 1),
+    (3, 1),
+    (4, 2),
+    (5, 2),
+    (2, 5);
