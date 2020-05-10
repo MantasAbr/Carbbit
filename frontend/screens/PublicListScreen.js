@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import { Modal, View, ActivityIndicator, StyleSheet, TouchableOpacity, TextInput, ImageBackground, Image, RefreshControl } from 'react-native';
+import { Keyboard, Modal, View, ActivityIndicator, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, TextInput, ImageBackground, Image, RefreshControl } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import moment from "moment";
+import { Dropdown } from 'react-native-material-dropdown';
 
 import Dimensions from '../constants/Layout';
 import Colors from '../constants/Colors';
@@ -23,6 +24,7 @@ export default class PublicList extends React.Component{
         isLoading: false,
         inputValue: 'ieškoti...',
         showModal: false,
+        showFilterModal: false,
         results: [
             {
                 post_id: '',
@@ -46,6 +48,26 @@ export default class PublicList extends React.Component{
         sel_body: '',
         sel_user_id: '',
 
+        filterMinPrice: '',
+        filterMaxPrice: '',
+        filterCar: '',
+        filterMinDistance: '',
+        filterMaxDistance: '',
+        filteringOptions: [
+            {
+                value: 'pigiausi viršuje',
+            },{
+                value: 'pigiausi apačioje',
+            },{
+                value: 'artimiausi viršuje',
+            },{
+                value: 'artimiausi apačioje',
+            },{
+                value: 'nuo A iki Z',
+            },{
+                value: 'nuo Z iki A',
+            }
+        ]
     };
 
     componentDidMount(){
@@ -80,6 +102,26 @@ export default class PublicList extends React.Component{
                        sel_available_to_date: item.available_to_date,
                        sel_body: item.body,
                        sel_user_id: item.user_id});
+    }
+
+    handlePriceFromInput = (text) => {
+        this.setState({ filterMinPrice: text})
+    }
+
+    handlePriceToInput = (text) => {
+        this.setState({ filterMaxPrice: text})
+    }
+
+    handleCarInput = (text) => {
+        this.setState({ filterCar: text})
+    }
+
+    handleDistanceFromInput = (text) => {
+        this.setState({ filterMinDistance: text})
+    }
+
+    handleDistanceToInput = (text) => {
+        this.setState({ filterMaxDistance: text})
     }
 
     render() {
@@ -119,9 +161,11 @@ export default class PublicList extends React.Component{
                         <View style={{marginHorizontal: 5}}/>                   
                         <TextInput style={styles.searchInput} clearTextOnFocus={true}  
                                    onChangeText={(text) => this.setState({inputValue: text})} 
-                                   value={this.state.inputValue} />
-                        <View style={{marginHorizontal: 3}}/>          
-                        <FontAwesome name={"filter"} sizeOf={25} colorOf={"iconColor"}/>
+                                   value={this.state.inputValue} maxLength={25} />
+                        <View style={{marginHorizontal: 3}}/>
+                        <TouchableOpacity style={styles.filterIcon} onPress={() => this.setState({showFilterModal: true})}>
+                            <FontAwesome name={"filter"} sizeOf={25} colorOf={"iconColor"}/>
+                        </TouchableOpacity>                               
                         <View style={{marginLeft: 7}}/>
                     </View>
 
@@ -143,14 +187,6 @@ export default class PublicList extends React.Component{
                         data={this.state.results}
                         renderItem={({item}) =>
                             <View style={{paddingBottom: 15}}>
-                                {/*<Text style={{fontWeight:"bold"}}>{item.brand} {item.model}</Text>
-                                <Text>nuo {moment(item.available_to_date).format('YYYY-MM-DD, HH:mm')} </Text>
-                                <Text>iki {moment(item.available_from_date).format('YYYY-MM-DD, HH:mm')}</Text>
-                                <Text>{item.body}</Text>
-                                <Image
-                                    style={{ width: 150, height: 150 }}
-                                    source={{ uri: item.picture_uri }} // isideti normaliu nuotrauku, kad veiktu
-                                />*/}
                                 <TouchableOpacity style={styles.carContainer} onPress={() => {this.getSelectedCarData(item), this.setState({showModal: true})}}>
 
                                     {/* Foto komponentas */}
@@ -183,7 +219,7 @@ export default class PublicList extends React.Component{
                                 </TouchableOpacity>                       
                             </View>}
                             keyExtractor={item => item.id}
-                    />
+                />
 
                     {/* Pop-up'as pasirinktos mašinos */}    
                     <Modal transparent={true} visible={this.state.showModal} animationType={'fade'}>
@@ -198,7 +234,7 @@ export default class PublicList extends React.Component{
                                     <View style={styles.modalCircle}>
                                         <View style={styles.modalCarIconBehind}>
                                             <IonicsIcon name={"ios-car"} sizeOf={150} colorOf={"iconColor"}/>
-                                            <TitilliumWeb style={styles.circleText}>Foto nerasta</TitilliumWeb>
+                                            <TitilliumWeb style={styles.circleText}>foto nerasta</TitilliumWeb>
                                         </View>
                                     
                                         <Image
@@ -229,7 +265,7 @@ export default class PublicList extends React.Component{
 
                                     <View style={styles.modalInfoLine}>
                                         <View style={{marginLeft: 21}}/>
-                                        <TitilliumWeb style={styles.modalAutoPriceText}>Kaina: </TitilliumWeb>
+                                        <TitilliumWeb style={styles.modalAutoPriceText}>kaina: </TitilliumWeb>
                                         <View style={{marginLeft: 113}}/>
                                         <TitilliumWeb style={styles.modalAutoActualPriceText}>{this.state.sel_price} €</TitilliumWeb>
                                     </View>
@@ -238,7 +274,7 @@ export default class PublicList extends React.Component{
 
                                     <View style={styles.modalInfoLine}>
                                         <View style={{marginLeft: 21}}/>
-                                        <TitilliumWeb style={styles.modalAutoPriceText}>Atstumas: </TitilliumWeb>
+                                        <TitilliumWeb style={styles.modalAutoPriceText}>atstumas: </TitilliumWeb>
                                         <View style={{marginLeft: 63}}/>
                                         <TitilliumWeb style={styles.modalAutoActualPriceText}>{this.state.sel_location} km</TitilliumWeb>
                                     </View>
@@ -260,19 +296,131 @@ export default class PublicList extends React.Component{
                                                       onPress={() => {this.setState({showModal: false}),
                                                       console.log('Vartotojas nori susiekti su nuomininku'), 
                                                       this.props.navigation.navigate('Chats')}}>                                
-                                        <TitilliumWeb style={styles.modalButtonText}>Susisiekti</TitilliumWeb>
+                                        <TitilliumWeb style={styles.modalButtonText}>susisiekti</TitilliumWeb>
                                     </TouchableOpacity>
 
                                     <View style={{marginVertical: 10}}/>
 
                                     <TouchableOpacity style={styles.modalButton} onPress={() => this.setState({showModal: false})}>                                
-                                        <TitilliumWeb style={styles.modalButtonText}>Grįžti</TitilliumWeb>
+                                        <TitilliumWeb style={styles.modalButtonText}>grįžti</TitilliumWeb>
                                     </TouchableOpacity>
 
                                     <View style={{marginVertical: 13}}/>
                                 </ScrollView>
                                 <View style={styles.modalHairline}/>
                             </View>                            
+                        </View>
+                    </Modal>
+
+                    {/* Pop-up'as filtravimui ir rikiavimui*/}
+                    <Modal transparent={true} visible={this.state.showFilterModal} animationType={'fade'}>
+                        <View style={{backgroundColor: '#000000aa', flex: 1}}>
+                            <View style={styles.filterModal}>
+
+                                <View style={styles.filterModalHairline}/>
+
+                                <ScrollView keyboardShouldPersistTaps='never' scrollEnabled={false}>
+                                <View style={{marginVertical: 10}}/>
+
+
+                                <TitilliumWeb style={styles.filterModalHeader}>kaina</TitilliumWeb>
+                                
+                                <View style={styles.filterModalContainer}>                        
+                                    <TextInput onChangeText={this.handlePriceFromInput}
+                                    style={styles.filterPriceInputField}
+                                    underlineColorAndroid="transparent"
+                                    placeholder="nuo"
+                                    placeholderTextColor={Colors.hintText}               
+                                    multiline={false}
+                                    value={this.state.filterMinPrice}
+                                    keyboardType="numeric"
+                                    maxLength={8}/>
+
+                                    <TitilliumWeb style={{marginTop: -2, marginLeft: 4, color: Colors.hintText, fontSize: 16}}>€</TitilliumWeb>
+                                    <TitilliumWeb style={{marginHorizontal: 16}}>–</TitilliumWeb>
+
+                                    <TextInput onChangeText={this.handlePriceToInput}
+                                    style={styles.filterPriceInputField}
+                                    underlineColorAndroid="transparent"
+                                    placeholder="iki"
+                                    placeholderTextColor={Colors.hintText}               
+                                    multiline={false}
+                                    value={this.state.filterMaxPrice}
+                                    keyboardType="numeric"
+                                    maxLength={8}/>
+                                    <TitilliumWeb style={{marginTop: -2, marginLeft: 2, color: Colors.hintText, fontSize: 16}}>€</TitilliumWeb>
+                                </View>
+                                
+                                <View style={{marginVertical: 10}}/>
+                                <TitilliumWeb style={styles.filterModalHeader}>automobilis</TitilliumWeb>
+
+                                <View style={styles.filterModalContainer}>
+                                <TextInput onChangeText={this.handleCarInput}
+                                    style={styles.filterCarInputField}
+                                    underlineColorAndroid="transparent"
+                                    placeholder="įveskite raktažodį..."
+                                    placeholderTextColor={Colors.hintText}               
+                                    multiline={false}
+                                    value={this.state.filterCar}
+                                    keyboardType="default"
+                                    maxLength={30}/>
+                                </View>
+
+                                <View style={{marginVertical: 10}}/>
+                                <TitilliumWeb style={styles.filterModalHeader}>atstumas</TitilliumWeb>
+
+                                <View style={styles.filterModalContainer}>                        
+                                    <TextInput onChangeText={this.handleDistanceFromInput}
+                                    style={styles.filterDistanceInputField}
+                                    underlineColorAndroid="transparent"
+                                    placeholder="nuo"
+                                    placeholderTextColor={Colors.hintText}               
+                                    multiline={false}
+                                    value={this.state.filterMinDistance}
+                                    keyboardType="numeric"
+                                    maxLength={4}/>
+
+                                    <TitilliumWeb style={{marginTop: -2, marginLeft: 4, color: Colors.hintText, fontSize: 16}}>km</TitilliumWeb>
+                                    <TitilliumWeb style={{marginHorizontal: 26}}>–</TitilliumWeb>
+
+                                    <TextInput onChangeText={this.handleDistanceToInput}
+                                    style={styles.filterDistanceInputField}
+                                    underlineColorAndroid="transparent"
+                                    placeholder="iki"
+                                    placeholderTextColor={Colors.hintText}               
+                                    multiline={false}
+                                    value={this.state.filterMaxDistance}
+                                    keyboardType="numeric"
+                                    maxLength={4}/>
+                                    <TitilliumWeb style={{marginTop: -2, marginLeft: 2, color: Colors.hintText, fontSize: 16}}>km</TitilliumWeb>
+                                </View>
+
+                                <View style={{marginVertical: 10}}/>
+                                <View style={styles.filterModalHairline}/>
+                                <View style={{marginVertical: 10}}/>
+
+                                <View style={styles.filterModalContainer}>
+                                    <View style={styles.filterSortBoxStyle}>                                    
+                                        <Dropdown
+                                        baseColor='black'
+                                        label='rikiuoti pagal'
+                                        pickerStyle={styles.dropdownPickerStyle}
+                                        data={this.state.filteringOptions}
+                                        />
+                                    </View>
+                                </View>
+
+                                <View style={{marginVertical: 50}}/>
+
+                                <TouchableOpacity style={styles.filterModalButton} onPress={() => this.setState({showFilterModal: false})}>                                
+                                    <TitilliumWeb style={styles.filterModalButtonText}>tęsti</TitilliumWeb>
+                                </TouchableOpacity>
+
+                                <View style={{marginVertical: 11}}/>
+
+                                </ScrollView>
+                                <View style={styles.filterModalHairline}/>
+                            </View>
                         </View>
                     </Modal>
 
@@ -300,7 +448,7 @@ const styles = StyleSheet.create({
         marginLeft: -5,
     },
     bellIcon: {
-        paddingHorizontal: 10,
+        paddingHorizontal: 25,
         paddingTop: 5,
     },
     hairline: {
@@ -463,5 +611,89 @@ const styles = StyleSheet.create({
         fontSize: 20,
         alignSelf: 'center',
         color: Colors.blackText,
+    },
+
+
+
+    filterModal: {
+        backgroundColor: Colors.containerColor, 
+        flex: 1, 
+        borderColor: Colors.buttonBorderColorBlack,
+        borderWidth: 1.5, 
+        marginVertical: 70,
+        paddingVertical: 20,
+        paddingHorizontal: 20,
+        marginHorizontal: 60, 
+        borderRadius: 10, 
+    },
+    filterModalButton: {
+        backgroundColor: Colors.buttonColor,
+        borderWidth: 1,
+        borderColor: Colors.buttonBorderColorBlack,
+        height: 50,
+        width: 210,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        borderRadius: 10, 
+    },
+    filterModalHairline: {
+        borderBottomWidth: 1,
+        borderColor: Colors.hairline,
+        width: 210,
+        alignSelf: 'center',
+        justifyContent: 'center',
+    },
+    filterModalButtonText: {
+        fontSize: 20,
+        alignSelf: 'center',
+        color: Colors.blackText,
+    },
+    filterModalHeader: {
+        alignSelf: 'flex-start',
+        paddingBottom: 10,
+        fontSize: 16,
+    },
+    filterModalContainer: {
+        alignSelf: 'center',
+        flexDirection: 'row',
+    },
+    filterPriceInputField: {
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderBottomColor: Colors.hairline,
+        width: 72,
+        height: 20,
+    },
+    filterCarInputField: {
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderBottomColor: Colors.hairline,
+        width: 210,
+        height: 20,
+    },
+    filterDistanceInputField: {
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderBottomColor: Colors.hairline,
+        width: 50,
+        height: 20,
+    },
+    dropdownPickerStyle: {
+        backgroundColor: Colors.containerColor, 
+        marginTop: 86, 
+        width: 182, 
+        height: 90, 
+        marginLeft: 15,
+        borderColor: Colors.buttonBorderColorBlack,
+        borderRadius: 5,
+        borderWidth: StyleSheet.hairlineWidth,
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
+    },
+    filterSortBoxStyle: {
+        width: 180, 
+        justifyContent: 'center',
+        height: 50,
+        marginTop: -8,
+    },
+    filterIcon: {
+        paddingHorizontal: 20,
     }
 })
