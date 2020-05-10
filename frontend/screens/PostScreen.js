@@ -216,37 +216,6 @@ export default class PostScreen extends React.Component {
                 <DatePicker
                   style={styles.calendarInputStyle}
                   mode="datetime"
-                  placeholder={this.state.availableFromDate}
-                  minDate={this.state.time}
-                  maxDate="2020-12-12"
-                  confirmBtnText="Patvirtinti"
-                  cancelBtnText="Atšaukti"
-                  is24Hour={true}
-                  showIcon={false}
-                  onDateChange={(date) => {this.setState({availableFromDate: date})}}
-                  customStyles={{
-                    placeholderText :{
-                      color: Colors.hintText,
-                      fontSize: 15,                     
-                    },
-                    dateInput: {
-                      borderWidth: 0,
-                      borderColor: Colors.buttonBorderColorBlack,
-                      borderBottomWidth: StyleSheet.hairlineWidth,
-                      marginTop: -15,
-                    }
-                  }}               
-                />
-              </View>
-
-              <View style={styles.calendarComponent}>
-                <View style={styles.calendarHeader}>
-                  <TitilliumWeb style={{fontSize: 15}}>iki</TitilliumWeb>
-                </View>
-              
-                <DatePicker
-                  style={styles.calendarInputStyle}
-                  mode="datetime"
                   placeholder={this.state.availableToDate}
                   minDate={this.state.time}
                   maxDate="2020-12-12"
@@ -267,6 +236,38 @@ export default class PostScreen extends React.Component {
                       marginTop: -15,
                     }
                   }}
+                />
+
+              </View>
+
+              <View style={styles.calendarComponent}>
+                <View style={styles.calendarHeader}>
+                  <TitilliumWeb style={{fontSize: 15}}>iki</TitilliumWeb>
+                </View>
+              
+                <DatePicker
+                  style={styles.calendarInputStyle}
+                  mode="datetime"
+                  placeholder={this.state.availableFromDate}
+                  minDate={this.state.time}
+                  maxDate="2020-12-12"
+                  confirmBtnText="Patvirtinti"
+                  cancelBtnText="Atšaukti"
+                  is24Hour={true}
+                  showIcon={false}
+                  onDateChange={(date) => {this.setState({availableFromDate: date})}}
+                  customStyles={{
+                    placeholderText :{
+                      color: Colors.hintText,
+                      fontSize: 15,                     
+                    },
+                    dateInput: {
+                      borderWidth: 0,
+                      borderColor: Colors.buttonBorderColorBlack,
+                      borderBottomWidth: StyleSheet.hairlineWidth,
+                      marginTop: -15,
+                    }
+                  }}               
                 />
               </View> 
             </View>
