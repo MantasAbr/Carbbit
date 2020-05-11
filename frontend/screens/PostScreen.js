@@ -87,6 +87,8 @@ export default class PostScreen extends React.Component {
     }).catch(function(err) {
         console.log(err)
     });
+    
+    this.props.navigation.goBack();
 }
   generateBrands = () => {
     let count = Object.keys(jsonData).length;
@@ -140,7 +142,7 @@ export default class PostScreen extends React.Component {
         
           <View style={styles.headerContainer}>
               
-              <TouchableOpacity style={styles.backButton} onPress={() => null}>
+              <TouchableOpacity style={styles.backButton} onPress={() => this.props.navigation.goBack()}>
                   <View>
                       <IonicsIcon name={"ios-arrow-back"} sizeOf={35} colorOf={'arrowIdle'}/>
                   </View> 
