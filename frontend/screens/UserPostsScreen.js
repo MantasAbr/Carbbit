@@ -1,12 +1,14 @@
 import * as React from 'react'
 import { Fragment, useState } from 'react'
 import { Modal, TouchableOpacity, StyleSheet, View, ImageBackground, Image} from 'react-native';
+import moment from "moment";
 
 import Dimensions from '../constants/Layout';
 import Colors from '../constants/Colors';
 import { TitilliumWeb } from '../components/TitilliumWeb';
 import FontAwesome from '../components/FontAwesomeIcon';
 import IonicsIcon from '../components/IonicsIcon';
+import MaterialIcon from '../components/MaterialCommunityIcons'
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 
 const screenWidth = Dimensions.window.width;
@@ -16,11 +18,12 @@ export default class UserPostScreen extends React.Component{
     state = {
         isLoading: false,
         showPrivate: false,
-        privateIconName: 'unlock-alt',
-        publicPosts: 1,
+        privateIconName: 'account-key-outline',
+        publicPosts: 2,
         privatePosts: 1,
         publicPost: [
             {
+                picture_uri: '',
                 brand: "BMW", 
                 model: "530", 
                 availableFrom: "2020, 05, 10, 18, 27", 
@@ -28,6 +31,7 @@ export default class UserPostScreen extends React.Component{
                 comment: "Lorem ipsum"
             },
             {
+                picture_uri: '',
                 brand: "Volkswagen", 
                 model: "Golf", 
                 availableFrom: "2020, 05, 10, 18, 27", 
@@ -37,6 +41,7 @@ export default class UserPostScreen extends React.Component{
         ],
         privatePost: [
             {
+                picture_uri: '',
                 brand: "Audi", 
                 model: "A6", 
                 availableFrom: "2020, 05, 10, 18, 27", 
@@ -68,14 +73,14 @@ export default class UserPostScreen extends React.Component{
                     <TouchableOpacity value={this.state.showPrivate} 
                                       onPress={() => {if(this.state.showPrivate === false){
                                         this.setState({showPrivate: true})
-                                        this.setState({privateIconName: 'lock'})
+                                        this.setState({privateIconName: 'account-key'})
                                     }
                                       if(this.state.showPrivate === true){
                                         this.setState({showPrivate:  false})
-                                        this.setState({privateIconName: 'unlock-alt'})
+                                        this.setState({privateIconName: 'account-key-outline'})
                                     }}} >
                         <View style={styles.bellIcon}>
-                            <FontAwesome name={this.state.privateIconName} sizeOf={25} colorOf={"iconColor"}/>
+                            <MaterialIcon name={this.state.privateIconName} sizeOf={28} colorOf={"iconColor"}/>
                         </View> 
                     </TouchableOpacity>
 
@@ -104,7 +109,7 @@ export default class UserPostScreen extends React.Component{
                 </View>
 
                 
-
+                {/*Refresh control'o reikia, reference yra publicPosts branche PublicListScreen*/}                    
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={{marginVertical: 20}}/>
                     <TitilliumWeb style={styles.title}>vieši skelbimai</TitilliumWeb>
@@ -117,9 +122,6 @@ export default class UserPostScreen extends React.Component{
                     <ReturnPrivateList numberOfPrivatePosts={this.state.privatePosts} 
                                        car={this.state.privatePost}
                                        isAllowedToShow={this.state.showPrivate}/>
-
-
-
                 </ScrollView>                
             </ImageBackground> 
             )
@@ -130,19 +132,32 @@ export default class UserPostScreen extends React.Component{
 function ReturnPublicList(props){
 
     const [popUp, setPopUp] = useState(false);
-    const selectedCar = [{brand: '', model: ''}]
+
+    //Tikrai ne pats geriausias budas info susidet apie einamaji auto, 
+    //bet nezinau kaip 'graziai' padaryt
+    //cia dar id's reikia
+    const [carPhoto, setCarPhoto] = useState('');
+    const [carBrand, setCarBrand] = useState('');
+    const [carModel, setCarModel] = useState('');
+    const [carAvailableFrom, setCarAvailableFrom] = useState('');
+    const [carAvailableTo, setCarAvailableTo] = useState('');
+    const [carComment, setCarComment] = useState('');
 
     if(props.numberOfPublicPosts > 0){
         return(
            
-            //Refresh control'o reikia, reference yra publicPosts branche PublicListScreen
+            
             <Fragment>
             <View style={{marginVertical: 10}}/>
             <FlatList data={props.car} scrollEnabled={false}
             renderItem={({item}) => 
                 <View style={{paddingBottom: 15}}>
                 <TouchableOpacity style={styles.carContainer} 
-                                  onPress={() => {setPopUp(true)}}>
+                                  onPress={() => {setPopUp(true), setCarPhoto(item.picture_uri)
+                                                  setCarBrand(item.brand), setCarModel(item.model),
+                                                  setCarAvailableFrom(item.availableFrom), 
+                                                  setCarAvailableTo(item.carAvailableTo), 
+                                                  setCarComment(item.comment)}}>
 
                     {/* Foto komponentas */}
                     <View style={styles.circle}>
@@ -184,7 +199,11 @@ function ReturnPublicList(props){
                         <View style={styles.modalHairline}/>
                         <ScrollView showsVerticalScrollIndicator={false}>
                         
-                            <View style={{marginVertical: 5}}/>
+                            <View style={{marginVertical: 7}}/>
+
+                            <TitilliumWeb style={styles.modalPostTypeText}>viešas skelbimas</TitilliumWeb>
+
+                            <View style={{marginVertical: 7}}/>
 
                             <View style={styles.modalCircle}>
                                 <View style={styles.modalCarIconBehind}>
@@ -203,15 +222,15 @@ function ReturnPublicList(props){
                             <View style={{marginVertical: 5}}/>
 
                             <View style={styles.modalCarNameContainer}>
-                                <TitilliumWeb style={styles.modalBrandName}>{selectedCar.brand}</TitilliumWeb>
-                                <TitilliumWeb style={styles.modalModelName}>{selectedCar.model}</TitilliumWeb>
+                                <TitilliumWeb style={styles.modalBrandName}>{carBrand}</TitilliumWeb>
+                                <TitilliumWeb style={styles.modalModelName}>{carModel}</TitilliumWeb>
                             </View>
 
-                            {/*<View style={{marginVertical: 10}}/>
+                            <View style={{marginVertical: 10}}/>
 
                             <View style={styles.modalDateContainer}>                             
-                                <TitilliumWeb style={styles.modalDateFrom}>nuo {moment(this.state.sel_available_to_date).format('YYYY-MM-DD, HH:mm')} </TitilliumWeb>
-                                <TitilliumWeb style={styles.modalDateUntil}>iki {moment(this.state.sel_available_from_date).format('YYYY-MM-DD, HH:mm')}</TitilliumWeb>
+                                <TitilliumWeb style={styles.modalDateFrom}>nuo {moment(carAvailableFrom).format('YYYY-MM-DD, HH:mm')} </TitilliumWeb>
+                                <TitilliumWeb style={styles.modalDateUntil}>iki {moment(carAvailableTo).format('YYYY-MM-DD, HH:mm')}</TitilliumWeb>
                             </View>
 
                             <View style={{marginVertical: 5}}/>
@@ -222,7 +241,7 @@ function ReturnPublicList(props){
                                 <View style={{marginLeft: 21}}/>
                                 <TitilliumWeb style={styles.modalAutoPriceText}>kaina: </TitilliumWeb>
                                 <View style={{marginLeft: 113}}/>
-                                <TitilliumWeb style={styles.modalAutoActualPriceText}>{this.state.sel_price} €</TitilliumWeb>
+                                <TitilliumWeb style={styles.modalAutoActualPriceText}>TBI €</TitilliumWeb>
                             </View>
 
                             <View style={{marginVertical: 2}}/>
@@ -231,14 +250,14 @@ function ReturnPublicList(props){
                                 <View style={{marginLeft: 21}}/>
                                 <TitilliumWeb style={styles.modalAutoPriceText}>atstumas: </TitilliumWeb>
                                 <View style={{marginLeft: 63}}/>
-                                <TitilliumWeb style={styles.modalAutoActualPriceText}>{this.state.sel_location} km</TitilliumWeb>
+                                <TitilliumWeb style={styles.modalAutoActualPriceText}>TBI km</TitilliumWeb>
                             </View>
 
                             <View style={{marginVertical: 5}}/>
                             <View style={styles.modalHairline}/>
                             <View style={{marginVertical: 5}}/>
 
-                            <TitilliumWeb style={styles.modalComment}>{this.state.sel_body}</TitilliumWeb>
+                            <TitilliumWeb style={styles.modalComment}>{carComment}</TitilliumWeb>
 
 
                             <View style={{marginVertical: 5}}/>
@@ -246,10 +265,17 @@ function ReturnPublicList(props){
                             <View style={{marginVertical: 5}}/>
 
                             <View style={{marginVertical: 13}}/>
-                            */}
+                            
                             <TouchableOpacity style={styles.modalButton} 
-                                            onPress={() => setPopUp(false)}>                                
-                                <TitilliumWeb style={styles.modalButtonText}>pakeisti duomenis</TitilliumWeb>
+                                            onPress={() => {setPopUp(false), console.log("išrintas skelbimas")}}>                                
+                                <TitilliumWeb style={styles.modalButtonImportantText}>ištrinti skelbimą</TitilliumWeb>
+                            </TouchableOpacity>
+
+                            <View style={{marginVertical: 10}}/>
+
+                            <TouchableOpacity style={styles.modalButton} 
+                                            onPress={() => {setPopUp(false), console.log("skelbimas pakeistas į privatų")}}>                                
+                                <TitilliumWeb style={styles.modalButtonYellowText}>padaryti privatų</TitilliumWeb>
                             </TouchableOpacity>
 
                             <View style={{marginVertical: 10}}/>
@@ -277,6 +303,19 @@ function ReturnPublicList(props){
 }
 
 function ReturnPrivateList(props){
+
+    const [popUp, setPopUp] = useState(false);
+
+    //Tikrai ne pats geriausias budas info susidet apie einamaji auto, 
+    //bet nezinau kaip 'graziai' padaryt
+    //cia dar id's reikia
+    const [carPhoto, setCarPhoto] = useState('');
+    const [carBrand, setCarBrand] = useState('');
+    const [carModel, setCarModel] = useState('');
+    const [carAvailableFrom, setCarAvailableFrom] = useState('');
+    const [carAvailableTo, setCarAvailableTo] = useState('');
+    const [carComment, setCarComment] = useState('');
+
     if(props.isAllowedToShow){
         if(props.numberOfPrivatePosts > 0){
             return(
@@ -286,7 +325,12 @@ function ReturnPrivateList(props){
                 <FlatList data={props.car} scrollEnabled={false}
                 renderItem={({item}) => 
                     <View style={{paddingBottom: 15}}>
-                    <TouchableOpacity style={styles.carContainer} onPress={() => null}>
+                    <TouchableOpacity style={styles.carContainer} 
+                                      onPress={() => {setPopUp(true), setCarPhoto(item.picture_uri)
+                                                      setCarBrand(item.brand), setCarModel(item.model),
+                                                      setCarAvailableFrom(item.availableFrom), 
+                                                      setCarAvailableTo(item.carAvailableTo), 
+                                                      setCarComment(item.comment)}}>
     
                         {/* Foto komponentas */}
                         <View style={styles.circle}>
@@ -318,6 +362,108 @@ function ReturnPrivateList(props){
                     </View>
                 } 
                 />
+
+            <Modal transparent={true} visible={popUp} animationType={'fade'}>
+                <View style={{backgroundColor: '#000000aa', flex: 1}}>
+                    
+                    <View style={styles.modal}>                                
+                        <View style={styles.modalHairline}/>
+                        <ScrollView showsVerticalScrollIndicator={false}>
+                        
+                            <View style={{marginVertical: 7}}/>
+
+                            <TitilliumWeb style={styles.modalPostTypeText}>privatus skelbimas</TitilliumWeb>
+
+                            <View style={{marginVertical: 7}}/>
+
+                            <View style={styles.modalCircle}>
+                                <View style={styles.modalCarIconBehind}>
+                                    <IonicsIcon name={"ios-car"} sizeOf={150} colorOf={"iconColor"}/>
+                                    <TitilliumWeb style={styles.circleText}>foto nerasta</TitilliumWeb>
+                                </View>
+                            
+                                {/*<Image
+                                    style={styles.modalCarIconBehind}
+                                    source={{uri: this.state.sel_picture}}
+                                />*/}                                    
+                            </View>
+
+                            <View style={{marginVertical: 5}}/>
+                            <View style={styles.modalHairline}/>
+                            <View style={{marginVertical: 5}}/>
+
+                            <View style={styles.modalCarNameContainer}>
+                                <TitilliumWeb style={styles.modalBrandName}>{carBrand}</TitilliumWeb>
+                                <TitilliumWeb style={styles.modalModelName}>{carModel}</TitilliumWeb>
+                            </View>
+
+                            <View style={{marginVertical: 10}}/>
+
+                            <View style={styles.modalDateContainer}>                             
+                                <TitilliumWeb style={styles.modalDateFrom}>nuo {moment(carAvailableFrom).format('YYYY-MM-DD, HH:mm')} </TitilliumWeb>
+                                <TitilliumWeb style={styles.modalDateUntil}>iki {moment(carAvailableTo).format('YYYY-MM-DD, HH:mm')}</TitilliumWeb>
+                            </View>
+
+                            <View style={{marginVertical: 5}}/>
+                            <View style={styles.modalHairline}/>
+                            <View style={{marginVertical: 5}}/>
+
+                            <View style={styles.modalInfoLine}>
+                                <View style={{marginLeft: 21}}/>
+                                <TitilliumWeb style={styles.modalAutoPriceText}>kaina: </TitilliumWeb>
+                                <View style={{marginLeft: 113}}/>
+                                <TitilliumWeb style={styles.modalAutoActualPriceText}>TBI €</TitilliumWeb>
+                            </View>
+
+                            <View style={{marginVertical: 2}}/>
+
+                            <View style={styles.modalInfoLine}>
+                                <View style={{marginLeft: 21}}/>
+                                <TitilliumWeb style={styles.modalAutoPriceText}>atstumas: </TitilliumWeb>
+                                <View style={{marginLeft: 63}}/>
+                                <TitilliumWeb style={styles.modalAutoActualPriceText}>TBI km</TitilliumWeb>
+                            </View>
+
+                            <View style={{marginVertical: 5}}/>
+                            <View style={styles.modalHairline}/>
+                            <View style={{marginVertical: 5}}/>
+
+                            <TitilliumWeb style={styles.modalComment}>{carComment}</TitilliumWeb>
+
+
+                            <View style={{marginVertical: 5}}/>
+                            <View style={styles.modalHairline}/>
+                            <View style={{marginVertical: 5}}/>
+
+                            <View style={{marginVertical: 13}}/>
+                            
+                            <TouchableOpacity style={styles.modalButton} 
+                                            onPress={() => {setPopUp(false), console.log("išrintas skelbimas")}}>                                
+                                <TitilliumWeb style={styles.modalButtonImportantText}>ištrinti skelbimą</TitilliumWeb>
+                            </TouchableOpacity>
+
+                            <View style={{marginVertical: 10}}/>
+
+                            <TouchableOpacity style={styles.modalButton} 
+                                            onPress={() => {setPopUp(false), console.log("skelbimas pakeistas į viešą")}}>                                
+                                <TitilliumWeb style={styles.modalButtonYellowText}>padaryti viešą</TitilliumWeb>
+                            </TouchableOpacity>
+
+                            <View style={{marginVertical: 10}}/>
+
+                            <TouchableOpacity style={styles.modalButton} onPress={() => setPopUp(false)}>                                
+                                <TitilliumWeb style={styles.modalButtonText}>grįžti</TitilliumWeb>
+                            </TouchableOpacity>
+
+                            <View style={{marginVertical: 13}}/>
+                            
+                        </ScrollView>
+                        <View style={styles.modalHairline}/>
+                    </View>                            
+                </View>
+            </Modal>
+
+
             </Fragment>
             )
         }
@@ -542,5 +688,18 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         color: Colors.blackText,
     },
-
+    modalButtonImportantText: {
+        fontSize: 20,
+        alignSelf: 'center',
+        color: Colors.importantText,
+    },
+    modalButtonYellowText: {
+        fontSize: 20,
+        alignSelf: 'center',
+        color: Colors.defaultText,
+    },
+    modalPostTypeText: {
+        alignSelf: 'center',
+        fontSize: 25,
+    },
 })
