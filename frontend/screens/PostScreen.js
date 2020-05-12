@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image, TouchableOpacity, View, TextInput, StyleSheet, ScrollView, Alert, ImageBackground} from 'react-native';
+import { Image, TouchableOpacity, View, TextInput, StyleSheet, ScrollView, Alert, ImageBackground, AsyncStorage} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
@@ -57,9 +57,9 @@ export default class PostScreen extends React.Component {
     this.setState({isPrivate: value})
   }
 
-  handleSubmit = () => {
+  handleSubmit = async () => {
+    const userID = await AsyncStorage.getItem('user_id');
     var data = {
-
       picture_uri: this.state.image,
       body: this.state.descriptionInput,
       available_from_date: moment(this.state.availableFromDate).format('YYYY-MM-DD, HH:mm'),
@@ -67,8 +67,7 @@ export default class PostScreen extends React.Component {
       brand: this.state.firstDropDownValue,
       model: this.state.secondDropDownValue,
       is_private: this.state.isPrivate,
-      user_id: 1
-      // kitam sprinte, kai auth padarysiu bus normalus user_id
+      user_id: userID
     }
     fetch('http://' + env.server.ip + ':' + env.server.port + '/posts/', {
         method: 'POST',
