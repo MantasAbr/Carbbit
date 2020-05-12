@@ -86,6 +86,25 @@ export default class PublicList extends React.Component{
       });
     }
 
+    fetchJson_byBrand = (brand) => {
+        this.setState({isLoading: true}); // start loading new filtered data
+        fetch('http://' + env.server.ip + ':' + env.server.port + '/posts/filterBrand/' + brand,{
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            }
+        })
+        .then((response) => response.json())
+        .then((responseJson) => {
+            this.setState({ isLoading: false, results: responseJson})
+        })
+        .catch((error) =>{
+            console.error(error);
+            this.setState({isLoading: false});
+        });
+    }
+
     getSelectedCarData = (item) => {
         this.setState({sel_post_id: item.post_id, 
                        sel_brand: item.brand, 
@@ -115,6 +134,12 @@ export default class PublicList extends React.Component{
 
     handleDistanceToInput = (text) => {
         this.setState({ filterMaxDistance: text})
+    }
+
+    handleFiltering = () => {
+        this.setState({showFilterModal: false}) // remove popup
+        if (this.state.filterCar != '')
+            this.fetchJson_byBrand(this.state.filterCar);
     }
 
     render() {
@@ -402,7 +427,7 @@ export default class PublicList extends React.Component{
 
                                 <View style={{marginVertical: 25}}/>
 
-                                <TouchableOpacity style={styles.filterModalButton} onPress={() => this.setState({showFilterModal: false})}>                                
+                                <TouchableOpacity style={styles.filterModalButton} onPress={this.handleFiltering}>                                
                                     <TitilliumWeb style={styles.filterModalButtonText}>tęsti</TitilliumWeb>
                                 </TouchableOpacity>
 
