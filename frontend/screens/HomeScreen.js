@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import * as Google from 'expo-google-app-auth'
 import * as Facebook from 'expo-facebook';
-//import AsyncStorage from '@react-native-community/async-storage';
 import { TouchableOpacity, Platform, StyleSheet, View, Text, ImageBackground, Image, Button, Alert, AsyncStorage  } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import env from '../env/server'
@@ -13,6 +12,7 @@ export default function HomeScreen({navigation}){
   const [users, setUsers] = useState([
     { user_id: null, first_name: '', email: ''},
   ]);
+  
   let found = false;
 
     return (

@@ -5,9 +5,6 @@ import { FlatList } from 'react-native-gesture-handler';
 import moment from "moment";
 
 import env from '../env/server';
-/*
-    This is the screen for the main list of all public posts.
-*/
 export default class PublicList extends React.Component{
     
     state = {
@@ -52,11 +49,12 @@ export default class PublicList extends React.Component{
 
     handleDeletion = async (key) => {
         console.log(key)
-        fetch('http://' + env.server.ip + ':' + env.server.port + '/posts/' + 100, {
+        fetch('http://' + env.server.ip + ':' + env.server.port + '/posts/' + key, {
         method: 'DELETE', 
         })
         .then(res => res.text())
         .then(res => console.log(res))
+        this.fetchJson()
     }
 
 
@@ -68,7 +66,7 @@ export default class PublicList extends React.Component{
                 body: 'atnaujinom',
                 available_from_date: moment(this.state.availableFromDate).format('YYYY-MM-DD, HH:mm'),
                 available_to_date: moment(this.state.availableToDate).format('YYYY-MM-DD, HH:mm'),
-                brand: 'atnaujinom',
+                brand: 'atnaujinom3',
                 model: 'atnaujinom',
                 is_private: false,
                 user_id: userID
@@ -90,7 +88,7 @@ export default class PublicList extends React.Component{
             }).catch(function(err) {
                 console.log(err)
             });
-        
+            this.fetchJson()
     }
 
     fetchJson = async () => {
