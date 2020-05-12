@@ -6,7 +6,8 @@ import TabBarIconIonicons from '../components/TabBarIconIonicons';
 import PublicListScreen from '../screens/PublicListScreen';
 import UserPostsScreen from '../screens/UserPostsScreen';
 import ChatScreen from '../screens/ChatScreen';
-import SettingsScreen from '../screens/SettingsScreen'
+import SettingsScreen from '../screens/SettingsScreen';
+import NotificationsScreen from '../screens/NotificationsScreen';
 
 import PostScreen from '../screens/PostScreen'
 
@@ -52,6 +53,14 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={ ChatScreen }
         options={{
           title: 'pokalbiai',
+          tabBarIcon: ({ focused }) => <TabBarIconIonicons focused={focused} name="ios-chatboxes" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Notifications"
+        component={ NotificationsScreen }
+        options={{
+          title: 'pranešimai',
           tabBarIcon: ({ focused }) => <TabBarIconIonicons focused={focused} name="ios-chatboxes" />,
         }}
       />
