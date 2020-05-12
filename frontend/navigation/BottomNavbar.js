@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { KeyboardAvoidingView } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarIconAwesome5 from '../components/TabBarIconAwesome5';
 import TabBarIconIonicons from '../components/TabBarIconIonicons';
@@ -22,6 +23,10 @@ export default function BottomTabNavigator({ navigation, route }) {
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
   return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
+      style={{flex:1}}
+    >
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
         name="Rents"
@@ -64,6 +69,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
     </BottomTab.Navigator>
+    </KeyboardAvoidingView>
   )
 }
 

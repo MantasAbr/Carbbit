@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import { Keyboard, Modal, View, ActivityIndicator, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, TextInput, ImageBackground, Image, RefreshControl } from 'react-native';
+import { Keyboard, Modal, View, KeyboardAvoidingView, ActivityIndicator, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, TextInput, ImageBackground, Image, RefreshControl } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import moment from "moment";
 import { Dropdown } from 'react-native-material-dropdown';
@@ -14,6 +14,7 @@ import IonicsIcon from '../components/IonicsIcon';
 import env from '../env/server';
 
 const screenWidth = Dimensions.window.width;
+const screenHeight = Dimensions.window.height;
 
 /*
     This is the screen for the main list of all public posts.
@@ -332,8 +333,9 @@ export default class PublicList extends React.Component{
 
                     {/* Pop-up'as filtravimui ir rikiavimui*/}
                     <Modal transparent={true} visible={this.state.showFilterModal} animationType={'fade'}>
-                        <View style={{backgroundColor: '#000000aa', flex: 1}}>
-                            <View style={styles.filterModal}>
+                        {/* https://reactnative.dev/docs/keyboardavoidingview nice meme */}
+                        <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={{backgroundColor: '#000000aa', flex: 1}}>
+                            <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.filterModal}>
                                 <View style={styles.filterModalHairline}/>
                                 <View style={{height:'100%'}}>
                                 <ScrollView keyboardShouldPersistTaps='never'>
@@ -435,8 +437,8 @@ export default class PublicList extends React.Component{
                                 </ScrollView>
                                 </View>
                                 <View style={styles.filterModalHairline}/>
-                            </View>
-                        </View>
+                            </KeyboardAvoidingView>
+                        </KeyboardAvoidingView>
                     </Modal>
 
                 </View>
@@ -635,7 +637,7 @@ const styles = StyleSheet.create({
         flex: 1, 
         borderColor: Colors.buttonBorderColorBlack,
         borderWidth: 1.5, 
-        marginVertical: '20%',
+        marginVertical: '10%', //screenHeight*0.05, //screenHeight is a constant, and plain percentage can cause bugs
         paddingVertical: 20,
         paddingHorizontal: 20,
         marginHorizontal: '10%', 
