@@ -15,6 +15,10 @@ router.get('/:postId', function (request, response) {
   posts.findOne(request, response);
 })
 
+router.get('/filterBrand/:brand', function (request, response) {
+  posts.findByBrand(request, response);
+})
+
 router.get('/user/:userId', function (request, response) {
   posts.findByUserId(request, response);
 })

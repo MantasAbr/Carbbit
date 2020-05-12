@@ -79,6 +79,23 @@ exports.findByUserId = (req, res) => {
     });
 };
 
+// Find (filter) all Posts with given brand
+exports.findByBrand = (req, res) => {
+    Post.findByBrand(req.params.brand, (err, data) => {
+        if (err) {
+            if (err.kind === "not_found") {
+                res.status(404).send({
+                    message: `Not found Post with such brand ${req.params.brand}.`
+                });
+            } else {
+                res.status(500).send({
+                    message: "Error retrieving post with brand " + req.params.brand
+                });
+            }
+        } else res.send(data);
+    })
+}
+
 // Update a Customer identified by the customerId in the request
 exports.update = (req, res) => {
     // Validate Request
