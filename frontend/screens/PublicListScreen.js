@@ -54,20 +54,13 @@ export default class PublicList extends React.Component{
         filterMinDistance: '',
         filterMaxDistance: '',
         filteringOptions: [
-            {
-                value: 'pigiausi viršuje',
-            },{
-                value: 'pigiausi apačioje',
-            },{
-                value: 'artimiausi viršuje',
-            },{
-                value: 'artimiausi apačioje',
-            },{
-                value: 'nuo A iki Z',
-            },{
-                value: 'nuo Z iki A',
-            }
-        ]
+            {value: 'pigiausi viršuje',},
+            {value: 'pigiausi apačioje',},
+            {value: 'artimiausi viršuje',},
+            {value: 'artimiausi apačioje',},
+            {value: 'nuo A iki Z',},
+            {value: 'nuo Z iki A',}
+        ],
     };
 
     componentDidMount(){
@@ -316,13 +309,10 @@ export default class PublicList extends React.Component{
                     <Modal transparent={true} visible={this.state.showFilterModal} animationType={'fade'}>
                         <View style={{backgroundColor: '#000000aa', flex: 1}}>
                             <View style={styles.filterModal}>
-
                                 <View style={styles.filterModalHairline}/>
-
-                                <ScrollView keyboardShouldPersistTaps='never' scrollEnabled={false}>
-                                <View style={{marginVertical: 10}}/>
-
-
+                                <View style={{height:'100%'}}>
+                                <ScrollView keyboardShouldPersistTaps='never'>
+                                
                                 <TitilliumWeb style={styles.filterModalHeader}>kaina</TitilliumWeb>
                                 
                                 <View style={styles.filterModalContainer}>                        
@@ -410,15 +400,15 @@ export default class PublicList extends React.Component{
                                     </View>
                                 </View>
 
-                                <View style={{marginVertical: 50}}/>
+                                <View style={{marginVertical: 25}}/>
 
                                 <TouchableOpacity style={styles.filterModalButton} onPress={() => this.setState({showFilterModal: false})}>                                
                                     <TitilliumWeb style={styles.filterModalButtonText}>tęsti</TitilliumWeb>
                                 </TouchableOpacity>
 
-                                <View style={{marginVertical: 11}}/>
 
                                 </ScrollView>
+                                </View>
                                 <View style={styles.filterModalHairline}/>
                             </View>
                         </View>
@@ -620,26 +610,27 @@ const styles = StyleSheet.create({
         flex: 1, 
         borderColor: Colors.buttonBorderColorBlack,
         borderWidth: 1.5, 
-        marginVertical: 70,
+        marginVertical: '20%',
         paddingVertical: 20,
         paddingHorizontal: 20,
-        marginHorizontal: 60, 
-        borderRadius: 10, 
+        marginHorizontal: '10%', 
+        borderRadius: 10,
+        //height: '100%', // nezinau per daug laiko praleidau ir vis tiek nesupratau kodel apacioje tiek daug dead space
     },
     filterModalButton: {
         backgroundColor: Colors.buttonColor,
         borderWidth: 1,
         borderColor: Colors.buttonBorderColorBlack,
         height: 50,
-        width: 210,
+        width: '100%',
         alignSelf: 'center',
         justifyContent: 'center',
         borderRadius: 10, 
     },
     filterModalHairline: {
-        borderBottomWidth: 1,
+        borderWidth: 1,
         borderColor: Colors.hairline,
-        width: 210,
+        width: '100%',
         alignSelf: 'center',
         justifyContent: 'center',
     },
@@ -650,6 +641,7 @@ const styles = StyleSheet.create({
     },
     filterModalHeader: {
         alignSelf: 'flex-start',
+        // paddingTop: 10, // butu gerai kazkaip atskirti aiskiau, tik sitas su pirmu elementu nedraugauja
         paddingBottom: 10,
         fontSize: 16,
     },
@@ -666,7 +658,7 @@ const styles = StyleSheet.create({
     filterCarInputField: {
         borderBottomWidth: StyleSheet.hairlineWidth,
         borderBottomColor: Colors.hairline,
-        width: 210,
+        width: '100%',
         height: 20,
     },
     filterDistanceInputField: {
@@ -688,7 +680,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 0,
     },
     filterSortBoxStyle: {
-        width: 180, 
+        width: '100%', 
         justifyContent: 'center',
         height: 50,
         marginTop: -8,
