@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Image, TouchableOpacity, StyleSheet, View, Text, ImageBackground, Alert} from 'react-native';
+import { Image, TouchableOpacity, StyleSheet, View, Text, ImageBackground, Alert, AsyncStorage} from 'react-native';
 import { ScrollView, TextInput} from 'react-native-gesture-handler';
 
 import Layout from '../constants/Layout'
@@ -62,12 +62,25 @@ export default function LoginScreen({navigation}){
 }
 
 function checkInputs(name, pass){
+    _retrieveData()
     if (name === '' || pass === ''){
         alert("Nenurodytas vardas ir/arba slaptažodis");
         return false;
     }
     return true;
 }
+
+async function _retrieveData() {
+    try {
+      const value = await AsyncStorage.getItem('username');
+      if (value !== null) {
+        console.log(value);
+      }
+    } catch (error) {
+      console.log('klaida _retrieveData()')
+      console.log(error)
+    }
+  };
 
 function Separator() {
     return <View style={styles.separator} />;

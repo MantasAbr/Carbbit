@@ -37,33 +37,6 @@ export default class SettingsScreen extends React.Component{
       .then(res => console.log(res))
     }
 
-    handleUpdate = () => {
-        var data = {
-        first_name: "vardas2", 
-        email: "email2",
-        password: "slaptazodis",
-
-        }
-        console.log('labas')
-        fetch("http://192.168.56.1:3000/users/1", {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-        }).then(function(response) {
-            if (response.status >= 400) {
-            console.log('Couldn\'t update..')
-            }
-            return response.json();
-        }).then(function(data) {
-            console.log(data)    
-            if(data == "success"){
-            console.log('updated!')
-            }
-        }).catch(function(err) {
-            console.log(err)
-        });
-    }
-
     render(){
         return(
             <ImageBackground source={require('../assets/backgrounds/kaunas_bg.png')} 
