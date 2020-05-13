@@ -66,6 +66,25 @@ Post.findByUserId = (userId, result) => {
     });
 };
 
+Post.findByBrand = (brand, result) => {
+    sql.query(`SELECT * FROM Posts WHERE brand = '${brand}' AND is_private = 0`, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+
+        if (res.length) {
+            console.log("found Posts: ", res);
+            result(null, res);
+            return;
+        }
+
+        // not found Post with such brand
+        result({ kind: "not_found" }, null);
+    });
+}
+
 Post.getAll = result => {
     sql.query("SELECT * FROM Posts WHERE is_private = 0", (err, res) => {
         if (err) {

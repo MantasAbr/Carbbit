@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "25e72e56-7960-4ccb-9f3c-ab4409c82008",
+		"_postman_id": "0633ab92-fc82-41f0-9a4c-72974bee78f6",
 		"name": "Autorent",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -135,6 +135,34 @@
 					"port": "3000",
 					"path": [
 						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Posts by brand",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/posts/filterBrand/audi",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"posts",
+						"filterBrand",
+						"audi"
 					]
 				}
 			},

@@ -37,7 +37,7 @@ export default function AboutScreen({navigation}){
                         <TitilliumWeb style={styles.aboutText}>Mantas: Front-end, Design, UI & UX;</TitilliumWeb> 
                         <TitilliumWeb style={styles.aboutText}>Nedas: Back-end functions, Android quality;</TitilliumWeb>         
                         <TitilliumWeb style={styles.aboutText}>Paulius: Back-end support, iOS quality;</TitilliumWeb>
-                        <TitilliumWeb style={styles.aboutText}>Lukas: DevOps, management, security, server, browser quality.</TitilliumWeb>
+                        <TitilliumWeb style={styles.aboutText}>Lukas: DevOps, management, security, server.</TitilliumWeb>
                     </View>                        
                 </View>                
             </View>
