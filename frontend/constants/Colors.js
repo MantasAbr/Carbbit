@@ -17,6 +17,7 @@ export default {
   iconColorGray: '#6E6E6E',
 
   containerColor: '#EEECD4',
+  containerColorTransparent: '#EEECD4aa',
   buttonColor: '#F5F3CB',
   blackText: 'black',
   defaultText: '#CB9D3C',
@@ -26,6 +27,7 @@ export default {
   unavailableText: '',
   buttonBorderColorGray: '#6D6D6D',
   buttonBorderColorBlack: 'black',
+  buttonBorderColorTransparent: 'transparent',
   hairline: 'black',
   photoCircle: 'black',
 };
