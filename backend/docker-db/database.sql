@@ -18,6 +18,14 @@
         FOREIGN KEY (user_id) REFERENCES Users(user_id)
     );
 
+    CREATE TABLE IF NOT EXISTS Photos (
+        photo_id int AUTO_INCREMENT PRIMARY KEY,
+        post_id int NOT NULL,
+        uri varchar(255) NOT NULL,
+        type varchar(255) NOT NULL,
+        FOREIGN KEY (post_id) REFERENCES Posts(post_id)
+    );
+
     CREATE TABLE IF NOT EXISTS Ratings (
         rating_id int AUTO_INCREMENT,
         rating int NOT NULL,
