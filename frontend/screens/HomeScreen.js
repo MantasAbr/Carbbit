@@ -28,12 +28,22 @@ export default function HomeScreen({navigation}){
                 <TouchableOpacity onPress={() => handleButton_Register(navigation)} style={styles.helpLink}>
                     <Text style={styles.helpLinkText}>Registruotis</Text>
                 </TouchableOpacity>
-                <View style={{width: 150 , alignSelf: 'center', paddingTop: 20}}>
-                  <Button title="Sign in with Google" onPress={() => logInGoogle()} />
-                </View>
-                <View style={{width: 150 , alignSelf: 'center', paddingTop: 10}}>
-                  <Button title="Sign in with Facebook" onPress={() => logInFacebook()} />
-                </View>
+                <TouchableOpacity onPress={() => logInGoogle()}>
+                  <View style={{paddingTop: 30}}>
+                  <Image
+                    style={{paddingLeft: 350, width: 50, height: 40, alignSelf: 'center'}}
+                    source={require('../assets/images/google.png')}
+                  />
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => logInFacebook()}>
+                  <View style={{paddingTop: 20}}>
+                  <Image
+                    style={{paddingLeft: 350, width: 50, height: 40, alignSelf: 'center'}}
+                    source={require('../assets/images/facebook.png')}
+                  />
+                  </View>
+                </TouchableOpacity>
             </ScrollView>
         </View>
     )
