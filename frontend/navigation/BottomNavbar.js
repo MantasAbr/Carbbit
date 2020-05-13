@@ -41,14 +41,6 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
-        name="Post"
-        component={ PostScreen }
-        options={{
-          title: 'įkelti',
-          tabBarIcon: ({ focused }) => <TabBarIconAwesome5 focused={focused} name="user-alt" />,
-        }}
-      />
-      <BottomTab.Screen
         name="Chats"
         component={ ChatScreen }
         options={{

@@ -16,6 +16,7 @@ import LoginScreen from './screens/LoginScreen';
 import LanguageScreen from './screens/Settings_children_screens/LanguageScreen';
 import AboutScreen from './screens/Settings_children_screens/AboutScreen';
 import UserAccountScreen from './screens/Settings_children_screens/UserAccountScreen';
+import NewPostScreen from './screens/PostScreen';
 
 const Stack = createStackNavigator();
 
@@ -72,6 +73,7 @@ export default function App(props) {
             <Stack.Screen options={{headerShown: false}} name="LanguageSettings" component={LanguageScreen}/>
             <Stack.Screen options={{headerShown: false}} name="AboutScreen" component={AboutScreen}/>
             <Stack.Screen options={{headerShown: false}} name="UserAccountScreen" component={UserAccountScreen}/>
+            <Stack.Screen options={{headerShown: false}} name="Post" component={NewPostScreen}/>
           </Stack.Navigator>
         </NavigationContainer>
       </View>
