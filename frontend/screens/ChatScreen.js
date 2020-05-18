@@ -9,7 +9,7 @@ export default class ChatScreen extends React.Component{
 
     render(){
         return(
-            <ImageBackground source={require('../assets/backgrounds/alytus_bg.png')} 
+            <ImageBackground source={require('../assets/backgrounds/vilnius_bg.png')} 
             style={styles.background}>
 
             </ImageBackground>

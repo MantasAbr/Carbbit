@@ -65,7 +65,7 @@ export default function App(props) {
           <Stack.Navigator>
             <Stack.Screen name="Home" component={HomeScreen}/>
             <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen}/>
-            <Stack.Screen name="Register" component={RegisterScreen}/>
+            <Stack.Screen options={{headerShown: false}} name="Register" component={RegisterScreen}/>
             <Stack.Screen name="Root" component={BottomNavbar}/>
 
             {/* Šitam kitam langui ir visiems kitiems children screen'ams reiktų sukurti atskirą stack navigatorių iš parent elemento*/}
