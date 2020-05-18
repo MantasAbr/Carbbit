@@ -186,12 +186,12 @@ export default class PublicList extends React.Component{
                                         this.setState({showPrivate:  false})
                                         this.setState({privateIconName: 'account-key-outline'})
                                     }}} >
-                        <View style={styles.bellIcon}>
+                        <View style={styles.lockIcon}>
                             <MaterialIcon name={this.state.privateIconName} sizeOf={28} colorOf={"iconColor"}/>
                         </View> 
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => null}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Notifications")}>
                         <View style={styles.bellIcon}>
                             <FontAwesome name={"bell"} sizeOf={25} colorOf={"iconColor"}/>
                         </View> 
@@ -284,7 +284,7 @@ function ReturnPublicList(props){
                         <View style={{marginVertical: 3}}/>
                         <TitilliumWeb style={{fontSize: 16}}>Kaina: TBI €</TitilliumWeb>
                         <View style={{marginVertical: 3}}/>
-                        <TitilliumWeb style={{fontSize: 16}}>Atstumas: TBI km</TitilliumWeb>
+                        <TitilliumWeb style={{fontSize: 16}}>Miestas: TBI</TitilliumWeb>
                     </View>
 
                     {/* Ikona */}
@@ -457,7 +457,7 @@ function ReturnPrivateList(props){
                             <View style={{marginVertical: 3}}/>
                             <TitilliumWeb style={{fontSize: 16}}>Kaina: TBI €</TitilliumWeb>
                             <View style={{marginVertical: 3}}/>
-                            <TitilliumWeb style={{fontSize: 16}}>Atstumas: TBI km</TitilliumWeb>
+                            <TitilliumWeb style={{fontSize: 16}}>Miestas: TBI</TitilliumWeb>
                         </View>
     
                         {/* Ikona */}
@@ -610,6 +610,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingTop: 5,
     },
+    lockIcon: {
+        paddingHorizontal: 10,
+        paddingTop: 3,
+    },
     hairline: {
         borderBottomWidth: 1,
         paddingTop: 4.5,
@@ -620,7 +624,7 @@ const styles = StyleSheet.create({
     },
     postContainer: {
         flexDirection: 'row',
-        marginTop: 30.5,
+        marginTop: 32.5,
         alignItems: 'flex-start',
     },
     searchContainer: {
