@@ -3,6 +3,7 @@ import { TouchableOpacity, StyleSheet, View, TextInput, ImageBackground, Modal, 
 import { TitilliumWeb } from '../../components/TitilliumWeb';
 import Dimensions from '../../constants/Layout';
 import IonicsIcon from '../../components/IonicsIcon';
+import MaterialIcon from '../../components/MaterialCommunityIcons';
 import FontAwesomeIcon from '../../components/FontAwesomeIcon';
 import Colors from '../../constants/Colors';
 
@@ -25,6 +26,9 @@ export default class UserAccountScreen extends React.Component{
         emailChangeModal: false,
         passwordChangeModal: false,
         photoChangeModal: false,
+
+        showPrivate: false,
+        privateIconName: 'account-key-outline',
     }
 
     handleNameChange = (text) => {
@@ -249,7 +253,6 @@ export default class UserAccountScreen extends React.Component{
             </Modal>
 
             {/* Pop-up'as pakeisti slaptažodį */}
-            {/* TODO uždėti ikona kokią, kurią tik paspaudus bus matomas passwordas, otherwise bus hidden */}
             <Modal transparent={true} visible={this.state.passwordChangeModal} animationType={'fade'}>
                 <View style={{backgroundColor: '#000000aa', flex: 1}}>
                     <View style={styles.modalPassword}>
@@ -257,8 +260,26 @@ export default class UserAccountScreen extends React.Component{
 
                         <View style={{marginVertical: 8}}/>
 
-                        <TitilliumWeb style={styles.modalTitle}>jūsų slaptažodis:</TitilliumWeb>
-                        <TitilliumWeb style={styles.modalPasswordInfo}>{this.state.password}</TitilliumWeb>
+                        <View style={{flexDirection: 'row'}}>
+                            <TitilliumWeb style={styles.modalTitle}>jūsų slaptažodis:</TitilliumWeb>
+                            <View style={{marginLeft: 45}}/>
+                            <TouchableOpacity value={this.state.showPrivate} 
+                                      onPress={() => {if(this.state.showPrivate === false){
+                                        this.setState({showPrivate: true})
+                                        this.setState({privateIconName: 'account-key'})
+                                    }
+                                      if(this.state.showPrivate === true){
+                                        this.setState({showPrivate:  false})
+                                        this.setState({privateIconName: 'account-key-outline'})
+                                    }}} >
+                                <View style={styles.lockIcon}>
+                                    <MaterialIcon name={this.state.privateIconName} sizeOf={28} colorOf={"iconColor"}/>
+                                </View> 
+                            </TouchableOpacity>
+                        </View>
+                        
+                        
+                        <ReturnPassword truePassword={this.state.password} doShow={this.state.showPrivate}/>
 
                         <View style={{marginVertical: 5}}/>
                         <View style={styles.modalHairline}/>
@@ -286,7 +307,7 @@ export default class UserAccountScreen extends React.Component{
 
                         <TouchableOpacity style={styles.modalButton} 
                         onPress={() => {this.setState({passwordChangeModal: false}), this.updatePassword(this.state.newPassword)
-                                        }}>
+                                        this.setState({privateIconName: 'account-key-outline'}), this.setState({showPrivate: false})}}>
                             <TitilliumWeb style={styles.modalButtonProceedText}>atlikti pakeitimus</TitilliumWeb>
                         </TouchableOpacity>
 
@@ -314,6 +335,24 @@ export default class UserAccountScreen extends React.Component{
         </ImageBackground>
     )
 }
+}
+
+function ReturnPassword(props){
+    if(props.doShow){
+        return(
+            <TitilliumWeb style={styles.modalPasswordInfo}>{props.truePassword}</TitilliumWeb>
+        )
+    }
+    else{
+        let hiddenPassword = [];
+        let realPassword = props.truePassword;
+        for(let i = 0; i < realPassword.length; i++){
+            hiddenPassword.push("•");
+        }
+        return(
+            <TitilliumWeb style={styles.modalPasswordInfo}>{hiddenPassword}</TitilliumWeb>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -532,5 +571,10 @@ const styles = StyleSheet.create({
         borderBottomColor: Colors.buttonBorderColorGray,
         borderBottomWidth: StyleSheet.hairlineWidth,
         fontSize: 18,
+    },
+    lockIcon: {
+        paddingHorizontal: 10,
+        paddingTop: 3,
+        marginTop: -5,
     },
 });
