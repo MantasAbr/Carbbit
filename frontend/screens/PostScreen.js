@@ -137,7 +137,7 @@ export default class PostScreen extends React.Component {
   render() { 
     return (
       <ImageBackground source={require('../assets/backgrounds/klaipeda_bg.png')} 
-                       style={styles.background} blurRadius={5}>
+                       style={styles.background}>
         
           <View style={styles.headerContainer}>
               

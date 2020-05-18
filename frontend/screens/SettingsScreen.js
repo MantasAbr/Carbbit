@@ -40,7 +40,7 @@ export default class SettingsScreen extends React.Component{
     render(){
         return(
             <ImageBackground source={require('../assets/backgrounds/kaunas_bg.png')} 
-                             style={styles.background} blurRadius={5}>
+                             style={styles.background}>
 
 <           View style={styles.headerContainer}>
                 <View style={{marginVertical: 15}}/>      

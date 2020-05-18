@@ -64,7 +64,7 @@ export default function App(props) {
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
           <Stack.Navigator>
             <Stack.Screen name="Home" component={HomeScreen}/>
-            <Stack.Screen name="Login" component={LoginScreen}/>
+            <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen}/>
             <Stack.Screen name="Register" component={RegisterScreen}/>
             <Stack.Screen name="Root" component={BottomNavbar}/>
 

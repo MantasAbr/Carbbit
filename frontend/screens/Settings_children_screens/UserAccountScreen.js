@@ -63,7 +63,7 @@ export default class UserAccountScreen extends React.Component{
     render(){   
     return(        
         <ImageBackground source={require('../../assets/backgrounds/vilnius_bg.png')} 
-        style={styles.background} blurRadius={5}>
+        style={styles.background}>
 
             <View style={styles.headerContainer}>
                 <TouchableOpacity style={styles.backButton} onPress={() => this.props.navigation.goBack()}>

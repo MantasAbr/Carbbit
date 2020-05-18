@@ -39,8 +39,8 @@ export default class NotificationsScreen extends React.Component{
     render(){
         if(this.state.isLoading){
             return(
-                    <ImageBackground source={require('../assets/backgrounds/kaunas_bg.png')} 
-                                    style={styles.background} blurRadius={5}>
+                    <ImageBackground source={require('../assets/backgrounds/siauliai_bg.png')} 
+                                    style={styles.background}>
                         <View style={{flex:1,padding:20}}>
                         </View>
                     </ImageBackground>
@@ -48,8 +48,8 @@ export default class NotificationsScreen extends React.Component{
         }
         else{
             return(
-                <ImageBackground source={require('../assets/backgrounds/kaunas_bg.png')} 
-                                 style={styles.background} blurRadius={5}>
+                <ImageBackground source={require('../assets/backgrounds/siauliai_bg.png')} 
+                                 style={styles.background}>
                     <View style={styles.headerContainer}>
               
                         <TouchableOpacity style={styles.backButton} onPress={() => this.props.navigation.goBack()}>

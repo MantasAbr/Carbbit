@@ -161,8 +161,8 @@ export default class PublicList extends React.Component{
     render() {
         if(this.state.isLoading){
             return(
-                <ImageBackground source={require('../assets/backgrounds/kaunas_bg.png')} 
-                                style={styles.background} blurRadius={5}>
+                <ImageBackground source={require('../assets/backgrounds/alytus_bg.png')} 
+                                style={styles.background}>
                     <View style={{flex:1,padding:20}}>
                         <ActivityIndicator/>
                     </View>
@@ -171,8 +171,8 @@ export default class PublicList extends React.Component{
         }
         else{
             return(
-            <ImageBackground source={require('../assets/backgrounds/kaunas_bg.png')} 
-            style={styles.background} blurRadius={5}>
+            <ImageBackground source={require('../assets/backgrounds/alytus_bg.png')} 
+            style={styles.background}>
                 {/* "Skelbimai" eilė */}
                 <View style={styles.postContainer}>
                     <TitilliumWeb style={styles.title}>jūsų skelbimai</TitilliumWeb>

@@ -13,7 +13,7 @@ export default function RegisterScreen({navigation}){
 
     return(
         <ImageBackground source={require('../assets/backgrounds/vilnius_bg.png')} 
-                         style={styles.background} blurRadius={5}>
+                         style={styles.background}>
             <View>
                 <ScrollView keyboardDismissMode={'on-drag'} showsVerticalScrollIndicator={false}>
                     <Image
