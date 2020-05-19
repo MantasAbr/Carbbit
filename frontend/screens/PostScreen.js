@@ -160,17 +160,8 @@ export default class PostScreen extends React.Component {
 
             <TouchableOpacity style={styles.circle} onPress={() => { this.pickImage(); } } >
               
-              <View style={styles.circleContainer}>
-                <View style={styles.circleTextContainer}>
-                  <TitilliumWeb style={styles.circleText}>Įkelti automobilio</TitilliumWeb>
-                  <TitilliumWeb style={styles.circleText}>nuotrauka</TitilliumWeb>
-                </View>
+              <ShowPhoto picture={this.state.image}/>
 
-                <View style={styles.iconContainer}>
-                  <IonicsIcon name={"ios-car"} sizeOf={50} colorOf={"iconColor"}/>
-                  <FontAwesomeIcon style={{marginTop: 13, marginLeft: 7}}name={"plus"} sizeOf={25} colorOf={"iconColor"}/>
-                </View>
-              </View>             
             </TouchableOpacity>
 
             <View style={{marginVertical: 10}}/>
@@ -399,6 +390,29 @@ export default class PostScreen extends React.Component {
       console.log(E);
     }
   };
+}
+
+function ShowPhoto(props){
+  if(props.picture === ''){
+    return(
+      <View style={styles.circleContainer}>
+        <View style={styles.circleTextContainer}>
+          <TitilliumWeb style={styles.circleText}>Įkelti automobilio</TitilliumWeb>
+          <TitilliumWeb style={styles.circleText}>nuotrauka</TitilliumWeb>
+        </View>
+
+        <View style={styles.iconContainer}>
+          <IonicsIcon name={"ios-car"} sizeOf={50} colorOf={"iconColor"}/>
+          <FontAwesomeIcon style={{marginTop: 13, marginLeft: 7}}name={"plus"} sizeOf={25} colorOf={"iconColor"}/>
+        </View>
+      </View>   
+    )
+  }
+  else{
+    return(
+      <Image style={{width: 148, height: 148, borderRadius: 148/2,}} source={{uri: props.picture}}/>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
