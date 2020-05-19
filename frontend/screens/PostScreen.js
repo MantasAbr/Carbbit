@@ -32,7 +32,7 @@ export default class PostScreen extends React.Component {
     secondDropDownValue: null,
     isPrivate: false,
     priceInput: null,
-    locationInput: null,
+    cityInput: null,
     addressInput: null,
     radioButtonName: 'ios-close-circle',  
   };
@@ -45,12 +45,12 @@ export default class PostScreen extends React.Component {
     this.setState({ priceInput: text})
   }
 
-  handleLocationInput = (text) => {
-    this.setState({ locationInput: text})
-  }
-
   handleAddressInput = (text) => {
     this.setState({ addressInput: text})
+  }
+
+  handleCityInput = (text) => {
+    this.setState({ cityInput: text})
   }
 
   setSelection = (value) => {
@@ -104,13 +104,13 @@ export default class PostScreen extends React.Component {
     if (this.state.availableFromDate != "pasirinkite datą" && this.state.availableToDate != "pasirinkite datą" &&
     this.state.image != '' && this.state.descriptionInput != null && this.state.firstDropDownValue != null &&
     this.state.secondDropDownValue != null) {
-        Alert.alert('Post is ready!', 'Post it?', [
-          {text: 'NO', onPress: () => console.log('post cancelled'), style: 'default'},
-          {text: 'OK', onPress: this.handleSubmit},
+        Alert.alert('Paviešinti skelbimą?', undefined, [
+          {text: 'Ne', onPress: () => console.log('post cancelled'), style: 'default'},
+          {text: 'Taip', onPress: this.handleSubmit},
         ]);
     }else{
-      Alert.alert('Error!', 'All fields must be filled.', [
-        {text: 'OK', onPress: () => console.log('empty fields, not posted.')},
+      Alert.alert('Klaida!', 'Visi laukai turi būti užpildyti', [
+        {text: 'Gerai', onPress: () => console.log('empty fields, not posted.')},
       ]);
     }
   }
@@ -137,7 +137,7 @@ export default class PostScreen extends React.Component {
   render() { 
     return (
       <ImageBackground source={require('../assets/backgrounds/klaipeda_bg.png')} 
-                       style={styles.background} blurRadius={5}>
+                       style={styles.background}>
         
           <View style={styles.headerContainer}>
               
@@ -296,18 +296,35 @@ export default class PostScreen extends React.Component {
             <View style={{marginVertical: 10}}/>
             <TitilliumWeb style={styles.header}>automobilio vieta</TitilliumWeb>
 
-            <View style={styles.locationContainer}>
-              <View style={styles.locationInputContainer}>
+            <View style={styles.addressContainer}>
+              <View style={styles.addressInputContainer}>
                 <FontAwesomeIcon name={"location-arrow"} sizeOf={30} colorOf={"iconColorGray"} style={styles.navIcon}/>
 
+                <View style={{flexDirection: 'column'}}>
+
+                <TextInput onChangeText={this.handleCityInput}
+                style={styles.cityInputField}
+                underlineColorAndroid="transparent"
+                placeholder="miestas"
+                placeholderTextColor={Colors.hintText}               
+                multiline={false}
+                value={this.state.cityInput}
+                maxLength={25}
+                />
+
+                <View style={{marginVertical: 5}}/>
+
                 <TextInput onChangeText={this.handleAddressInput}
-                style={styles.locationInputField}
+                style={styles.addressInputField}
                 underlineColorAndroid="transparent"
                 placeholder="adresas"
                 placeholderTextColor={Colors.hintText}               
                 multiline={false}
                 value={this.state.addressInput}
+                maxLength={35}
                 />
+
+                </View>
               </View>
             </View>
 
@@ -377,7 +394,7 @@ export default class PostScreen extends React.Component {
     if (Constants.platform.ios) {
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
       if (status !== 'granted') {
-        alert('Sorry, we need camera roll permissions to upload a picture!');
+        alert('Atsiprašome, tačiau programėlei reikia kameros teisių patvirtinimo.');
       }
     }
   };
@@ -539,7 +556,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
     marginTop: 10,
   },
-  locationContainer: {
+  addressContainer: {
     alignItems: 'center',
     flexDirection: 'column',
     borderRadius: 10,
@@ -547,18 +564,27 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: Colors.containerColor,
     width: 347,
-    height: 50,
+    height: 80,
   },
-  locationInputContainer: {
+  addressInputContainer: {
     flexDirection: 'row',
     alignSelf: 'flex-start'
   },
   navIcon: {
-    marginTop: 8,
+    marginTop: 25,
     marginLeft: 40,
     height: 27,
   },
-  locationInputField: {
+  addressInputField: {
+    width: 210,
+    color: Colors.blackText,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: Colors.hairline,
+    fontSize: 15,
+    marginLeft: 18,
+    marginTop: 10,
+  },
+  cityInputField: {
     width: 210,
     color: Colors.blackText,
     borderBottomWidth: StyleSheet.hairlineWidth,

@@ -147,7 +147,7 @@ export default class PublicList extends React.Component{
         if(this.state.isLoading){
             return(
                 <ImageBackground source={require('../assets/backgrounds/kaunas_bg.png')} 
-                                style={styles.background} blurRadius={5}>
+                                style={styles.background}>
                     <View style={{flex:1,padding:20}}>
                         <ActivityIndicator/>
                     </View>
@@ -156,13 +156,13 @@ export default class PublicList extends React.Component{
         }
         return(
             <ImageBackground source={require('../assets/backgrounds/kaunas_bg.png')} 
-                                style={styles.background} blurRadius={5}>
+                                style={styles.background}>
 
                 {/* "Skelbimai" eilė */}
                 <View style={styles.postContainer}>
                     <TitilliumWeb style={styles.title}>skelbimai</TitilliumWeb>
-                    <View style={{marginLeft: 160}}/>
-                    <TouchableOpacity onPress={() => null}>
+                    <View style={{marginLeft: 140}}/>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Notifications")}>
                         <View style={styles.bellIcon}>
                             <FontAwesome name={"bell"} sizeOf={25} colorOf={"iconColor"}/>
                         </View> 
@@ -226,7 +226,7 @@ export default class PublicList extends React.Component{
                                         <View style={{marginVertical: 3}}/>
                                         <TitilliumWeb style={{fontSize: 16}}>Kaina: TBI €</TitilliumWeb>
                                         <View style={{marginVertical: 3}}/>
-                                        <TitilliumWeb style={{fontSize: 16}}>Atstumas: TBI km</TitilliumWeb>
+                                        <TitilliumWeb style={{fontSize: 16}}>Miestas: TBI</TitilliumWeb>
                                     </View>
 
                                     {/* Ikona */}
@@ -462,11 +462,12 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: '600',
         letterSpacing: 1,
-        marginLeft: -5,
+        marginLeft: 20,
     },
     bellIcon: {
         paddingHorizontal: 25,
         paddingTop: 5,
+        paddingBottom: 4,
     },
     hairline: {
         borderBottomWidth: 1,
@@ -478,7 +479,7 @@ const styles = StyleSheet.create({
     },
     postContainer: {
         flexDirection: 'row',
-        marginTop: 30.5,
+        marginTop: 32,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -486,6 +487,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+        marginLeft: 5,
     },
     searchInput: {
         color: Colors.hintText,
@@ -634,15 +636,15 @@ const styles = StyleSheet.create({
 
     filterModal: {
         backgroundColor: Colors.containerColor, 
-        flex: 1, 
         borderColor: Colors.buttonBorderColorBlack,
         borderWidth: 1.5, 
-        marginVertical: '10%', //screenHeight*0.05, //screenHeight is a constant, and plain percentage can cause bugs
-        paddingVertical: 20,
+        marginTop: '10%', //screenHeight*0.05, //screenHeight is a constant, and plain percentage can cause bugs
+        paddingTop: 20,
         paddingHorizontal: 20,
         marginHorizontal: '10%', 
         borderRadius: 10,
         //height: '100%', // nezinau per daug laiko praleidau ir vis tiek nesupratau kodel apacioje tiek daug dead space
+        marginBottom: '30%'
     },
     filterModalButton: {
         backgroundColor: Colors.buttonColor,
@@ -655,7 +657,7 @@ const styles = StyleSheet.create({
         borderRadius: 10, 
     },
     filterModalHairline: {
-        borderWidth: 1,
+        borderWidth: StyleSheet.hairlineWidth,
         borderColor: Colors.hairline,
         width: '100%',
         alignSelf: 'center',
@@ -713,6 +715,6 @@ const styles = StyleSheet.create({
         marginTop: -8,
     },
     filterIcon: {
-        paddingHorizontal: 20,
+        
     }
 })

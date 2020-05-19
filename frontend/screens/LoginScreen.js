@@ -2,7 +2,11 @@ import * as React from 'react'
 import { Image, TouchableOpacity, StyleSheet, View, Text, ImageBackground, Alert, AsyncStorage} from 'react-native';
 import { ScrollView, TextInput} from 'react-native-gesture-handler';
 
-import Layout from '../constants/Layout'
+import IonicsIcon from '../components/IonicsIcon'
+import { TitilliumWeb } from '../components/TitilliumWeb'
+import FontAwesomeIcon from '../components/FontAwesomeIcon';
+import Colors from '../constants/Colors';
+import Dimensions from '../constants/Layout';
 
 export default function LoginScreen({navigation}){
 
@@ -10,53 +14,81 @@ export default function LoginScreen({navigation}){
     const [inputPassword, setInputPassword] = React.useState('');
 
     return(
-        <ImageBackground source={require('../assets/backgrounds/kaunas_bg.png')} 
-                         style={styles.background} blurRadius={5}>
-            <View>
-                <ScrollView  keyboardDismissMode={'on-drag'} showsVerticalScrollIndicator={false}>
-                    <Image
-                        style={Layout.logoPresentation}
-                        source={require('../assets/images/carbbit.png')}
-                    />
-                    <Text style={styles.login}>Prisijungimas</Text>
-                    <Separator/>
-                    
-                    <Text>Vardas</Text>
-                    <TextInput
-                        onChangeText={text => setInputName(text)}
-                        value={inputName}
-                        style={styles.inputBox}
-                        />
-                    <Separator/>
+        <ImageBackground source={require('../assets/backgrounds/klaipeda_bg.png')} 
+                         style={styles.background}>
 
-                    <Text>Slaptažodis</Text>
-                    <TextInput
-                        onChangeText={text => setInputPassword(text)}
-                        value={inputPassword}
-                        style={styles.inputBox}
-                        secureTextEntry={true}
-                        />
-                    <Separator/>
-                    <TouchableOpacity style={styles.button} onPress={() => {
-                        // set navigation head to Root (BottomNavbar component in App.js)
-                        // navigation.reset CANNOT BE CALLED OUTSIDE OF return()
-                        // or it won't work, but doesn't throw an error
-                        checkInputs(inputName, inputPassword)
-                        ? navigation.reset({
-                            index: 0,
-                            routes: [
-                                {name: 'Root'}
-                            ]
-                        })
-                        : undefined}
-                        }>
-                        <Text>Prisijungti</Text>
-                    </TouchableOpacity>
-                
-                    <Separator />
-
-                </ScrollView>    
+            <View style={styles.headerContainer}>
+              
+              <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                  <View>
+                      <IonicsIcon name={"ios-arrow-back"} sizeOf={35} colorOf={'arrowIdle'}/>
+                  </View> 
+              </TouchableOpacity>                   
+              <TitilliumWeb style={styles.title}>prisijungimas</TitilliumWeb>
             </View>
+
+            <View style={{alignSelf: 'center'}}>
+                <View style={styles.hairline}/>           
+            </View>
+
+
+            <ScrollView  keyboardDismissMode={'on-drag'} showsVerticalScrollIndicator={false}>
+                
+                <View style={{marginVertical: 40}}/>
+                <View style={styles.container}>
+
+                <View style={styles.inputContainer}>
+                    <View style={styles.inputContainerUpperHairline}/>
+                    <View style={{flexDirection: 'row'}}>
+                        <FontAwesomeIcon  style={{marginVertical: 2, marginHorizontal: 2}}name={"user"} sizeOf={35}/>
+                        <View style={{marginHorizontal: 5}}/>
+                        <TextInput
+                            onChangeText={text => setInputName(text)}
+                            value={inputName}
+                            style={styles.inputBox}
+                            placeholder={"vardas..."}
+                            placeholderTextColor={Colors.hintText}
+                        />
+                    </View>
+                </View>
+
+                <View style={{marginVertical: 30}}/>
+
+                <View style={styles.inputContainer}>
+                    <View style={styles.inputContainerUpperHairline}/>
+                    <View style={{flexDirection: 'row'}}>
+                        <FontAwesomeIcon  style={{marginTop: 2, marginLeft: 3}}name={"lock"} sizeOf={40}/>
+                        <View style={{marginHorizontal: 5}}/>
+                        <TextInput
+                            onChangeText={text => setInputPassword(text)}
+                            value={inputPassword}
+                            style={styles.inputBox}
+                            secureTextEntry={true}
+                            placeholder={"slaptažodis..."}
+                            placeholderTextColor={Colors.hintText}
+                            />
+                    </View>
+                </View>
+
+                <View style={{marginVertical: 40}}/>
+
+                <TouchableOpacity style={styles.button} onPress={() => {
+                    // set navigation head to Root (BottomNavbar component in App.js)
+                    // navigation.reset CANNOT BE CALLED OUTSIDE OF return()
+                    // or it won't work, but doesn't throw an error
+                    checkInputs(inputName, inputPassword)
+                    ? navigation.reset({
+                        index: 0,
+                        routes: [
+                            {name: 'Root'}
+                        ]
+                    })
+                    : undefined}
+                    }>
+                    <TitilliumWeb style={{fontSize: 26}}>tęsti</TitilliumWeb>
+                </TouchableOpacity>
+                </View>
+            </ScrollView>    
         </ImageBackground>
     )
 }
@@ -82,10 +114,6 @@ async function _retrieveData() {
     }
   };
 
-function Separator() {
-    return <View style={styles.separator} />;
-}
-
 function handleLoginButton(navigation){
     navigation.navigate('Root');
 }
@@ -101,26 +129,59 @@ const styles = StyleSheet.create({
     },
     inputBox: {
         height: 40,
-        width: 300,
-        borderColor: 'black',
-        borderWidth: 2,
-        borderBottomWidth: 2,
-        shadowColor: 'black',
-        shadowOpacity: 0.2,
-        backgroundColor: '#EEECD4',        
+        width: '88%',
+        borderColor: Colors.buttonBorderColorBlack,
+        borderBottomWidth: 1,
+        fontSize: 15,      
     },
     background: {
-        justifyContent: 'center',
-        alignItems: 'center',
         width: '100%',
         height: '100%',
     },
+    container: {
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
+    },
     button: {
-        backgroundColor: '#EEECD4',
-        borderWidth: 2,
-        borderColor: 'black',
-        height: 50,
+        backgroundColor: Colors.buttonColor,
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: Colors.buttonBorderColorBlack,
+        height: '20%',
+        width: '55%',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    headerContainer: {
+        flexDirection: 'row',
+        marginTop: 50.5,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    title: {
+        fontSize: 27,
+        fontWeight: '600',
+        letterSpacing: 1,
+        marginLeft: 15,
+    },
+    hairline: {
+        borderBottomWidth: 1,
+        paddingTop: 8.5,
+        borderColor: Colors.hairline,
+        width: 240,
+    },
+    backButton: {
+        marginLeft: -30,
+        paddingHorizontal: 10,
+        paddingTop: 5,        
+    },
+    inputContainer: {
+        width: '90%',
+    },
+    inputContainerUpperHairline: {
+        borderBottomWidth: 1,
+        borderColor: Colors.hairline,
+        width: '100%',
     },
 });

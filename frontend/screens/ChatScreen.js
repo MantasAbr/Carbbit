@@ -10,7 +10,7 @@ export default class ChatScreen extends React.Component{
     render(){
         return(
             <ImageBackground source={require('../assets/backgrounds/vilnius_bg.png')} 
-            style={styles.background} blurRadius={5}>
+            style={styles.background}>
 
             </ImageBackground>
         )

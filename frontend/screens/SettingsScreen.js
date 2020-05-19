@@ -40,7 +40,7 @@ export default class SettingsScreen extends React.Component{
     render(){
         return(
             <ImageBackground source={require('../assets/backgrounds/kaunas_bg.png')} 
-                             style={styles.background} blurRadius={5}>
+                             style={styles.background}>
 
 <           View style={styles.headerContainer}>
                 <View style={{marginVertical: 15}}/>      
@@ -56,7 +56,7 @@ export default class SettingsScreen extends React.Component{
 
                     <View style={{marginVertical: 10}}/>
 
-                    <TitilliumWeb style={styles.header}>pasirinkti kalbą</TitilliumWeb>           
+                    {/*<TitilliumWeb style={styles.header}>pasirinkti kalbą</TitilliumWeb>           
                     <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('LanguageSettings')} activeOpacity={0.5}>
                         <View style={styles.buttonContainer}>
                             <Image source={require('../assets/custom_icons/lt_circle.png')} style={styles.flagCircle}/>
@@ -68,7 +68,7 @@ export default class SettingsScreen extends React.Component{
                         </View>
                     </TouchableOpacity> 
 
-                    <View style={{marginVertical: 23}}/>
+                    <View style={{marginVertical: 23}}/>*/}
 
                     <TitilliumWeb style={styles.header}>paskyros valdymas</TitilliumWeb>
 
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     },
     headerContainer: {
         flexDirection: 'row',
-        marginTop: 50.5,
+        marginTop: 33,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: '600',
         letterSpacing: 1,
-        paddingRight: 185,
+        paddingRight: 175,
     },
     hairline: {
         borderBottomWidth: 1,

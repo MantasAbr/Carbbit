@@ -17,6 +17,7 @@ import LanguageScreen from './screens/Settings_children_screens/LanguageScreen';
 import AboutScreen from './screens/Settings_children_screens/AboutScreen';
 import UserAccountScreen from './screens/Settings_children_screens/UserAccountScreen';
 import NewPostScreen from './screens/PostScreen';
+import NotificationsScreen from './screens/NotificationsScreen';
 
 const Stack = createStackNavigator();
 
@@ -62,9 +63,9 @@ export default function App(props) {
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
           <Stack.Navigator>
-            <Stack.Screen name="Home" component={HomeScreen}/>
-            <Stack.Screen name="Login" component={LoginScreen}/>
-            <Stack.Screen name="Register" component={RegisterScreen}/>
+            <Stack.Screen options={{headerShown: false}} name="Home" component={HomeScreen}/>
+            <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen}/>
+            <Stack.Screen options={{headerShown: false}} name="Register" component={RegisterScreen}/>
             <Stack.Screen name="Root" component={BottomNavbar}/>
 
             {/* Šitam kitam langui ir visiems kitiems children screen'ams reiktų sukurti atskirą stack navigatorių iš parent elemento*/}
@@ -74,6 +75,7 @@ export default function App(props) {
             <Stack.Screen options={{headerShown: false}} name="AboutScreen" component={AboutScreen}/>
             <Stack.Screen options={{headerShown: false}} name="UserAccountScreen" component={UserAccountScreen}/>
             <Stack.Screen options={{headerShown: false}} name="Post" component={NewPostScreen}/>
+            <Stack.Screen options={{headerShown: false}} name="Notifications" component={NotificationsScreen}/>
           </Stack.Navigator>
         </NavigationContainer>
       </View>
