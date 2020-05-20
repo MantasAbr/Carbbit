@@ -18,8 +18,11 @@ exports.create = (req, res) => {
         brand: req.body.brand,
         model: req.body.model,
         isPrivate: req.body.is_private,
+        price: req.body.price,
+        locationCity: req.body.location_city,
+        locationAddress: req.body.location_address,
+        inUse: req.body.in_use,
         userId: req.body.user_id,
-        private: req.body.private,
     });
 
     // Save Post in the database
@@ -115,6 +118,10 @@ exports.update = (req, res) => {
             brand: req.body.brand,
             model: req.body.model,
             isPrivate: req.body.is_private,
+            price: req.body.price,
+            locationCity: req.body.location_city,
+            locationAddress: req.body.location_address,
+            inUse: req.body.in_use,
             userId: req.body.user_id,
         }),
         (err, data) => {

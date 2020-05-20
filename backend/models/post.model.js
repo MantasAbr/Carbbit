@@ -9,14 +9,17 @@ const Post = function(post) {
     this.brand = post.brand;
     this.model = post.model;
     this.isPrivate = post.isPrivate;
+    this.price = post.price;
+    this.locationCity = post.locationCity;
+    this.locationAddress = post.locationAddress;
+    this.inUse = post.inUse;
     this.userId = post.userId;
-    this.private = post.private;
 };
 
 Post.create = (newPost, result) => {
     console.log(newPost.isPrivate)
-    let postArray = [newPost.pictureUri, newPost.body, newPost.availableToDate, newPost.availableFromDate, newPost.brand, newPost.model, newPost.isPrivate, newPost.userId];
-    sql.query('INSERT INTO Posts (picture_uri , body, available_from_date, available_to_date, brand, model, is_private, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', postArray, (err, res) => {
+    let postArray = [newPost.pictureUri, newPost.body, newPost.availableToDate, newPost.availableFromDate, newPost.brand, newPost.model, newPost.isPrivate, newPost.price, newPost.locationCity, newPost.locationAddress, newPost.inUse, newPost.userId];
+    sql.query('INSERT INTO Posts (picture_uri , body, available_from_date, available_to_date, brand, model, is_private, price, location_city, location_address, in_use, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', postArray, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -97,10 +100,11 @@ Post.getAll = result => {
     });
 };
 
+
 Post.updateById = (id, post, result) => {
     sql.query(
-        "UPDATE Posts SET picture_uri = ?, body = ?, available_from_date = ?, available_to_date = ?, brand = ?, model = ?, is_private = ? WHERE post_id = ?",
-        [post.pictureUri, post.body, post.availableFromDate, post.availableToDate, post.brand, post.model, post.isPrivate, id],
+        "UPDATE Posts SET picture_uri = ?, body = ?, available_from_date = ?, available_to_date = ?, brand = ?, model = ?, is_private = ?, price = ?, location_city = ?, location_address = ?, in_use = ? WHERE post_id = ?",
+        [post.pictureUri, post.body, post.availableFromDate, post.availableToDate, post.brand, post.model, post.isPrivate, post.price, post.locationCity, post.locationAddress, post.inUse, id],
         (err, res) => {
             if (err) {
                 console.log("error: ", err);

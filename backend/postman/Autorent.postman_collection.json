@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0633ab92-fc82-41f0-9a4c-72974bee78f6",
+		"_postman_id": "8fa21ba9-05e7-4b8c-afd9-9d3feaf8cc2b",
 		"name": "Autorent",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -141,19 +141,12 @@
 			"response": []
 		},
 		{
-			"name": "Posts by brand",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
+			"name": "PostsByBrand",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
-					"raw": "http://localhost:3000/posts/filterBrand/audi",
+					"raw": "http://localhost:3000/posts/filterBrand/BMW",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -162,7 +155,7 @@
 					"path": [
 						"posts",
 						"filterBrand",
-						"audi"
+						"BMW"
 					]
 				}
 			},
@@ -175,7 +168,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"picture_uri\": \"image/jpeg;base1\",\r\n    \"body\": \"aprasymas\",\r\n    \"available_from_date\": \"2020-04-29 10:20:21.000\",\r\n    \"available_to_date\": \"2020-04-29 10:20:21.000\",\r\n    \"brand\": \"BMW\",\r\n    \"model\": \"E46\",\r\n    \"is_private\": 1,\r\n    \"user_id\": 5\r\n}",
+					"raw": "{\r\n    \"picture_uri\": \"image/jpeg;base1\",\r\n    \"body\": \"aprasymas\",\r\n    \"available_from_date\": \"2020-04-29 10:20:21.000\",\r\n    \"available_to_date\": \"2020-04-29 10:20:21.000\",\r\n    \"brand\": \"MB\",\r\n    \"model\": \"E46\",\r\n    \"is_private\": 0,\r\n    \"price\": 10.53,\r\n    \"location_city\": \"Kaunas\",\r\n    \"location_address\": \"Centras\",\r\n    \"in_use\": 1,\r\n    \"user_id\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -202,7 +195,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/posts/2",
+					"raw": "http://localhost:3000/posts/5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -210,7 +203,7 @@
 					"port": "3000",
 					"path": [
 						"posts",
-						"2"
+						"5"
 					]
 				}
 			},
@@ -223,7 +216,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"picture_uri\": \"image/jpeg;base1\",\r\n    \"body\": \"aprasymas\",\r\n    \"available_from_date\": \"2020-04-29 10:20:21.000\",\r\n    \"available_to_date\": \"2020-04-29 10:20:21.000\",\r\n    \"brand\": \"BMW\",\r\n    \"model\": \"E46\",\r\n    \"is_private\": 0\r\n}",
+					"raw": "{\r\n    \"picture_uri\": \"image/jpeg;base1\",\r\n    \"body\": \"aprasymas\",\r\n    \"available_from_date\": \"2020-04-29 10:20:21.000\",\r\n    \"available_to_date\": \"2020-04-29 10:20:21.000\",\r\n    \"brand\": \"BMW\",\r\n    \"model\": \"E46\",\r\n    \"is_private\": 0,\r\n    \"price\": 9.99,\r\n    \"location_city\": \"KaunasUpdate\",\r\n    \"location_address\": \"CentrasUpdate\",\r\n    \"in_use\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
