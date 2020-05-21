@@ -14,6 +14,10 @@
         brand varchar(255) NOT NULL,
         model varchar(255) NOT NULL,
         is_private BIT NOT NULL,
+        price double NOT NULL,
+        location_city varchar(255) NOT NULL,
+        location_address varchar(255) NOT NULL,
+        in_use BIT NOT NULL,
         user_id int NOT NULL, PRIMARY KEY (post_id),
         FOREIGN KEY (user_id) REFERENCES Users(user_id)
     );
@@ -52,13 +56,13 @@
     ('Nedas', 'Nedas@gmail.com', 'slaptazodis5'),
     ('Paulius', 'Paulius@gmail.com', 'slaptazodis5');
 
-    INSERT INTO Posts (picture_uri , body, available_from_date, available_to_date, brand, model, is_private, user_id)
+    INSERT INTO Posts (picture_uri , body, available_from_date, available_to_date, brand, model, is_private, price, location_city, location_address, in_use, user_id)
     VALUES
-    ('image/jpeg;base1', 'aprasymas', CURRENT_TIMESTAMP() , CURRENT_TIMESTAMP() , 'BMW' , 'E46', 1, 1),
-    ('image/jpeg;base2', 'aprasymas', CURRENT_TIMESTAMP() , CURRENT_TIMESTAMP() , 'Audi' , 'A6' , 0, 2),
-    ('image/jpeg;base3', 'aprasymas', CURRENT_TIMESTAMP() , CURRENT_TIMESTAMP() , 'Audi' , 'A7' , 0, 3),
-    ('image/jpeg;base4', 'aprasymas', CURRENT_TIMESTAMP() , CURRENT_TIMESTAMP() , 'Audi' , 'A3' , 0, 4),
-    ('image/jpeg;base5', 'aprasymas', CURRENT_TIMESTAMP() , CURRENT_TIMESTAMP() , 'Audi' , 'A6' , 0, 5);
+    ('image/jpeg;base1', 'aprasymas', CURRENT_TIMESTAMP() , CURRENT_TIMESTAMP() , 'BMW' , 'E46', 1, 10.00, 'KAUNAS', '', 1, 1),
+    ('image/jpeg;base2', 'aprasymas', CURRENT_TIMESTAMP() , CURRENT_TIMESTAMP() , 'Audi' , 'A6' , 0, 12.00, 'VILNIUS', '', 0, 2),
+    ('image/jpeg;base3', 'aprasymas', CURRENT_TIMESTAMP() , CURRENT_TIMESTAMP() , 'Audi' , 'A7' , 0, 15.00, 'KLAIPEDA', '', 1, 3),
+    ('image/jpeg;base4', 'aprasymas', CURRENT_TIMESTAMP() , CURRENT_TIMESTAMP() , 'Audi' , 'A3' , 0, 8.00, 'KAUNAS', '', 0, 4),
+    ('image/jpeg;base5', 'aprasymas', CURRENT_TIMESTAMP() , CURRENT_TIMESTAMP() , 'Audi' , 'A6' , 0, 5.00, 'SIAULIAI', '', 1, 5);
 
     INSERT INTO Ratings (rating, post_id)
     VALUES
