@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import { Keyboard, Modal, View, KeyboardAvoidingView, ActivityIndicator, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, TextInput, ImageBackground, Image, RefreshControl } from 'react-native';
+import { Keyboard, Modal, View, KeyboardAvoidingView, ActivityIndicator, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, TextInput, ImageBackground, Image, RefreshControl, ToastAndroid, AlertIOS } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import moment from "moment";
 import { Dropdown } from 'react-native-material-dropdown';
@@ -52,8 +52,7 @@ export default class PublicList extends React.Component{
         filterMinPrice: '',
         filterMaxPrice: '',
         filterCar: '',
-        filterMinDistance: '',
-        filterMaxDistance: '',
+        filterCity: '',
         filteringOptions: [
             {value: 'pigiausi viršuje',},
             {value: 'pigiausi apačioje',},
@@ -96,7 +95,8 @@ export default class PublicList extends React.Component{
               'Content-Type': 'application/json',
             }
         })
-        .then((response) => response.json())
+        .then((response) => response.ok ? response.json() : // nested one-liner if, spaghettio
+            Platform.OS === "android" ? ToastAndroid.show("įrašų nerasta", ToastAndroid.LONG) : AlertIOS.alert("įrašų nerasta"))
         .then((responseJson) => {
             this.setState({ isLoading: false, results: responseJson})
         })
@@ -129,7 +129,7 @@ export default class PublicList extends React.Component{
         this.setState({ filterCar: text})
     }
 
-    handleDistanceFromInput = (text) => {
+    handleCity = (text) => {
         this.setState({ filterMinDistance: text})
     }
 
@@ -139,8 +139,7 @@ export default class PublicList extends React.Component{
 
     handleFiltering = () => {
         this.setState({showFilterModal: false}) // remove popup
-        if (this.state.filterCar != '')
-            this.fetchJson_byBrand(this.state.filterCar);
+        this.fetchJson_byBrand(this.state.filterCar);
     }
 
     render() {
@@ -334,11 +333,11 @@ export default class PublicList extends React.Component{
                     {/* Pop-up'as filtravimui ir rikiavimui*/}
                     <Modal transparent={true} visible={this.state.showFilterModal} animationType={'fade'}>
                         {/* https://reactnative.dev/docs/keyboardavoidingview nice meme */}
-                        <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={{backgroundColor: '#000000aa', flex: 1}}>
+                        <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={{marginBottom: 0, paddingBottom: 0, backgroundColor: '#000000aa', flex: 1}}>
                             <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.filterModal}>
                                 <View style={styles.filterModalHairline}/>
                                 <View style={{height:'100%'}}>
-                                <ScrollView keyboardShouldPersistTaps='never'>
+                                <ScrollView keyboardShouldPersistTaps='always'>
                                 
                                 <TitilliumWeb style={styles.filterModalHeader}>kaina</TitilliumWeb>
                                 
@@ -376,7 +375,7 @@ export default class PublicList extends React.Component{
                                     style={styles.filterCarInputField}
                                     underlineColorAndroid="transparent"
                                     placeholder="įveskite raktažodį..."
-                                    placeholderTextColor={Colors.hintText}               
+                                    placeholderTextColor={Colors.hintText}
                                     multiline={false}
                                     value={this.state.filterCar}
                                     keyboardType="default"
@@ -384,32 +383,17 @@ export default class PublicList extends React.Component{
                                 </View>
 
                                 <View style={{marginVertical: 10}}/>
-                                <TitilliumWeb style={styles.filterModalHeader}>atstumas</TitilliumWeb>
+                                <TitilliumWeb style={styles.filterModalHeader}>miestas</TitilliumWeb>
 
                                 <View style={styles.filterModalContainer}>                        
-                                    <TextInput onChangeText={this.handleDistanceFromInput}
-                                    style={styles.filterDistanceInputField}
+                                    <TextInput onChangeText={this.handleCity}
+                                    style={styles.filterCarInputField}
                                     underlineColorAndroid="transparent"
-                                    placeholder="nuo"
-                                    placeholderTextColor={Colors.hintText}               
+                                    placeholder="įveskite miestą..."
+                                    placeholderTextColor={Colors.hintText}
                                     multiline={false}
-                                    value={this.state.filterMinDistance}
-                                    keyboardType="numeric"
-                                    maxLength={4}/>
-
-                                    <TitilliumWeb style={{marginTop: -2, marginLeft: 4, color: Colors.hintText, fontSize: 16}}>km</TitilliumWeb>
-                                    <TitilliumWeb style={{marginHorizontal: 26}}>–</TitilliumWeb>
-
-                                    <TextInput onChangeText={this.handleDistanceToInput}
-                                    style={styles.filterDistanceInputField}
-                                    underlineColorAndroid="transparent"
-                                    placeholder="iki"
-                                    placeholderTextColor={Colors.hintText}               
-                                    multiline={false}
-                                    value={this.state.filterMaxDistance}
-                                    keyboardType="numeric"
-                                    maxLength={4}/>
-                                    <TitilliumWeb style={{marginTop: -2, marginLeft: 2, color: Colors.hintText, fontSize: 16}}>km</TitilliumWeb>
+                                    value={this.state.filterCity}
+                                    />
                                 </View>
 
                                 <View style={{marginVertical: 10}}/>
@@ -644,7 +628,9 @@ const styles = StyleSheet.create({
         marginHorizontal: '10%', 
         borderRadius: 10,
         //height: '100%', // nezinau per daug laiko praleidau ir vis tiek nesupratau kodel apacioje tiek daug dead space
-        marginBottom: '30%'
+        marginBottom: '30%',
+        paddingBottom: 0,
+        flex: 1
     },
     filterModalButton: {
         backgroundColor: Colors.buttonColor,
@@ -688,12 +674,6 @@ const styles = StyleSheet.create({
         borderBottomWidth: StyleSheet.hairlineWidth,
         borderBottomColor: Colors.hairline,
         width: '100%',
-        height: 20,
-    },
-    filterDistanceInputField: {
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: Colors.hairline,
-        width: 50,
         height: 20,
     },
     dropdownPickerStyle: {
