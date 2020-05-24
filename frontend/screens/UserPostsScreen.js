@@ -17,61 +17,42 @@ const screenWidth = Dimensions.window.width;
 
 import env from '../env/server';
 export default class PublicList extends React.Component{
-    
-    state = {
-        isLoading: false,
-        results: [
-            {
-                post_id: '',
-                picture_uri: '',
-                body: '',
-                available_from_date: '',
-                available_to_date: '',
-                brand: '',
-                model: '',
-                user_id: ''
-            }
-        ]
-    };
 
     state = {
         isLoading: false,
-        showPrivate: false,
+        showPrivate: true,
         privateIconName: 'account-key-outline',
-        publicPosts: 2,
-        privatePosts: 1,
+        publicPosts: 0,
+        privatePosts: 0,
         publicPost: [
             {
+                post_id: null,
                 picture_uri: '',
-                brand: "BMW", 
-                model: "530", 
-                availableFrom: "2020, 05, 10, 18, 27", 
-                availableUntil: "2020, 05, 12, 15, 00",
-                comment: "Lorem ipsum"
-            },
-            {
-                picture_uri: '',
-                brand: "Volkswagen", 
-                model: "Golf", 
-                availableFrom: "2020, 05, 10, 18, 27", 
-                availableUntil: "2020, 05, 12, 15, 00",
-                comment: "Lorem ipsum"
+                brand: "", 
+                model: "", 
+                availableFrom: "", 
+                availableUntil: "",
+                body: "",
+                user_id: null
             }
         ],
+
         privatePost: [
             {
+                post_id: null,
                 picture_uri: '',
-                brand: "Audi", 
-                model: "A6", 
-                availableFrom: "2020, 05, 10, 18, 27", 
-                availableUntil: "2020, 05, 12, 15, 00",
-                comment: "Lorem ipsum"
+                brand: "", 
+                model: "", 
+                availableFrom: "", 
+                availableUntil: "",
+                body: "",
+                user_id: null
             }
         ],
     };
 
     componentDidMount(){
-        this.fetchJson();
+        this.fetchPostsByUserId();
     }
 
     fetchPosts = () => {
@@ -92,6 +73,35 @@ export default class PublicList extends React.Component{
           this.setState({isLoading: false});
       });
     }
+    fetchPostsByUserId = async () => {
+        const userID = await AsyncStorage.getItem('user_id');
+        this.setState({user_id: userID})
+        this.setState({isLoading: true});
+        fetch('http://' + env.server.ip + ':' + env.server.port + '/posts/user/' + userID,{
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            }
+          })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        
+        let publicPosts2 = responseJson.filter(post => post.is_private.data != 1);
+        this.setState({publicPosts: responseJson.length});
+
+        let privatePosts = responseJson.filter(post => post.is_private.data != 0);
+        this.setState({privatePosts: responseJson.length});
+
+        console.log(privatePosts);
+
+        this.setState({ isLoading: false, privatePost: privatePosts, publicPost: publicPosts2})
+      })
+      .catch((error) =>{
+          console.error(error);
+          this.setState({isLoading: false});
+      });
+    }
 
 
     handleDeletion = async (key) => {
@@ -106,8 +116,6 @@ export default class PublicList extends React.Component{
 
 
     updatePost = async (key) => { 
-        const userID = await AsyncStorage.getItem('user_id');
-
             var data = {
                 picture_uri: 'atnaujinom',
                 body: 'atnaujinom',
@@ -136,26 +144,6 @@ export default class PublicList extends React.Component{
                 console.log(err)
             });
             this.fetchJson()
-    }
-
-    fetchJson = async () => {
-        const userID = await AsyncStorage.getItem('user_id');
-        this.setState({isLoading: true});
-        fetch('http://' + env.server.ip + ':' + env.server.port + '/posts/user/' + userID,{
-            method: 'GET',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            }
-          })
-      .then((response) => response.json())
-      .then((responseJson) => {
-         this.setState({ isLoading: false, results: responseJson})
-      })
-      .catch((error) =>{
-          console.error(error);
-          this.setState({isLoading: false});
-      });
     }
 
     render() {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image, TouchableOpacity, View, TextInput, StyleSheet, ScrollView, Alert, ImageBackground, AsyncStorage} from 'react-native';
+import { Text, Image, TouchableOpacity, View, TextInput, StyleSheet, ScrollView, Alert, ImageBackground, AsyncStorage} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
@@ -67,6 +67,10 @@ export default class PostScreen extends React.Component {
       brand: this.state.firstDropDownValue,
       model: this.state.secondDropDownValue,
       is_private: this.state.isPrivate,
+      price: this.state.priceInput,
+      location_city: this.state.cityInput,
+      location_address: this.state.addressInput,
+      in_use: false,
       user_id: userID
     }
     fetch('http://' + env.server.ip + ':' + env.server.port + '/posts/', {
@@ -103,7 +107,8 @@ export default class PostScreen extends React.Component {
   postSuccessful = () => {
     if (this.state.availableFromDate != "pasirinkite datą" && this.state.availableToDate != "pasirinkite datą" &&
     this.state.image != '' && this.state.descriptionInput != null && this.state.firstDropDownValue != null &&
-    this.state.secondDropDownValue != null) {
+    this.state.secondDropDownValue != null && this.state.priceInput != null && this.state.cityInput != null
+    && this.state.addressInput != null) {
         Alert.alert('Paviešinti skelbimą?', undefined, [
           {text: 'Ne', onPress: () => console.log('post cancelled'), style: 'default'},
           {text: 'Taip', onPress: this.handleSubmit},
@@ -146,7 +151,8 @@ export default class PostScreen extends React.Component {
                       <IonicsIcon name={"ios-arrow-back"} sizeOf={35} colorOf={'arrowIdle'}/>
                   </View> 
               </TouchableOpacity>                   
-              <TitilliumWeb style={styles.title}>naujas skelbimas</TitilliumWeb>
+              <TitilliumWeb style={styles.title}>naujas skelbimaz</TitilliumWeb>            
+
           </View>
 
           <View style={{alignSelf: 'center'}}>
@@ -388,6 +394,7 @@ export default class PostScreen extends React.Component {
     this.getPermissionAsync();
     this.generateBrands();
   }
+  
   
 
   getPermissionAsync = async () => {
