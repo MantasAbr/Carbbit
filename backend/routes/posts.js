@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const posts = require("../controllers/post.controller.js");
+const filters = require("../controllers/post.controller.js");
 
 /* GET posts listing. */
 router.get('/', function(request, response) {
@@ -15,8 +16,8 @@ router.get('/:postId', function (request, response) {
   posts.findOne(request, response);
 })
 
-router.get('/filterBrand/:brand', function (request, response) {
-  posts.findByBrand(request, response);
+router.get('/filter', function (request, response) {
+  filters.findByFilters(request, response);
 })
 
 router.get('/user/:userId', function (request, response) {

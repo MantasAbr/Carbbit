@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8fa21ba9-05e7-4b8c-afd9-9d3feaf8cc2b",
+		"_postman_id": "e55cf2c3-eb80-4eb5-baa4-0e6423ae0084",
 		"name": "Autorent",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -678,6 +678,32 @@
 					"port": "3000",
 					"path": [
 						"photos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"price_from\": 5,\n\t\"price_to\": 100,\n\t\"brand\": \"Audi\",\n\t\"model\": \"\",\n\tlocation_city: \"\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/filter",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"filter"
 					]
 				}
 			},

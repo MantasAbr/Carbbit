@@ -1,4 +1,5 @@
 const Post = require("../models/post.model.js");
+const Filter = require("../models/post.model.js");
 
 // Create and Save a new posts
 exports.create = (req, res) => {
@@ -23,6 +24,14 @@ exports.create = (req, res) => {
         locationAddress: req.body.location_address,
         inUse: req.body.in_use,
         userId: req.body.user_id,
+    });
+
+    const filter = new Filter({
+        priceFrom: req.body.price_from,
+        priceTo: req.body.price_to,
+        brand: req.body.brand,
+        model: req.body.model,
+        locationCity: req.body.locationCity
     });
 
     // Save Post in the database
@@ -83,16 +92,26 @@ exports.findByUserId = (req, res) => {
 };
 
 // Find (filter) all Posts with given brand
-exports.findByBrand = (req, res) => {
-    Post.findByBrand(req.params.brand, (err, data) => {
+exports.findByFilters = (req, res) => {
+    Filter.findByFilters(req.params.priceFrom, req.params.priceTo, req.params.brand, req.params.model, req.params.locationCity, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
-                    message: `Not found Post with such brand ${req.params.brand}.`
+                    message: `Not found Post with such parameters:\n
+                    Price from: ${req.params.priceFrom}\n
+                    Price to: ${req.params.priceTo}\n
+                    Brand: ${req.params.brand}\n
+                    Model: ${req.params.model}\n
+                    City: ${req.params.locationCity}`
                 });
             } else {
                 res.status(500).send({
-                    message: "Error retrieving post with brand " + req.params.brand
+                    message: `Error retrieving post with parameters:\n
+                    Price from: ${req.params.priceFrom}\n
+                    Price to: ${req.params.priceTo}\n
+                    Brand: ${req.params.brand}\n
+                    Model: ${req.params.model}\n
+                    City: ${req.params.locationCity}`
                 });
             }
         } else res.send(data);
