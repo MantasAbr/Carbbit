@@ -14,7 +14,7 @@
         brand varchar(255) NOT NULL,
         model varchar(255) NOT NULL,
         is_private BIT NOT NULL,
-        price double NOT NULL,
+        price int NOT NULL,
         location_city varchar(255) NOT NULL,
         location_address varchar(255) NOT NULL,
         in_use BIT NOT NULL,

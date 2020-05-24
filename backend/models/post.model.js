@@ -17,7 +17,6 @@ const Post = function(post) {
 };
 
 Post.create = (newPost, result) => {
-    console.log(newPost.isPrivate)
     let postArray = [newPost.pictureUri, newPost.body, newPost.availableToDate, newPost.availableFromDate, newPost.brand, newPost.model, newPost.isPrivate, newPost.price, newPost.locationCity, newPost.locationAddress, newPost.inUse, newPost.userId];
     sql.query('INSERT INTO Posts (picture_uri , body, available_from_date, available_to_date, brand, model, is_private, price, location_city, location_address, in_use, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', postArray, (err, res) => {
         if (err) {
@@ -25,7 +24,6 @@ Post.create = (newPost, result) => {
             result(err, null);
             return;
         }
-
         console.log("created post: ", { id: res.insertId, ...newPost });
         result(null, { id: res.insertId, ...newPost });
     });
