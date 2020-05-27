@@ -167,7 +167,7 @@ export default class SettingsScreen extends React.Component{
                             <TitilliumWeb style={styles.basicTextNoIcon}>atjungti paskyrą</TitilliumWeb>
                         </View>
                     </TouchableOpacity> 
-                    <TouchableOpacity style={styles.buttonLower} onPress={() => {this.deleteAccountAlert();}} activeOpacity={0.5}>
+                    <TouchableOpacity style={styles.buttonLower} onPress={() => {this.deleteAccountAlert(), this.props.navigation.navigate('Home');}} activeOpacity={0.5}>
                         <View style={styles.buttonContainer}>
                             <TitilliumWeb style={styles.importantText}>ištrinti paskyrą</TitilliumWeb>
                         </View>
