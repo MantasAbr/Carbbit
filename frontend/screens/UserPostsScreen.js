@@ -3,7 +3,6 @@ import { render } from 'react-dom';
 import { Fragment, useState } from 'react'
 import { Modal, TouchableOpacity, StyleSheet, View, ImageBackground, Image, Text, ActivityIndicator, TextInput, RefreshControl, AsyncStorage, Button} from 'react-native';
 import moment from "moment";
-
 import Dimensions from '../constants/Layout';
 import Colors from '../constants/Colors';
 import { TitilliumWeb } from '../components/TitilliumWeb';
@@ -209,7 +208,13 @@ export default class PublicList extends React.Component{
 
                 
                 {/*Refresh control'o reikia, reference yra publicPosts branche PublicListScreen*/}                    
-                <ScrollView showsVerticalScrollIndicator={false}>
+                <ScrollView showsVerticalScrollIndicator={false}
+                        refreshControl={ // pulldown refresh
+                            <RefreshControl
+                                isLoading={this.state.isLoading}
+                                onRefresh={this.fetchPostsByUserId}
+                            />
+                        }>
                     <View style={{marginVertical: 20}}/>
                     <TitilliumWeb style={styles.title}>vieši skelbimai</TitilliumWeb>
 

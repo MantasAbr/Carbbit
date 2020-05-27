@@ -209,7 +209,7 @@ export default class SettingsScreen extends React.Component{
 
     deleteAccountAlert = () => {
         if(Platform.OS == 'web'){
-            alert("Paskyrą ištrinta!")
+            alert("Paskyra ištrinta!")
         }
         else
         {
