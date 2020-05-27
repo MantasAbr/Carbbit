@@ -1,21 +1,21 @@
 import * as React from 'react'
-import { TouchableOpacity, StyleSheet, View, TextInput, ImageBackground, Modal, Alert, Image, ScrollView} from 'react-native';
+import { TouchableOpacity, StyleSheet, View, TextInput, ImageBackground, Modal, Alert, Image, ScrollView, AsyncStorage} from 'react-native';
 import { TitilliumWeb } from '../../components/TitilliumWeb';
 import Dimensions from '../../constants/Layout';
 import IonicsIcon from '../../components/IonicsIcon';
 import MaterialIcon from '../../components/MaterialCommunityIcons';
 import FontAwesomeIcon from '../../components/FontAwesomeIcon';
 import Colors from '../../constants/Colors';
+import env from '../../env/server';
 
 export default class UserAccountScreen extends React.Component{
 
 
     state = {
-
-        name: 'John',
-        surname: 'Doe',
-        password: 'password',
-        mail: 'Mail@mail.com',
+        user_id: null,
+        name: '',
+        password: '',
+        mail: '',
 
         newName: '',
         newSurname: '',
@@ -31,12 +31,20 @@ export default class UserAccountScreen extends React.Component{
         privateIconName: 'account-key-outline',
     }
 
-    handleNameChange = (text) => {
-        this.setState({newName: text})
+    componentDidMount(){
+        this.getUserData()
     }
 
-    handleSurnameChange = (text) => {
-        this.setState({newSurname: text})
+    getUserData = async () => {
+        let name = await AsyncStorage.getItem('username');
+        let email = await AsyncStorage.getItem('email');
+        let userID = await AsyncStorage.getItem('user_id');
+        let password = await AsyncStorage.getItem('password');
+        this.setState({name: name, mail: email, user_id: userID, password: password})
+    }
+
+    handleNameChange = (text) => {
+        this.setState({newName: text})
     }
 
     handleEmailChange = (text) => {
@@ -47,21 +55,52 @@ export default class UserAccountScreen extends React.Component{
         this.setState({newPassword: text})
     }
 
-    updateName(newNameChoice, newSurnameChoice){
-        this.setState({name: newNameChoice});
-        this.setState({surname: newSurnameChoice});
-        this.setState({newName: ''});
-        this.setState({newSurname: ''});
+    updateName = async (newNameChoice, newSurnameChoice) => {
+        await this.setState({name: newNameChoice});
+        await this.setState({newName: ''});
+        this.updateUser()
     }
 
-    updateMail(newMailChoice){
-        this.setState({mail: newMailChoice});
-        this.setState({newMail: ''});
+    updateMail = async (newMailChoice) => {
+        await this.setState({mail: newMailChoice});
+        await this.setState({newMail: ''});
+        this.updateUser();
+        console.log('yo')
+    }
+
+    updateUser() {
+        var data = {
+            first_name: this.state.name,
+            email: this.state.mail,
+            password: this.state.password,
+            user_id: this.state.user_id
+        };
+        fetch('http://' + env.server.ip + ':' + env.server.port + '/users/' + this.state.user_id, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        }).then(function (response) {
+            if (response.status >= 400) {
+                console.log('Couldn\'t update..');
+            }
+            return response.json();
+        }).then(function (data) {
+            console.log(data);
+            if (data == "success") {
+                console.log('updated!');
+            }
+        }).catch(function (err) {
+            console.log(err);
+        });
+        AsyncStorage.setItem('username', this.state.name);
+        AsyncStorage.setItem('email', this.state.mail );
+        AsyncStorage.setItem('password', this.state.password );
     }
 
     updatePassword(newPasswordChoice){
         this.setState({password: newPasswordChoice});
         this.setState({newPassword: ''});
+        this.updateUser();
     }
    
     render(){   
@@ -95,7 +134,6 @@ export default class UserAccountScreen extends React.Component{
 
                     <View style={styles.nameComponent}>
                         <TitilliumWeb style={styles.userName}>{this.state.name}</TitilliumWeb>
-                        <TitilliumWeb style={styles.userName}>{this.state.surname}</TitilliumWeb>
                         <TitilliumWeb style={styles.userMail}>{this.state.mail}</TitilliumWeb>
                     </View>    
                     
@@ -148,7 +186,6 @@ export default class UserAccountScreen extends React.Component{
 
                         <TitilliumWeb style={styles.modalTitle}>jūsų vardas:</TitilliumWeb>
                         <TitilliumWeb style={styles.modalUserInfo}>{this.state.name}</TitilliumWeb>
-                        <TitilliumWeb style={styles.modalUserInfo}>{this.state.surname}</TitilliumWeb>
 
                         <View style={{marginVertical: 5}}/>
                         <View style={styles.modalHairline}/>
@@ -165,20 +202,6 @@ export default class UserAccountScreen extends React.Component{
                         placeholderTextColor={Colors.hintText}               
                         multiline={false}
                         value={this.state.newName}
-                        keyboardType="default"
-                        />
-
-                        <View style={{marginVertical: 5}}/>
-
-                        <TitilliumWeb style={styles.modalTitle}>pakeisti pavardę</TitilliumWeb>
-                        <View style={{marginVertical: 5}}/>
-                        <TextInput onChangeText={this.handleSurnameChange}
-                        style={styles.modalInput}
-                        underlineColorAndroid="transparent"
-                        placeholder="įveskite..."
-                        placeholderTextColor={Colors.hintText}               
-                        multiline={false}
-                        value={this.state.newSurname}
                         keyboardType="default"
                         />
 

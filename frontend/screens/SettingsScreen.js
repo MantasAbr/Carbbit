@@ -1,11 +1,11 @@
 import * as React from 'react'
-import { TouchableOpacity, StyleSheet, View, Platform, ImageBackground, Image, Alert} from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Platform, ImageBackground, Image, Alert, AsyncStorage} from 'react-native';
 import { ScrollView} from 'react-native-gesture-handler';
 import { TitilliumWeb } from '../components/TitilliumWeb';
 import Dimensions from '../constants/Layout';
 import IonicsIcon from '../components/IonicsIcon';
 import Colors from '../constants/Colors'
-
+import env from '../env/server';
 
 export default class SettingsScreen extends React.Component{
 
@@ -14,27 +14,82 @@ export default class SettingsScreen extends React.Component{
         this.state = {screenWidth: '', rememberInfo: false, radioButtonName: 'ios-radio-button-off'}
     }
 
+    
+    state = {
+        user_id: null,
+        name: '',
+        password: '',
+        mail: '',
+    }
+
+    componentDidMount(){
+        this.getUserData()
+    }
+
+    getUserData = async () => {
+        let name = await AsyncStorage.getItem('username');
+        let email = await AsyncStorage.getItem('email');
+        let userID = await AsyncStorage.getItem('user_id');
+        let password = await AsyncStorage.getItem('password');
+        this.setState({name: name, mail: email, user_id: userID, password: password})
+    }
+
     screenWidth = Math.round(Dimensions.window.width);
 
-    handleDeletion = () => {
+    handleDeletion = async () => {
 
-    fetch("http://192.168.56.1:3000/ratings/" + 5, { // po auth user_id
-    method: 'DELETE', 
-    })
-    .then(res => res.text())
-    .then(res => console.log(res))
-    
-    fetch("http://192.168.56.1:3000/posts/" + 5, { // po auth user_id
-    method: 'DELETE', 
-    })
-    .then(res => res.text())
-    .then(res => console.log(res))
+        fetch('http://' + env.server.ip + ':' + env.server.port + '/posts/user/' + this.state.user_id,{
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            }
+          })
+        .then((response) => response.json())
+        .then((responseJson) => {
+        
+        let posts = new Array();
 
-    fetch("http://192.168.56.1:3000/users/" + 5, { // po auth user_id
+        for(var i = 0; i < responseJson.length; i++) {
+            var obj = responseJson[i];
+            posts.push(obj.post_id);
+        }
+
+        for (let index = 0; index < posts.length; index++) {
+            this.deleteAssociatedPosts(posts[index]);
+        }
+
+      }).then(() => {
+        console.log(this.state.user_id)
+        console.log('ieinam')
+        fetch('http://' + env.server.ip + ':' + env.server.port + '/users/' + this.state.user_id, {
         method: 'DELETE', 
+        })
+        .then(res => res.text())
+        .then(res => console.log(res))
+        
+        this.setState({user_id: null, name: '', mail: '', password: ''})
+
+        AsyncStorage.setItem('username', '');
+        AsyncStorage.setItem('email', '' );
+        AsyncStorage.setItem('password', '' );
+        AsyncStorage.setItem('user_id', null);
+
       })
-      .then(res => res.text())
-      .then(res => console.log(res))
+      .catch((error) =>{
+          console.error(error);
+      });
+    }
+
+    
+        deleteAssociatedPosts = async (key) => {
+        console.log(key)
+        fetch('http://' + env.server.ip + ':' + env.server.port + '/posts/' + key, {
+        method: 'DELETE', 
+        })
+        .then(res => res.text())
+        .then(res => console.log(res))
+        this.fetchJson()
     }
 
     render(){
@@ -159,7 +214,7 @@ export default class SettingsScreen extends React.Component{
         else
         {
             Alert.alert('Ištrinti paskyrą?', null, [
-                        {text: 'Ištrinti', onPress: () => console.log('ištrinta paskyra'), style: 'default'},
+                        {text: 'Ištrinti', onPress: () => this.handleDeletion(), style: 'default'},
                         {text: 'Atšaukti', onPress: () => null, style: 'cancel'}]);
         }
     }
