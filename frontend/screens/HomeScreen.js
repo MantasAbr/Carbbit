@@ -15,7 +15,7 @@ import Dimensions from '../constants/Layout';
 
 export default function HomeScreen({navigation}){
 
-  const [userLoginState, setUserLoginState] = React.useState( { signedIn: false , first_name: '', email: ''} );
+  const [userLoginState, setUserLoginState] = React.useState( { signedIn: false , first_name: '', email: '.'} );
   const [users, setUsers] = useState([
     { user_id: null, first_name: '', email: ''},
   ]);
@@ -33,6 +33,11 @@ export default function HomeScreen({navigation}){
               source={require('../assets/images/carbbit.png')}
             />
           </View>
+
+        
+          <TouchableOpacity onPress={() => testas()}>
+            <Text>TESTAS</Text>
+          </TouchableOpacity>
 
           <TouchableOpacity onPress={() => handleButton_Login(navigation)} style={styles.button}>
             <TitilliumWeb style={{fontSize: 26}}>prisijungti</TitilliumWeb>    
@@ -67,7 +72,10 @@ export default function HomeScreen({navigation}){
     </ImageBackground>
     )
     
-    async function fetchJsonCheckIfEmailExists() {
+    async function fetchJsonCheckIfEmailExists(Name, Email) {
+      console.log('esam fetche()')
+      console.log(Name)
+      console.log(Email)
       await fetch('http://' + env.server.ip + ':' + env.server.port + '/users/',{
             method: 'GET',
             headers: {
@@ -86,54 +94,98 @@ export default function HomeScreen({navigation}){
             });
           }
       for (let index = 0; index < users.length; index++) {
-        if (users[index].email == userLoginState.email) {
-          _storeData(users[index].user_id)
+        if (users[index].email === Email) {
+          console.log('radom email')
+          console.log(users[index].email)
+          console.log('su')
+          console.log(userLoginState.email)
+          console.log(users[index].user_id)
+
+          _storeData(users[index].user_id, Name, Email)
           found = true;
-          return;
+          return true;
         }
       }
+      }).then(() => {
+        console.log('ziurim koks found')
+        console.log(found)
+      if (!found) {
+        newUser(found, Name, Email);
+      }
+
       }).catch((error) =>{
           console.error(error);
       });
-      console.log(found)
-      if (!found) {
-        newUser(found);
-      }
     }
 
-  function newUser(found) {
+  function newUser(found, Name, Email) {
+    console.log('esam newUser')
+    console.log(Name)
+    console.log(Email)
     if (found == false) {
       console.log(found);
       var data = {
-        first_name: userLoginState.first_name,
-        email: userLoginState.email,
+        first_name: Name,
+        email: Email,
         password: 'slaptazodis'
       };
       console.log('neradom');
+
       fetch('http://' + env.server.ip + ':' + env.server.port + '/users/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
-      }).then(function (response) {
-        if (response.status >= 400) {
-          console.log('Couldn\'t post..');
-        }
-        return response.json();
-      }).then(function (data) {
+      }).then((response)=>response.json())
+      .then(function (responseJson) {
+        console.log('kodel tu negali veikti')
+        console.log(responseJson.id)
         console.log('Posted!')
-        console.log(data);
-        _storeData(data.id)
+        _storeData(responseJson.id, Name, Email)
       }).catch(function (err) {
         console.log(err);
       });
     }
   }
 
-    async function _storeData(id) {
+    async function testas() {
       try {
+        await AsyncStorage.setItem('user_id', '1' );
+        await AsyncStorage.setItem('username', 'vardas' );
+        await AsyncStorage.setItem('email', 'email' );
+        await AsyncStorage.setItem('password', 'slaptazodis' );
+        navigation.reset({
+          index: 0,
+          routes: [
+              {name: 'Root'}
+          ]
+      })
+
+      } catch (error) {
+        console.log(error)
+      }
+    };
+
+    async function _storeData(id, Name, Email) {
+      try {
+        console.log('esam storeData')
+        console.log(id)
+        console.log(Name)
+        console.log(Email)
         await AsyncStorage.setItem('user_id', id.toString() );
-        await AsyncStorage.setItem('username', userLoginState.first_name );
-        await AsyncStorage.setItem('email', userLoginState.email );
+        await AsyncStorage.setItem('username', Name );
+        await AsyncStorage.setItem('email', Email );
+        await AsyncStorage.setItem('password', 'slaptazodis' );
+        
+        const value = await AsyncStorage.getItem('user_id');
+        const value2 = await AsyncStorage.getItem('username');
+        const value3 = await AsyncStorage.getItem('email');
+        const value4 = await AsyncStorage.getItem('password');
+
+        console.log(value)
+        console.log(value2)
+        console.log(value3)
+        console.log(value4)
+
       } catch (error) {
         console.log(error)
       }
@@ -144,6 +196,7 @@ export default function HomeScreen({navigation}){
         const value = await AsyncStorage.getItem('user_id');
         const value2 = await AsyncStorage.getItem('username');
         const value3 = await AsyncStorage.getItem('email');
+        const value4 = await AsyncStorage.getItem('password');
         if (value !== null) {
           console.log(value);
           console.log(value2);
@@ -155,6 +208,7 @@ export default function HomeScreen({navigation}){
     };
 
     async function logInGoogle() {
+      console.log('esam googlei')
       try {
         const result = await Google.logInAsync({
           androidClientId:
@@ -166,8 +220,12 @@ export default function HomeScreen({navigation}){
           console.log('success')
           console.log(result.user.name)
           console.log(result.user.email)
-          await setUserLoginState({signedIn: true, first_name: result.user.name, email: result.user.email})
-          fetchJsonCheckIfEmailExists()
+          setUserLoginState({signedIn: true, first_name: result.user.name, email: result.user.email})
+          console.log('state')
+          console.log(userLoginState.first_name)
+          console.log(userLoginState.email)
+          fetchJsonCheckIfEmailExists(result.user.name, result.user.email)
+          
           navigation.reset({
             index: 0,
             routes: [
@@ -193,10 +251,13 @@ export default function HomeScreen({navigation}){
         });
         if (type === 'success') {
           const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-          let name = await response.json().name
-          let email = await response.json().email
+          let name = response.json().name
+          let email = response.json().email
           await setUserLoginState({signedIn: true, first_name: name, email: email})
-          fetchJsonCheckIfEmailExists
+          console.log('einam i fethca')
+          console.log(name)
+          console.log(email)
+          fetchJsonCheckIfEmailExists(response.json().name, response.json().email)
         } else {
           console.log('Unable to login!')
         }

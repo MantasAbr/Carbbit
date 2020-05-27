@@ -25,6 +25,7 @@ export default function LoginScreen({navigation}){
                   </View> 
               </TouchableOpacity>                   
               <TitilliumWeb style={styles.title}>prisijungimas</TitilliumWeb>
+
             </View>
 
             <View style={{alignSelf: 'center'}}>
@@ -85,21 +86,64 @@ export default function LoginScreen({navigation}){
                     })
                     : undefined}
                     }>
-                    <TitilliumWeb style={{fontSize: 26}}>tęsti</TitilliumWeb>
+                    <TitilliumWeb style={{fontSize: 26,}}>tęsti</TitilliumWeb>
                 </TouchableOpacity>
+
                 </View>
             </ScrollView>    
         </ImageBackground>
     )
 }
 
+async function usersInfo() {
+    console.log('esam fetchjson()')
+    console.log(Email)
+    console.log(Name)
+    console.log(Pass)
+    let found = false;
+     fetch('http://' + env.server.ip + ':' + env.server.port + '/users/',{
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          }
+        })
+    .then((response) => response.json())
+    .then((responseJson) => {
+        for(var i = 0; i < responseJson.length; i++) {
+            var obj = responseJson[i];
+            if (obj.email == Email) {
+                found = true;
+                console.log('radom email pasikartojima')
+                return true;
+            }
+        }
+    }
+    ).then((found) => {
+        console.log(found)
+        if (found == false) {
+            newUser(Name, Email, Pass);
+        }
+        
+    }).catch((error) =>{
+        console.error(error);
+        console.log('klaida')
+    });
+  }
+
 function checkInputs(name, pass){
     _retrieveData()
     if (name === '' || pass === ''){
+        usersInfo = 
         alert("Nenurodytas vardas ir/arba slaptažodis");
         return false;
     }
     return true;
+}
+
+function testukas(){
+    console.log(this.inputName)
+    console.log(this.inputPassword)
 }
 
 async function _retrieveData() {

@@ -73,6 +73,7 @@ export default class PublicList extends React.Component{
           this.setState({isLoading: false});
       });
     }
+
     fetchPostsByUserId = async () => {
         const userID = await AsyncStorage.getItem('user_id');
         this.setState({user_id: userID})
@@ -84,9 +85,10 @@ export default class PublicList extends React.Component{
               'Content-Type': 'application/json',
             }
           })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        
+        .then((response) => response.json())
+        .then((responseJson) => {
+        const userID = AsyncStorage.getItem('user_id');
+        console.log(userID)
         let publicPosts2 = responseJson.filter(post => post.is_private.data != 1);
         this.setState({publicPosts: responseJson.length});
 
@@ -116,6 +118,8 @@ export default class PublicList extends React.Component{
 
 
     updatePost = async (key) => { 
+            //vietoj 'atnaujinom' state reik sudeti, kurie atnaujinami
+            //kazkokiam kitam lange
             var data = {
                 picture_uri: 'atnaujinom',
                 body: 'atnaujinom',

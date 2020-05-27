@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { TouchableOpacity, Platform, StyleSheet, View, Text, ImageBackground, Image, Alert} from 'react-native';
+import { TouchableOpacity, Platform, StyleSheet, View, Text, ImageBackground, Image, Alert, AsyncStorage} from 'react-native';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 
 import IonicsIcon from '../components/IonicsIcon'
@@ -8,6 +8,7 @@ import FontAwesomeIcon from '../components/FontAwesomeIcon';
 import FontAwesome5Icon from '../components/FontAwesome5Icon';
 import Colors from '../constants/Colors';
 import Dimensions from '../constants/Layout';
+import env from '../env/server'
 
 export default function RegisterScreen({navigation}){
 
@@ -15,6 +16,11 @@ export default function RegisterScreen({navigation}){
     const [inputEmail, setInputEmail] = React.useState('');
     const [inputPassword, setInputPassword] = React.useState('');
     const [inputConfirmationPassword, setInputConfirmationPassword] = React.useState('');
+
+    const [userLoginState, setUserLoginState] = React.useState( { signedIn: false , first_name: '', email: ''} );
+    const [users, setUsers] = React.useState([
+      { user_id: null, first_name: '', email: ''},
+    ]);
 
     return(
         <ImageBackground source={require('../assets/backgrounds/vilnius_bg.png')} 
@@ -145,14 +151,85 @@ function checkInputs(name, mail, pass, pass2){
         alert("slaptažodis tuščias");
         return false;
     }
-    if (pass === pass2){
-        return true;
+    if (pass === pass2 ) {
+        fetchJsonCheckIfEmailExists(name, mail, pass);
     }
     else{
         alert("Patvirtinimo slaptažodis neatitinka slaptažodžio");
         return false;
     }
 }
+
+    async function fetchJsonCheckIfEmailExists(Name, Email, Pass) {
+    console.log('esam fetchjson()')
+    console.log(Email)
+    console.log(Name)
+    console.log(Pass)
+    let found = false;
+     fetch('http://' + env.server.ip + ':' + env.server.port + '/users/',{
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          }
+        })
+    .then((response) => response.json())
+    .then((responseJson) => {
+        for(var i = 0; i < responseJson.length; i++) {
+            var obj = responseJson[i];
+            if (obj.email == Email) {
+                found = true;
+                console.log('radom email pasikartojima')
+                return true;
+            }
+        }
+    }
+    ).then((found) => {
+        console.log(found)
+        if (found == false) {
+            newUser(Name, Email, Pass);
+        }
+        
+    }).catch((error) =>{
+        console.error(error);
+        console.log('klaida')
+    });
+  }
+
+  async function newUser( name, emailas, password) {
+      console.log('esam newUser()')
+      console.log(name)
+      console.log(emailas)
+      console.log(password)
+      var data = {
+        first_name: name,
+        email: emailas,
+        password: password
+      };
+      console.log('neradom');
+      fetch('http://' + env.server.ip + ':' + env.server.port + '/users/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      }).then(function (response) {
+        if (response.status >= 400) {
+          console.log('Couldn\'t create..');
+        }
+        return response.json();
+      }).then(function (data) {
+        console.log('Created!')
+
+        AsyncStorage.setItem('user_id', data.id );
+        AsyncStorage.setItem('username', name );
+        AsyncStorage.setItem('email', emailas );
+        AsyncStorage.setItem('password', password );
+
+        console.log(data);
+      }).catch(function (err) {
+        console.log(err);
+      });
+    }
+  
 
 function handleRegisterButton(navigation){
     navigation.navigate('Root')
