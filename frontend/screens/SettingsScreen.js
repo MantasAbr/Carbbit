@@ -154,12 +154,17 @@ export default class SettingsScreen extends React.Component{
                             </View>
                         </View>
                     </TouchableOpacity>
-
+                    <TouchableOpacity style={styles.buttonLower} onPress={() => {this.props.navigation.navigate('Home'), this.handleDeletion();}} activeOpacity={0.5}>
+                        <View style={styles.buttonContainer}>
+                            <TitilliumWeb style={styles.basicTextNoIcon}>atjungti paskyrą</TitilliumWeb>
+                        </View>
+                    </TouchableOpacity> 
                     <TouchableOpacity style={styles.buttonLower} onPress={() => {this.deleteAccountAlert();}} activeOpacity={0.5}>
                         <View style={styles.buttonContainer}>
                             <TitilliumWeb style={styles.importantText}>ištrinti paskyrą</TitilliumWeb>
                         </View>
-                    </TouchableOpacity>  
+                    </TouchableOpacity>
+ 
 
                     <View style={{marginVertical: 23}}/>
 
@@ -214,7 +219,7 @@ export default class SettingsScreen extends React.Component{
         else
         {
             Alert.alert('Ištrinti paskyrą?', null, [
-                        {text: 'Ištrinti', onPress: () => this.handleDeletion(), style: 'default'},
+                        {text: 'Ištrinti', onPress: () => {this.handleDeletion(), this.props.navigation.navigate("Home")}, style: 'default'},
                         {text: 'Atšaukti', onPress: () => null, style: 'cancel'}]);
         }
     }
@@ -302,6 +307,11 @@ const styles = StyleSheet.create({
         color: Colors.defaultText,
         paddingLeft: 15,
         marginTop: 5
+    },
+    basicTextNoIcon: {
+        fontSize: 15,
+        color: Colors.defaultText,
+        paddingLeft: 15,
     },
     importantText: {
         fontSize: 15,
