@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import { Keyboard, Modal, View, KeyboardAvoidingView, ActivityIndicator, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, TextInput, ImageBackground, Image, RefreshControl } from 'react-native';
+import { Keyboard, Modal, View, KeyboardAvoidingView, ActivityIndicator, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, TextInput, ImageBackground, Image, RefreshControl, Platform, ToastAndroid } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import moment from "moment";
 import { Dropdown } from 'react-native-material-dropdown';
@@ -96,7 +96,10 @@ export default class PublicList extends React.Component{
               'Content-Type': 'application/json',
             }
         })
-        .then((response) => response.json())
+        .then((response) => response.ok ? response.json() : // nested one-liner if, spaghettio
+        Platform.OS === "android" ? 
+            ToastAndroid.show("įrašų nerasta", ToastAndroid.LONG) : 
+            AlertIOS.alert("įrašų nerasta") && undefined)
         .then((responseJson) => {
             this.setState({ isLoading: false, results: responseJson})
         })
