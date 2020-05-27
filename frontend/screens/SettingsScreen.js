@@ -81,8 +81,16 @@ export default class SettingsScreen extends React.Component{
       });
     }
 
+    handleLogoff = async() =>{
+        AsyncStorage.setItem('username', '');
+        AsyncStorage.setItem('email', '' );
+        AsyncStorage.setItem('password', '' );
+        AsyncStorage.setItem('user_id', null);
+        console.log('user data cleared, logged off');
+    }
+
     
-        deleteAssociatedPosts = async (key) => {
+    deleteAssociatedPosts = async (key) => {
         console.log(key)
         fetch('http://' + env.server.ip + ':' + env.server.port + '/posts/' + key, {
         method: 'DELETE', 
@@ -154,7 +162,7 @@ export default class SettingsScreen extends React.Component{
                             </View>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonLower} onPress={() => {this.props.navigation.navigate('Home'), this.handleDeletion();}} activeOpacity={0.5}>
+                    <TouchableOpacity style={styles.buttonLower} onPress={() => {this.handleLogoff(), this.props.navigation.navigate('Home');}} activeOpacity={0.5}>
                         <View style={styles.buttonContainer}>
                             <TitilliumWeb style={styles.basicTextNoIcon}>atjungti paskyrą</TitilliumWeb>
                         </View>
