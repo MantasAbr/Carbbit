@@ -88,15 +88,23 @@ export default class PublicList extends React.Component{
         .then((responseJson) => {
         const userID = AsyncStorage.getItem('user_id');
         console.log(userID)
-        let publicPosts2 = responseJson.filter(post => post.is_private.data != 1);
-        this.setState({publicPosts: responseJson.length});
+        let privatePosts;
 
-        let privatePosts = responseJson.filter(post => post.is_private.data != 0);
-        this.setState({privatePosts: responseJson.length});
+        if (this.state.privatePosts != 0) {
+            privatePosts = responseJson.filter(post => post.is_private.data != 0);
+            this.setState({privatePosts: responseJson.length});
+        }
+
+        let publicPosts;
+
+        if (this.state.publicPosts != 0) {
+            publicPosts = responseJson.filter(post => post.is_private.data != 1);
+            this.setState({publicPosts: responseJson.length});
+        }
 
         console.log(privatePosts);
 
-        this.setState({ isLoading: false, privatePost: privatePosts, publicPost: publicPosts2})
+        this.setState({ isLoading: false, privatePost: privatePosts, publicPost: publicPosts})
       })
       .catch((error) =>{
           console.error(error);
